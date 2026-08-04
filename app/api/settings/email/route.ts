@@ -26,6 +26,14 @@ export async function GET() {
       excludeKeywords: prefs?.excludeKeywords ?? [],
       includeKeywords: prefs?.includeKeywords ?? [],
       targetRoles: prefs?.targetRoles ?? [],
+      alertsEnabled: prefs?.alertsEnabled ?? true,
+      alertMinScore: prefs?.alertMinScore ?? 55,
+      lastAlertedAt: prefs?.lastAlertedAt ?? null,
+      followUpRemindersEnabled: prefs?.followUpRemindersEnabled ?? true,
+      autoApplyEnabled: prefs?.autoApplyEnabled ?? false,
+      autoApplyMinScore: prefs?.autoApplyMinScore ?? 70,
+      autoApplyMarkApplied: prefs?.autoApplyMarkApplied ?? true,
+      autoApplyFollowUpDays: prefs?.autoApplyFollowUpDays ?? 7,
     },
     envHints: {
       hasResendEnv: Boolean(process.env.RESEND_API_KEY),
@@ -65,6 +73,13 @@ export async function PUT(request: Request) {
       excludeKeywords?: string[]
       includeKeywords?: string[]
       targetRoles?: string[]
+      alertsEnabled?: boolean
+      alertMinScore?: number
+      followUpRemindersEnabled?: boolean
+      autoApplyEnabled?: boolean
+      autoApplyMinScore?: number
+      autoApplyMarkApplied?: boolean
+      autoApplyFollowUpDays?: number
     }
   }
 
@@ -146,6 +161,13 @@ export async function PUT(request: Request) {
         excludeKeywords: cd.excludeKeywords ?? [],
         includeKeywords: cd.includeKeywords ?? [],
         targetRoles: cd.targetRoles ?? [],
+        alertsEnabled: cd.alertsEnabled ?? true,
+        alertMinScore: cd.alertMinScore ?? 55,
+        followUpRemindersEnabled: cd.followUpRemindersEnabled ?? true,
+        autoApplyEnabled: cd.autoApplyEnabled ?? false,
+        autoApplyMinScore: cd.autoApplyMinScore ?? 70,
+        autoApplyMarkApplied: cd.autoApplyMarkApplied ?? true,
+        autoApplyFollowUpDays: cd.autoApplyFollowUpDays ?? 7,
       },
       update: {
         ...(typeof cd.remoteOnly === "boolean"
@@ -164,6 +186,39 @@ export async function PUT(request: Request) {
           ? { includeKeywords: cd.includeKeywords }
           : {}),
         ...(cd.targetRoles ? { targetRoles: cd.targetRoles } : {}),
+        ...(typeof cd.alertsEnabled === "boolean"
+          ? { alertsEnabled: cd.alertsEnabled }
+          : {}),
+        ...(typeof cd.alertMinScore === "number"
+          ? {
+              alertMinScore: Math.max(28, Math.min(100, Math.round(cd.alertMinScore))),
+            }
+          : {}),
+        ...(typeof cd.followUpRemindersEnabled === "boolean"
+          ? { followUpRemindersEnabled: cd.followUpRemindersEnabled }
+          : {}),
+        ...(typeof cd.autoApplyEnabled === "boolean"
+          ? { autoApplyEnabled: cd.autoApplyEnabled }
+          : {}),
+        ...(typeof cd.autoApplyMinScore === "number"
+          ? {
+              autoApplyMinScore: Math.max(
+                40,
+                Math.min(100, Math.round(cd.autoApplyMinScore))
+              ),
+            }
+          : {}),
+        ...(typeof cd.autoApplyMarkApplied === "boolean"
+          ? { autoApplyMarkApplied: cd.autoApplyMarkApplied }
+          : {}),
+        ...(typeof cd.autoApplyFollowUpDays === "number"
+          ? {
+              autoApplyFollowUpDays: Math.max(
+                0,
+                Math.min(60, Math.round(cd.autoApplyFollowUpDays))
+              ),
+            }
+          : {}),
       },
     })
   }
@@ -181,6 +236,14 @@ export async function PUT(request: Request) {
       excludeKeywords: prefs?.excludeKeywords ?? [],
       includeKeywords: prefs?.includeKeywords ?? [],
       targetRoles: prefs?.targetRoles ?? [],
+      alertsEnabled: prefs?.alertsEnabled ?? true,
+      alertMinScore: prefs?.alertMinScore ?? 55,
+      lastAlertedAt: prefs?.lastAlertedAt ?? null,
+      followUpRemindersEnabled: prefs?.followUpRemindersEnabled ?? true,
+      autoApplyEnabled: prefs?.autoApplyEnabled ?? false,
+      autoApplyMinScore: prefs?.autoApplyMinScore ?? 70,
+      autoApplyMarkApplied: prefs?.autoApplyMarkApplied ?? true,
+      autoApplyFollowUpDays: prefs?.autoApplyFollowUpDays ?? 7,
     },
   })
 }

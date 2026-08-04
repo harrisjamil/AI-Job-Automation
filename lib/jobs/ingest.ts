@@ -239,6 +239,24 @@ export async function runJobCrawl(userId: string) {
       },
     })
 
+    // Fire-and-forget high-score digest (does not fail the crawl)
+    void import("@/lib/email/alerts")
+      .then(({ sendHighScoreJobAlerts }) =>
+        sendHighScoreJobAlerts(userId, crawlRun.id)
+      )
+      .catch((error) => {
+        console.error("Alert dispatch failed:", error)
+      })
+
+    // Fire-and-forget auto-apply prep for high-score jobs when enabled
+    void import("@/lib/auto-apply")
+      .then(({ maybeAutoApplyAfterCrawl }) =>
+        maybeAutoApplyAfterCrawl(userId, crawlRun.id)
+      )
+      .catch((error) => {
+        console.error("Auto-apply after crawl failed:", error)
+      })
+
     return finished
   } catch (error) {
     clearTimeout(timer)

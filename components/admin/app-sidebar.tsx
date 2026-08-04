@@ -11,8 +11,9 @@ import {
   ChevronsUpDownIcon,
   UserRoundIcon,
   BotIcon,
-  MailIcon,
+  ClipboardListIcon,
   RadarIcon,
+  MessageSquareIcon,
 } from "lucide-react"
 import { BrandLogo } from "@/components/brand-logo"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -69,9 +70,14 @@ const mainNav = [
     icon: RadarIcon,
   },
   {
-    title: "Contacts & Outreach",
+    title: "Applications",
     url: "/admin/applications",
-    icon: MailIcon,
+    icon: ClipboardListIcon,
+  },
+  {
+    title: "Assistant",
+    url: "/admin/assistant",
+    icon: MessageSquareIcon,
   },
   {
     title: "AI Platforms",

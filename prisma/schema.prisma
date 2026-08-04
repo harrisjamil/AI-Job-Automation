@@ -43,15 +43,18 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  skills         UserSkill[]
-  projects       Project[]
-  resumes        Resume[]
-  jobPreferences JobPreferences?
-  aiPlatforms    AiPlatform[]
-  crawlRuns      CrawlRun[]
-  jobs           Job[]
-  outreachEmails OutreachEmail[]
-  emailAccount   EmailAccount?
+  skills              UserSkill[]
+  projects            Project[]
+  resumes             Resume[]
+  jobPreferences      JobPreferences?
+  aiPlatforms         AiPlatform[]
+  crawlRuns           CrawlRun[]
+  jobs                Job[]
+  outreachEmails      OutreachEmail[]
+  applications        JobApplication[]
+  emailAccount        EmailAccount?
+  jobDocuments        JobDocument[]
+  assistantThreads    AssistantThread[]
 
   @@index([email])
   @@index([username])
@@ -148,6 +151,19 @@ model JobPreferences {
   scheduledCrawlEnabled Boolean  @default(false)
   crawlIntervalHours   Int      @default(6)
   lastScheduledAt      DateTime?
+  /// Email digest when high-score jobs appear after a crawl
+  alertsEnabled        Boolean  @default(true)
+  alertMinScore        Int      @default(55)
+  lastAlertedAt        DateTime?
+  /// Daily email when application follow-up dates are due
+  followUpRemindersEnabled Boolean @default(true)
+  /// Prepare apply packages for high-score jobs (cover letter + resume + tracker)
+  autoApplyEnabled   Boolean @default(false)
+  autoApplyMinScore  Int     @default(70)
+  /// After preparing, set application status to applied and suggest opening the URL
+  autoApplyMarkApplied Boolean @default(true)
+  /// Days until follow-up after auto-apply (0 = skip)
+  autoApplyFollowUpDays Int @default(7)
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -249,6 +265,9 @@ model Job {
   companyRef     Company?        @relation(fields: [companyId], references: [id], onDelete: SetNull)
   contacts       JobContact[]
   outreachEmails OutreachEmail[]
+  application    JobApplication?
+  documents      JobDocument[]
+  alertedAt      DateTime?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -261,6 +280,38 @@ model Job {
   @@index([userId, fingerprint])
   @@index([companyId])
   @@index([sourceCategory])
+  @@index([userId, alertedAt])
+}
+
+/// Tracks formal application pipeline for a discovered job.
+model JobApplication {
+  id           String    @id @default(cuid())
+  userId       String
+  jobId        String    @unique
+  /// saved | outreach | applied | interview | offer | rejected | withdrawn
+  status       String    @default("saved")
+  notes        String?
+  followUpAt   DateTime?
+  /// Set after a follow-up reminder email is sent for the current followUpAt
+  followUpRemindedAt DateTime?
+  appliedAt    DateTime?
+  statusChangedAt DateTime @default(now())
+  /// idle | preparing | ready | submitted | failed
+  autoApplyStatus String?
+  autoApplyError  String?
+  /// Snapshot of materials used for apply (cover letter, resume, profile answers)
+  applyPackageJson Json?
+  autoPreparedAt   DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  job  Job @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([userId, status])
+  @@index([userId, followUpAt])
 }
 
 model JobContact {
@@ -326,4 +377,54 @@ model EmailAccount {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+/// Per-job cover letter or tailored resume draft.
+model JobDocument {
+  id             String   @id @default(cuid())
+  userId         String
+  jobId          String
+  /// cover_letter | tailored_resume
+  type           String
+  title          String?
+  content        String
+  structuredJson Json?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  job  Job  @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, jobId, type])
+  @@index([userId, jobId])
+  @@index([jobId])
+}
+
+model AssistantThread {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String   @default("New chat")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user     User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages AssistantMessage[]
+
+  @@index([userId])
+  @@index([userId, updatedAt])
+}
+
+model AssistantMessage {
+  id        String   @id @default(cuid())
+  threadId  String
+  /// user | assistant
+  role      String
+  content   String
+  createdAt DateTime @default(now())
+
+  thread AssistantThread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+
+  @@index([threadId])
+  @@index([threadId, createdAt])
 }

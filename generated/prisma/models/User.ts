@@ -432,7 +432,10 @@ export type UserWhereInput = {
   crawlRuns?: Prisma.CrawlRunListRelationFilter
   jobs?: Prisma.JobListRelationFilter
   outreachEmails?: Prisma.OutreachEmailListRelationFilter
+  applications?: Prisma.JobApplicationListRelationFilter
   emailAccount?: Prisma.XOR<Prisma.EmailAccountNullableScalarRelationFilter, Prisma.EmailAccountWhereInput> | null
+  jobDocuments?: Prisma.JobDocumentListRelationFilter
+  assistantThreads?: Prisma.AssistantThreadListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -475,7 +478,10 @@ export type UserOrderByWithRelationInput = {
   crawlRuns?: Prisma.CrawlRunOrderByRelationAggregateInput
   jobs?: Prisma.JobOrderByRelationAggregateInput
   outreachEmails?: Prisma.OutreachEmailOrderByRelationAggregateInput
+  applications?: Prisma.JobApplicationOrderByRelationAggregateInput
   emailAccount?: Prisma.EmailAccountOrderByWithRelationInput
+  jobDocuments?: Prisma.JobDocumentOrderByRelationAggregateInput
+  assistantThreads?: Prisma.AssistantThreadOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -521,7 +527,10 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   crawlRuns?: Prisma.CrawlRunListRelationFilter
   jobs?: Prisma.JobListRelationFilter
   outreachEmails?: Prisma.OutreachEmailListRelationFilter
+  applications?: Prisma.JobApplicationListRelationFilter
   emailAccount?: Prisma.XOR<Prisma.EmailAccountNullableScalarRelationFilter, Prisma.EmailAccountWhereInput> | null
+  jobDocuments?: Prisma.JobDocumentListRelationFilter
+  assistantThreads?: Prisma.AssistantThreadListRelationFilter
 }, "id" | "email" | "username">
 
 export type UserOrderByWithAggregationInput = {
@@ -640,7 +649,10 @@ export type UserCreateInput = {
   crawlRuns?: Prisma.CrawlRunCreateNestedManyWithoutUserInput
   jobs?: Prisma.JobCreateNestedManyWithoutUserInput
   outreachEmails?: Prisma.OutreachEmailCreateNestedManyWithoutUserInput
+  applications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
   emailAccount?: Prisma.EmailAccountCreateNestedOneWithoutUserInput
+  jobDocuments?: Prisma.JobDocumentCreateNestedManyWithoutUserInput
+  assistantThreads?: Prisma.AssistantThreadCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -683,7 +695,10 @@ export type UserUncheckedCreateInput = {
   crawlRuns?: Prisma.CrawlRunUncheckedCreateNestedManyWithoutUserInput
   jobs?: Prisma.JobUncheckedCreateNestedManyWithoutUserInput
   outreachEmails?: Prisma.OutreachEmailUncheckedCreateNestedManyWithoutUserInput
+  applications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
   emailAccount?: Prisma.EmailAccountUncheckedCreateNestedOneWithoutUserInput
+  jobDocuments?: Prisma.JobDocumentUncheckedCreateNestedManyWithoutUserInput
+  assistantThreads?: Prisma.AssistantThreadUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -726,7 +741,10 @@ export type UserUpdateInput = {
   crawlRuns?: Prisma.CrawlRunUpdateManyWithoutUserNestedInput
   jobs?: Prisma.JobUpdateManyWithoutUserNestedInput
   outreachEmails?: Prisma.OutreachEmailUpdateManyWithoutUserNestedInput
+  applications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
   emailAccount?: Prisma.EmailAccountUpdateOneWithoutUserNestedInput
+  jobDocuments?: Prisma.JobDocumentUpdateManyWithoutUserNestedInput
+  assistantThreads?: Prisma.AssistantThreadUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -769,7 +787,10 @@ export type UserUncheckedUpdateInput = {
   crawlRuns?: Prisma.CrawlRunUncheckedUpdateManyWithoutUserNestedInput
   jobs?: Prisma.JobUncheckedUpdateManyWithoutUserNestedInput
   outreachEmails?: Prisma.OutreachEmailUncheckedUpdateManyWithoutUserNestedInput
+  applications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
   emailAccount?: Prisma.EmailAccountUncheckedUpdateOneWithoutUserNestedInput
+  jobDocuments?: Prisma.JobDocumentUncheckedUpdateManyWithoutUserNestedInput
+  assistantThreads?: Prisma.AssistantThreadUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -1146,6 +1167,20 @@ export type UserUpdateOneRequiredWithoutJobsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutJobsInput, Prisma.UserUpdateWithoutJobsInput>, Prisma.UserUncheckedUpdateWithoutJobsInput>
 }
 
+export type UserCreateNestedOneWithoutApplicationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutApplicationsInput, Prisma.UserUncheckedCreateWithoutApplicationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutApplicationsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutApplicationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutApplicationsInput, Prisma.UserUncheckedCreateWithoutApplicationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutApplicationsInput
+  upsert?: Prisma.UserUpsertWithoutApplicationsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutApplicationsInput, Prisma.UserUpdateWithoutApplicationsInput>, Prisma.UserUncheckedUpdateWithoutApplicationsInput>
+}
+
 export type UserCreateNestedOneWithoutOutreachEmailsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutOutreachEmailsInput, Prisma.UserUncheckedCreateWithoutOutreachEmailsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutOutreachEmailsInput
@@ -1172,6 +1207,34 @@ export type UserUpdateOneRequiredWithoutEmailAccountNestedInput = {
   upsert?: Prisma.UserUpsertWithoutEmailAccountInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutEmailAccountInput, Prisma.UserUpdateWithoutEmailAccountInput>, Prisma.UserUncheckedUpdateWithoutEmailAccountInput>
+}
+
+export type UserCreateNestedOneWithoutJobDocumentsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutJobDocumentsInput, Prisma.UserUncheckedCreateWithoutJobDocumentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutJobDocumentsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutJobDocumentsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutJobDocumentsInput, Prisma.UserUncheckedCreateWithoutJobDocumentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutJobDocumentsInput
+  upsert?: Prisma.UserUpsertWithoutJobDocumentsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutJobDocumentsInput, Prisma.UserUpdateWithoutJobDocumentsInput>, Prisma.UserUncheckedUpdateWithoutJobDocumentsInput>
+}
+
+export type UserCreateNestedOneWithoutAssistantThreadsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAssistantThreadsInput, Prisma.UserUncheckedCreateWithoutAssistantThreadsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssistantThreadsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAssistantThreadsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAssistantThreadsInput, Prisma.UserUncheckedCreateWithoutAssistantThreadsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssistantThreadsInput
+  upsert?: Prisma.UserUpsertWithoutAssistantThreadsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAssistantThreadsInput, Prisma.UserUpdateWithoutAssistantThreadsInput>, Prisma.UserUncheckedUpdateWithoutAssistantThreadsInput>
 }
 
 export type UserCreateWithoutAiPlatformsInput = {
@@ -1213,7 +1276,10 @@ export type UserCreateWithoutAiPlatformsInput = {
   crawlRuns?: Prisma.CrawlRunCreateNestedManyWithoutUserInput
   jobs?: Prisma.JobCreateNestedManyWithoutUserInput
   outreachEmails?: Prisma.OutreachEmailCreateNestedManyWithoutUserInput
+  applications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
   emailAccount?: Prisma.EmailAccountCreateNestedOneWithoutUserInput
+  jobDocuments?: Prisma.JobDocumentCreateNestedManyWithoutUserInput
+  assistantThreads?: Prisma.AssistantThreadCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAiPlatformsInput = {
@@ -1255,7 +1321,10 @@ export type UserUncheckedCreateWithoutAiPlatformsInput = {
   crawlRuns?: Prisma.CrawlRunUncheckedCreateNestedManyWithoutUserInput
   jobs?: Prisma.JobUncheckedCreateNestedManyWithoutUserInput
   outreachEmails?: Prisma.OutreachEmailUncheckedCreateNestedManyWithoutUserInput
+  applications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
   emailAccount?: Prisma.EmailAccountUncheckedCreateNestedOneWithoutUserInput
+  jobDocuments?: Prisma.JobDocumentUncheckedCreateNestedManyWithoutUserInput
+  assistantThreads?: Prisma.AssistantThreadUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAiPlatformsInput = {
@@ -1313,7 +1382,10 @@ export type UserUpdateWithoutAiPlatformsInput = {
   crawlRuns?: Prisma.CrawlRunUpdateManyWithoutUserNestedInput
   jobs?: Prisma.JobUpdateManyWithoutUserNestedInput
   outreachEmails?: Prisma.OutreachEmailUpdateManyWithoutUserNestedInput
+  applications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
   emailAccount?: Prisma.EmailAccountUpdateOneWithoutUserNestedInput
+  jobDocuments?: Prisma.JobDocumentUpdateManyWithoutUserNestedInput
+  assistantThreads?: Prisma.AssistantThreadUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAiPlatformsInput = {
@@ -1355,7 +1427,10 @@ export type UserUncheckedUpdateWithoutAiPlatformsInput = {
   crawlRuns?: Prisma.CrawlRunUncheckedUpdateManyWithoutUserNestedInput
   jobs?: Prisma.JobUncheckedUpdateManyWithoutUserNestedInput
   outreachEmails?: Prisma.OutreachEmailUncheckedUpdateManyWithoutUserNestedInput
+  applications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
   emailAccount?: Prisma.EmailAccountUncheckedUpdateOneWithoutUserNestedInput
+  jobDocuments?: Prisma.JobDocumentUncheckedUpdateManyWithoutUserNestedInput
+  assistantThreads?: Prisma.AssistantThreadUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSkillsInput = {
@@ -1397,7 +1472,10 @@ export type UserCreateWithoutSkillsInput = {
   crawlRuns?: Prisma.CrawlRunCreateNestedManyWithoutUserInput
   jobs?: Prisma.JobCreateNestedManyWithoutUserInput
   outreachEmails?: Prisma.OutreachEmailCreateNestedManyWithoutUserInput
+  applications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
   emailAccount?: Prisma.EmailAccountCreateNestedOneWithoutUserInput
+  jobDocuments?: Prisma.JobDocumentCreateNestedManyWithoutUserInput
+  assistantThreads?: Prisma.AssistantThreadCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSkillsInput = {
@@ -1439,7 +1517,10 @@ export type UserUncheckedCreateWithoutSkillsInput = {
   crawlRuns?: Prisma.CrawlRunUncheckedCreateNestedManyWithoutUserInput
   jobs?: Prisma.JobUncheckedCreateNestedManyWithoutUserInput
   outreachEmails?: Prisma.OutreachEmailUncheckedCreateNestedManyWithoutUserInput
+  applications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
   emailAccount?: Prisma.EmailAccountUncheckedCreateNestedOneWithoutUserInput
+  jobDocuments?: Prisma.JobDocumentUncheckedCreateNestedManyWithoutUserInput
+  assistantThreads?: Prisma.AssistantThreadUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSkillsInput = {
@@ -1497,7 +1578,10 @@ export type UserUpdateWithoutSkillsInput = {
   crawlRuns?: Prisma.CrawlRunUpdateManyWithoutUserNestedInput
   jobs?: Prisma.JobUpdateManyWithoutUserNestedInput
   outreachEmails?: Prisma.OutreachEmailUpdateManyWithoutUserNestedInput
+  applications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
   emailAccount?: Prisma.EmailAccountUpdateOneWithoutUserNestedInput
+  jobDocuments?: Prisma.JobDocumentUpdateManyWithoutUserNestedInput
+  assistantThreads?: Prisma.AssistantThreadUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSkillsInput = {
@@ -1539,7 +1623,10 @@ export type UserUncheckedUpdateWithoutSkillsInput = {
   crawlRuns?: Prisma.CrawlRunUncheckedUpdateManyWithoutUserNestedInput
   jobs?: Prisma.JobUncheckedUpdateManyWithoutUserNestedInput
   outreachEmails?: Prisma.OutreachEmailUncheckedUpdateManyWithoutUserNestedInput
+  applications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
   emailAccount?: Prisma.EmailAccountUncheckedUpdateOneWithoutUserNestedInput
+  jobDocuments?: Prisma.JobDocumentUncheckedUpdateManyWithoutUserNestedInput
+  assistantThreads?: Prisma.AssistantThreadUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutProjectsInput = {
@@ -1581,7 +1668,10 @@ export type UserCreateWithoutProjectsInput = {
   crawlRuns?: Prisma.CrawlRunCreateNestedManyWithoutUserInput
   jobs?: Prisma.JobCreateNestedManyWithoutUserInput
   outreachEmails?: Prisma.OutreachEmailCreateNestedManyWithoutUserInput
+  applications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
   emailAccount?: Prisma.EmailAccountCreateNestedOneWithoutUserInput
+  jobDocuments?: Prisma.JobDocumentCreateNestedManyWithoutUserInput
+  assistantThreads?: Prisma.AssistantThreadCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutProjectsInput = {
@@ -1623,7 +1713,10 @@ export type UserUncheckedCreateWithoutProjectsInput = {
   crawlRuns?: Prisma.CrawlRunUncheckedCreateNestedManyWithoutUserInput
   jobs?: Prisma.JobUncheckedCreateNestedManyWithoutUserInput
   outreachEmails?: Prisma.OutreachEmailUncheckedCreateNestedManyWithoutUserInput
+  applications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
   emailAccount?: Prisma.EmailAccountUncheckedCreateNestedOneWithoutUserInput
+  jobDocuments?: Prisma.JobDocumentUncheckedCreateNestedManyWithoutUserInput
+  assistantThreads?: Prisma.AssistantThreadUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutProjectsInput = {
@@ -1681,7 +1774,10 @@ export type UserUpdateWithoutProjectsInput = {
   crawlRuns?: Prisma.CrawlRunUpdateManyWithoutUserNestedInput
   jobs?: Prisma.JobUpdateManyWithoutUserNestedInput
   outreachEmails?: Prisma.OutreachEmailUpdateManyWithoutUserNestedInput
+  applications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
   emailAccount?: Prisma.EmailAccountUpdateOneWithoutUserNestedInput
+  jobDocuments?: Prisma.JobDocumentUpdateManyWithoutUserNestedInput
+  assistantThreads?: Prisma.AssistantThreadUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProjectsInput = {
@@ -1723,7 +1819,10 @@ export type UserUncheckedUpdateWithoutProjectsInput = {
   crawlRuns?: Prisma.CrawlRunUncheckedUpdateManyWithoutUserNestedInput
   jobs?: Prisma.JobUncheckedUpdateManyWithoutUserNestedInput
   outreachEmails?: Prisma.OutreachEmailUncheckedUpdateManyWithoutUserNestedInput
+  applications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
   emailAccount?: Prisma.EmailAccountUncheckedUpdateOneWithoutUserNestedInput
+  jobDocuments?: Prisma.JobDocumentUncheckedUpdateManyWithoutUserNestedInput
+  assistantThreads?: Prisma.AssistantThreadUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutResumesInput = {
@@ -1765,7 +1864,10 @@ export type UserCreateWithoutResumesInput = {
   crawlRuns?: Prisma.CrawlRunCreateNestedManyWithoutUserInput
   jobs?: Prisma.JobCreateNestedManyWithoutUserInput
   outreachEmails?: Prisma.OutreachEmailCreateNestedManyWithoutUserInput
+  applications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
   emailAccount?: Prisma.EmailAccountCreateNestedOneWithoutUserInput
+  jobDocuments?: Prisma.JobDocumentCreateNestedManyWithoutUserInput
+  assistantThreads?: Prisma.AssistantThreadCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutResumesInput = {
@@ -1807,7 +1909,10 @@ export type UserUncheckedCreateWithoutResumesInput = {
   crawlRuns?: Prisma.CrawlRunUncheckedCreateNestedManyWithoutUserInput
   jobs?: Prisma.JobUncheckedCreateNestedManyWithoutUserInput
   outreachEmails?: Prisma.OutreachEmailUncheckedCreateNestedManyWithoutUserInput
+  applications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
   emailAccount?: Prisma.EmailAccountUncheckedCreateNestedOneWithoutUserInput
+  jobDocuments?: Prisma.JobDocumentUncheckedCreateNestedManyWithoutUserInput
+  assistantThreads?: Prisma.AssistantThreadUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutResumesInput = {
@@ -1865,7 +1970,10 @@ export type UserUpdateWithoutResumesInput = {
   crawlRuns?: Prisma.CrawlRunUpdateManyWithoutUserNestedInput
   jobs?: Prisma.JobUpdateManyWithoutUserNestedInput
   outreachEmails?: Prisma.OutreachEmailUpdateManyWithoutUserNestedInput
+  applications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
   emailAccount?: Prisma.EmailAccountUpdateOneWithoutUserNestedInput
+  jobDocuments?: Prisma.JobDocumentUpdateManyWithoutUserNestedInput
+  assistantThreads?: Prisma.AssistantThreadUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutResumesInput = {
@@ -1907,7 +2015,10 @@ export type UserUncheckedUpdateWithoutResumesInput = {
   crawlRuns?: Prisma.CrawlRunUncheckedUpdateManyWithoutUserNestedInput
   jobs?: Prisma.JobUncheckedUpdateManyWithoutUserNestedInput
   outreachEmails?: Prisma.OutreachEmailUncheckedUpdateManyWithoutUserNestedInput
+  applications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
   emailAccount?: Prisma.EmailAccountUncheckedUpdateOneWithoutUserNestedInput
+  jobDocuments?: Prisma.JobDocumentUncheckedUpdateManyWithoutUserNestedInput
+  assistantThreads?: Prisma.AssistantThreadUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutJobPreferencesInput = {
@@ -1949,7 +2060,10 @@ export type UserCreateWithoutJobPreferencesInput = {
   crawlRuns?: Prisma.CrawlRunCreateNestedManyWithoutUserInput
   jobs?: Prisma.JobCreateNestedManyWithoutUserInput
   outreachEmails?: Prisma.OutreachEmailCreateNestedManyWithoutUserInput
+  applications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
   emailAccount?: Prisma.EmailAccountCreateNestedOneWithoutUserInput
+  jobDocuments?: Prisma.JobDocumentCreateNestedManyWithoutUserInput
+  assistantThreads?: Prisma.AssistantThreadCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutJobPreferencesInput = {
@@ -1991,7 +2105,10 @@ export type UserUncheckedCreateWithoutJobPreferencesInput = {
   crawlRuns?: Prisma.CrawlRunUncheckedCreateNestedManyWithoutUserInput
   jobs?: Prisma.JobUncheckedCreateNestedManyWithoutUserInput
   outreachEmails?: Prisma.OutreachEmailUncheckedCreateNestedManyWithoutUserInput
+  applications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
   emailAccount?: Prisma.EmailAccountUncheckedCreateNestedOneWithoutUserInput
+  jobDocuments?: Prisma.JobDocumentUncheckedCreateNestedManyWithoutUserInput
+  assistantThreads?: Prisma.AssistantThreadUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutJobPreferencesInput = {
@@ -2049,7 +2166,10 @@ export type UserUpdateWithoutJobPreferencesInput = {
   crawlRuns?: Prisma.CrawlRunUpdateManyWithoutUserNestedInput
   jobs?: Prisma.JobUpdateManyWithoutUserNestedInput
   outreachEmails?: Prisma.OutreachEmailUpdateManyWithoutUserNestedInput
+  applications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
   emailAccount?: Prisma.EmailAccountUpdateOneWithoutUserNestedInput
+  jobDocuments?: Prisma.JobDocumentUpdateManyWithoutUserNestedInput
+  assistantThreads?: Prisma.AssistantThreadUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutJobPreferencesInput = {
@@ -2091,7 +2211,10 @@ export type UserUncheckedUpdateWithoutJobPreferencesInput = {
   crawlRuns?: Prisma.CrawlRunUncheckedUpdateManyWithoutUserNestedInput
   jobs?: Prisma.JobUncheckedUpdateManyWithoutUserNestedInput
   outreachEmails?: Prisma.OutreachEmailUncheckedUpdateManyWithoutUserNestedInput
+  applications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
   emailAccount?: Prisma.EmailAccountUncheckedUpdateOneWithoutUserNestedInput
+  jobDocuments?: Prisma.JobDocumentUncheckedUpdateManyWithoutUserNestedInput
+  assistantThreads?: Prisma.AssistantThreadUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCrawlRunsInput = {
@@ -2133,7 +2256,10 @@ export type UserCreateWithoutCrawlRunsInput = {
   aiPlatforms?: Prisma.AiPlatformCreateNestedManyWithoutUserInput
   jobs?: Prisma.JobCreateNestedManyWithoutUserInput
   outreachEmails?: Prisma.OutreachEmailCreateNestedManyWithoutUserInput
+  applications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
   emailAccount?: Prisma.EmailAccountCreateNestedOneWithoutUserInput
+  jobDocuments?: Prisma.JobDocumentCreateNestedManyWithoutUserInput
+  assistantThreads?: Prisma.AssistantThreadCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCrawlRunsInput = {
@@ -2175,7 +2301,10 @@ export type UserUncheckedCreateWithoutCrawlRunsInput = {
   aiPlatforms?: Prisma.AiPlatformUncheckedCreateNestedManyWithoutUserInput
   jobs?: Prisma.JobUncheckedCreateNestedManyWithoutUserInput
   outreachEmails?: Prisma.OutreachEmailUncheckedCreateNestedManyWithoutUserInput
+  applications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
   emailAccount?: Prisma.EmailAccountUncheckedCreateNestedOneWithoutUserInput
+  jobDocuments?: Prisma.JobDocumentUncheckedCreateNestedManyWithoutUserInput
+  assistantThreads?: Prisma.AssistantThreadUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCrawlRunsInput = {
@@ -2233,7 +2362,10 @@ export type UserUpdateWithoutCrawlRunsInput = {
   aiPlatforms?: Prisma.AiPlatformUpdateManyWithoutUserNestedInput
   jobs?: Prisma.JobUpdateManyWithoutUserNestedInput
   outreachEmails?: Prisma.OutreachEmailUpdateManyWithoutUserNestedInput
+  applications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
   emailAccount?: Prisma.EmailAccountUpdateOneWithoutUserNestedInput
+  jobDocuments?: Prisma.JobDocumentUpdateManyWithoutUserNestedInput
+  assistantThreads?: Prisma.AssistantThreadUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCrawlRunsInput = {
@@ -2275,7 +2407,10 @@ export type UserUncheckedUpdateWithoutCrawlRunsInput = {
   aiPlatforms?: Prisma.AiPlatformUncheckedUpdateManyWithoutUserNestedInput
   jobs?: Prisma.JobUncheckedUpdateManyWithoutUserNestedInput
   outreachEmails?: Prisma.OutreachEmailUncheckedUpdateManyWithoutUserNestedInput
+  applications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
   emailAccount?: Prisma.EmailAccountUncheckedUpdateOneWithoutUserNestedInput
+  jobDocuments?: Prisma.JobDocumentUncheckedUpdateManyWithoutUserNestedInput
+  assistantThreads?: Prisma.AssistantThreadUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutJobsInput = {
@@ -2317,7 +2452,10 @@ export type UserCreateWithoutJobsInput = {
   aiPlatforms?: Prisma.AiPlatformCreateNestedManyWithoutUserInput
   crawlRuns?: Prisma.CrawlRunCreateNestedManyWithoutUserInput
   outreachEmails?: Prisma.OutreachEmailCreateNestedManyWithoutUserInput
+  applications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
   emailAccount?: Prisma.EmailAccountCreateNestedOneWithoutUserInput
+  jobDocuments?: Prisma.JobDocumentCreateNestedManyWithoutUserInput
+  assistantThreads?: Prisma.AssistantThreadCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutJobsInput = {
@@ -2359,7 +2497,10 @@ export type UserUncheckedCreateWithoutJobsInput = {
   aiPlatforms?: Prisma.AiPlatformUncheckedCreateNestedManyWithoutUserInput
   crawlRuns?: Prisma.CrawlRunUncheckedCreateNestedManyWithoutUserInput
   outreachEmails?: Prisma.OutreachEmailUncheckedCreateNestedManyWithoutUserInput
+  applications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
   emailAccount?: Prisma.EmailAccountUncheckedCreateNestedOneWithoutUserInput
+  jobDocuments?: Prisma.JobDocumentUncheckedCreateNestedManyWithoutUserInput
+  assistantThreads?: Prisma.AssistantThreadUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutJobsInput = {
@@ -2417,7 +2558,10 @@ export type UserUpdateWithoutJobsInput = {
   aiPlatforms?: Prisma.AiPlatformUpdateManyWithoutUserNestedInput
   crawlRuns?: Prisma.CrawlRunUpdateManyWithoutUserNestedInput
   outreachEmails?: Prisma.OutreachEmailUpdateManyWithoutUserNestedInput
+  applications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
   emailAccount?: Prisma.EmailAccountUpdateOneWithoutUserNestedInput
+  jobDocuments?: Prisma.JobDocumentUpdateManyWithoutUserNestedInput
+  assistantThreads?: Prisma.AssistantThreadUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutJobsInput = {
@@ -2459,7 +2603,206 @@ export type UserUncheckedUpdateWithoutJobsInput = {
   aiPlatforms?: Prisma.AiPlatformUncheckedUpdateManyWithoutUserNestedInput
   crawlRuns?: Prisma.CrawlRunUncheckedUpdateManyWithoutUserNestedInput
   outreachEmails?: Prisma.OutreachEmailUncheckedUpdateManyWithoutUserNestedInput
+  applications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
   emailAccount?: Prisma.EmailAccountUncheckedUpdateOneWithoutUserNestedInput
+  jobDocuments?: Prisma.JobDocumentUncheckedUpdateManyWithoutUserNestedInput
+  assistantThreads?: Prisma.AssistantThreadUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutApplicationsInput = {
+  id?: string
+  fullName: string
+  email: string
+  username: string
+  passwordHash: string
+  country?: string | null
+  city?: string | null
+  timezone?: string | null
+  experienceYears?: number | null
+  primaryRole?: string | null
+  preferredJobType?: string | null
+  workPreference?: string | null
+  englishLevel?: string | null
+  githubUrl?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  expectedSalary?: number | null
+  salaryPeriod?: string | null
+  noticePeriod?: string | null
+  availableHoursPerWeek?: number | null
+  preferredTechStack?: Prisma.UserCreatepreferredTechStackInput | string[]
+  preferredCompanySize?: string | null
+  preferredIndustries?: Prisma.UserCreatepreferredIndustriesInput | string[]
+  willingOverlapUsEu?: boolean
+  degree?: string | null
+  university?: string | null
+  graduationYear?: number | null
+  certifications?: Prisma.UserCreatecertificationsInput | string[]
+  careerGoal?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  skills?: Prisma.UserSkillCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
+  resumes?: Prisma.ResumeCreateNestedManyWithoutUserInput
+  jobPreferences?: Prisma.JobPreferencesCreateNestedOneWithoutUserInput
+  aiPlatforms?: Prisma.AiPlatformCreateNestedManyWithoutUserInput
+  crawlRuns?: Prisma.CrawlRunCreateNestedManyWithoutUserInput
+  jobs?: Prisma.JobCreateNestedManyWithoutUserInput
+  outreachEmails?: Prisma.OutreachEmailCreateNestedManyWithoutUserInput
+  emailAccount?: Prisma.EmailAccountCreateNestedOneWithoutUserInput
+  jobDocuments?: Prisma.JobDocumentCreateNestedManyWithoutUserInput
+  assistantThreads?: Prisma.AssistantThreadCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutApplicationsInput = {
+  id?: string
+  fullName: string
+  email: string
+  username: string
+  passwordHash: string
+  country?: string | null
+  city?: string | null
+  timezone?: string | null
+  experienceYears?: number | null
+  primaryRole?: string | null
+  preferredJobType?: string | null
+  workPreference?: string | null
+  englishLevel?: string | null
+  githubUrl?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  expectedSalary?: number | null
+  salaryPeriod?: string | null
+  noticePeriod?: string | null
+  availableHoursPerWeek?: number | null
+  preferredTechStack?: Prisma.UserCreatepreferredTechStackInput | string[]
+  preferredCompanySize?: string | null
+  preferredIndustries?: Prisma.UserCreatepreferredIndustriesInput | string[]
+  willingOverlapUsEu?: boolean
+  degree?: string | null
+  university?: string | null
+  graduationYear?: number | null
+  certifications?: Prisma.UserCreatecertificationsInput | string[]
+  careerGoal?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  skills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
+  resumes?: Prisma.ResumeUncheckedCreateNestedManyWithoutUserInput
+  jobPreferences?: Prisma.JobPreferencesUncheckedCreateNestedOneWithoutUserInput
+  aiPlatforms?: Prisma.AiPlatformUncheckedCreateNestedManyWithoutUserInput
+  crawlRuns?: Prisma.CrawlRunUncheckedCreateNestedManyWithoutUserInput
+  jobs?: Prisma.JobUncheckedCreateNestedManyWithoutUserInput
+  outreachEmails?: Prisma.OutreachEmailUncheckedCreateNestedManyWithoutUserInput
+  emailAccount?: Prisma.EmailAccountUncheckedCreateNestedOneWithoutUserInput
+  jobDocuments?: Prisma.JobDocumentUncheckedCreateNestedManyWithoutUserInput
+  assistantThreads?: Prisma.AssistantThreadUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutApplicationsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutApplicationsInput, Prisma.UserUncheckedCreateWithoutApplicationsInput>
+}
+
+export type UserUpsertWithoutApplicationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutApplicationsInput, Prisma.UserUncheckedUpdateWithoutApplicationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutApplicationsInput, Prisma.UserUncheckedCreateWithoutApplicationsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutApplicationsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutApplicationsInput, Prisma.UserUncheckedUpdateWithoutApplicationsInput>
+}
+
+export type UserUpdateWithoutApplicationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experienceYears?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  primaryRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredJobType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workPreference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  englishLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  githubUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expectedSalary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  salaryPeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  noticePeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableHoursPerWeek?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  preferredTechStack?: Prisma.UserUpdatepreferredTechStackInput | string[]
+  preferredCompanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredIndustries?: Prisma.UserUpdatepreferredIndustriesInput | string[]
+  willingOverlapUsEu?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  degree?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  university?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  graduationYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  certifications?: Prisma.UserUpdatecertificationsInput | string[]
+  careerGoal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  skills?: Prisma.UserSkillUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
+  resumes?: Prisma.ResumeUpdateManyWithoutUserNestedInput
+  jobPreferences?: Prisma.JobPreferencesUpdateOneWithoutUserNestedInput
+  aiPlatforms?: Prisma.AiPlatformUpdateManyWithoutUserNestedInput
+  crawlRuns?: Prisma.CrawlRunUpdateManyWithoutUserNestedInput
+  jobs?: Prisma.JobUpdateManyWithoutUserNestedInput
+  outreachEmails?: Prisma.OutreachEmailUpdateManyWithoutUserNestedInput
+  emailAccount?: Prisma.EmailAccountUpdateOneWithoutUserNestedInput
+  jobDocuments?: Prisma.JobDocumentUpdateManyWithoutUserNestedInput
+  assistantThreads?: Prisma.AssistantThreadUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutApplicationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experienceYears?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  primaryRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredJobType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workPreference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  englishLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  githubUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expectedSalary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  salaryPeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  noticePeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableHoursPerWeek?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  preferredTechStack?: Prisma.UserUpdatepreferredTechStackInput | string[]
+  preferredCompanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredIndustries?: Prisma.UserUpdatepreferredIndustriesInput | string[]
+  willingOverlapUsEu?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  degree?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  university?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  graduationYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  certifications?: Prisma.UserUpdatecertificationsInput | string[]
+  careerGoal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  skills?: Prisma.UserSkillUncheckedUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
+  resumes?: Prisma.ResumeUncheckedUpdateManyWithoutUserNestedInput
+  jobPreferences?: Prisma.JobPreferencesUncheckedUpdateOneWithoutUserNestedInput
+  aiPlatforms?: Prisma.AiPlatformUncheckedUpdateManyWithoutUserNestedInput
+  crawlRuns?: Prisma.CrawlRunUncheckedUpdateManyWithoutUserNestedInput
+  jobs?: Prisma.JobUncheckedUpdateManyWithoutUserNestedInput
+  outreachEmails?: Prisma.OutreachEmailUncheckedUpdateManyWithoutUserNestedInput
+  emailAccount?: Prisma.EmailAccountUncheckedUpdateOneWithoutUserNestedInput
+  jobDocuments?: Prisma.JobDocumentUncheckedUpdateManyWithoutUserNestedInput
+  assistantThreads?: Prisma.AssistantThreadUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutOutreachEmailsInput = {
@@ -2501,7 +2844,10 @@ export type UserCreateWithoutOutreachEmailsInput = {
   aiPlatforms?: Prisma.AiPlatformCreateNestedManyWithoutUserInput
   crawlRuns?: Prisma.CrawlRunCreateNestedManyWithoutUserInput
   jobs?: Prisma.JobCreateNestedManyWithoutUserInput
+  applications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
   emailAccount?: Prisma.EmailAccountCreateNestedOneWithoutUserInput
+  jobDocuments?: Prisma.JobDocumentCreateNestedManyWithoutUserInput
+  assistantThreads?: Prisma.AssistantThreadCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOutreachEmailsInput = {
@@ -2543,7 +2889,10 @@ export type UserUncheckedCreateWithoutOutreachEmailsInput = {
   aiPlatforms?: Prisma.AiPlatformUncheckedCreateNestedManyWithoutUserInput
   crawlRuns?: Prisma.CrawlRunUncheckedCreateNestedManyWithoutUserInput
   jobs?: Prisma.JobUncheckedCreateNestedManyWithoutUserInput
+  applications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
   emailAccount?: Prisma.EmailAccountUncheckedCreateNestedOneWithoutUserInput
+  jobDocuments?: Prisma.JobDocumentUncheckedCreateNestedManyWithoutUserInput
+  assistantThreads?: Prisma.AssistantThreadUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOutreachEmailsInput = {
@@ -2601,7 +2950,10 @@ export type UserUpdateWithoutOutreachEmailsInput = {
   aiPlatforms?: Prisma.AiPlatformUpdateManyWithoutUserNestedInput
   crawlRuns?: Prisma.CrawlRunUpdateManyWithoutUserNestedInput
   jobs?: Prisma.JobUpdateManyWithoutUserNestedInput
+  applications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
   emailAccount?: Prisma.EmailAccountUpdateOneWithoutUserNestedInput
+  jobDocuments?: Prisma.JobDocumentUpdateManyWithoutUserNestedInput
+  assistantThreads?: Prisma.AssistantThreadUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOutreachEmailsInput = {
@@ -2643,7 +2995,10 @@ export type UserUncheckedUpdateWithoutOutreachEmailsInput = {
   aiPlatforms?: Prisma.AiPlatformUncheckedUpdateManyWithoutUserNestedInput
   crawlRuns?: Prisma.CrawlRunUncheckedUpdateManyWithoutUserNestedInput
   jobs?: Prisma.JobUncheckedUpdateManyWithoutUserNestedInput
+  applications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
   emailAccount?: Prisma.EmailAccountUncheckedUpdateOneWithoutUserNestedInput
+  jobDocuments?: Prisma.JobDocumentUncheckedUpdateManyWithoutUserNestedInput
+  assistantThreads?: Prisma.AssistantThreadUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutEmailAccountInput = {
@@ -2686,6 +3041,9 @@ export type UserCreateWithoutEmailAccountInput = {
   crawlRuns?: Prisma.CrawlRunCreateNestedManyWithoutUserInput
   jobs?: Prisma.JobCreateNestedManyWithoutUserInput
   outreachEmails?: Prisma.OutreachEmailCreateNestedManyWithoutUserInput
+  applications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
+  jobDocuments?: Prisma.JobDocumentCreateNestedManyWithoutUserInput
+  assistantThreads?: Prisma.AssistantThreadCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutEmailAccountInput = {
@@ -2728,6 +3086,9 @@ export type UserUncheckedCreateWithoutEmailAccountInput = {
   crawlRuns?: Prisma.CrawlRunUncheckedCreateNestedManyWithoutUserInput
   jobs?: Prisma.JobUncheckedCreateNestedManyWithoutUserInput
   outreachEmails?: Prisma.OutreachEmailUncheckedCreateNestedManyWithoutUserInput
+  applications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
+  jobDocuments?: Prisma.JobDocumentUncheckedCreateNestedManyWithoutUserInput
+  assistantThreads?: Prisma.AssistantThreadUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutEmailAccountInput = {
@@ -2786,6 +3147,9 @@ export type UserUpdateWithoutEmailAccountInput = {
   crawlRuns?: Prisma.CrawlRunUpdateManyWithoutUserNestedInput
   jobs?: Prisma.JobUpdateManyWithoutUserNestedInput
   outreachEmails?: Prisma.OutreachEmailUpdateManyWithoutUserNestedInput
+  applications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
+  jobDocuments?: Prisma.JobDocumentUpdateManyWithoutUserNestedInput
+  assistantThreads?: Prisma.AssistantThreadUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutEmailAccountInput = {
@@ -2828,6 +3192,401 @@ export type UserUncheckedUpdateWithoutEmailAccountInput = {
   crawlRuns?: Prisma.CrawlRunUncheckedUpdateManyWithoutUserNestedInput
   jobs?: Prisma.JobUncheckedUpdateManyWithoutUserNestedInput
   outreachEmails?: Prisma.OutreachEmailUncheckedUpdateManyWithoutUserNestedInput
+  applications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
+  jobDocuments?: Prisma.JobDocumentUncheckedUpdateManyWithoutUserNestedInput
+  assistantThreads?: Prisma.AssistantThreadUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutJobDocumentsInput = {
+  id?: string
+  fullName: string
+  email: string
+  username: string
+  passwordHash: string
+  country?: string | null
+  city?: string | null
+  timezone?: string | null
+  experienceYears?: number | null
+  primaryRole?: string | null
+  preferredJobType?: string | null
+  workPreference?: string | null
+  englishLevel?: string | null
+  githubUrl?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  expectedSalary?: number | null
+  salaryPeriod?: string | null
+  noticePeriod?: string | null
+  availableHoursPerWeek?: number | null
+  preferredTechStack?: Prisma.UserCreatepreferredTechStackInput | string[]
+  preferredCompanySize?: string | null
+  preferredIndustries?: Prisma.UserCreatepreferredIndustriesInput | string[]
+  willingOverlapUsEu?: boolean
+  degree?: string | null
+  university?: string | null
+  graduationYear?: number | null
+  certifications?: Prisma.UserCreatecertificationsInput | string[]
+  careerGoal?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  skills?: Prisma.UserSkillCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
+  resumes?: Prisma.ResumeCreateNestedManyWithoutUserInput
+  jobPreferences?: Prisma.JobPreferencesCreateNestedOneWithoutUserInput
+  aiPlatforms?: Prisma.AiPlatformCreateNestedManyWithoutUserInput
+  crawlRuns?: Prisma.CrawlRunCreateNestedManyWithoutUserInput
+  jobs?: Prisma.JobCreateNestedManyWithoutUserInput
+  outreachEmails?: Prisma.OutreachEmailCreateNestedManyWithoutUserInput
+  applications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
+  emailAccount?: Prisma.EmailAccountCreateNestedOneWithoutUserInput
+  assistantThreads?: Prisma.AssistantThreadCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutJobDocumentsInput = {
+  id?: string
+  fullName: string
+  email: string
+  username: string
+  passwordHash: string
+  country?: string | null
+  city?: string | null
+  timezone?: string | null
+  experienceYears?: number | null
+  primaryRole?: string | null
+  preferredJobType?: string | null
+  workPreference?: string | null
+  englishLevel?: string | null
+  githubUrl?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  expectedSalary?: number | null
+  salaryPeriod?: string | null
+  noticePeriod?: string | null
+  availableHoursPerWeek?: number | null
+  preferredTechStack?: Prisma.UserCreatepreferredTechStackInput | string[]
+  preferredCompanySize?: string | null
+  preferredIndustries?: Prisma.UserCreatepreferredIndustriesInput | string[]
+  willingOverlapUsEu?: boolean
+  degree?: string | null
+  university?: string | null
+  graduationYear?: number | null
+  certifications?: Prisma.UserCreatecertificationsInput | string[]
+  careerGoal?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  skills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
+  resumes?: Prisma.ResumeUncheckedCreateNestedManyWithoutUserInput
+  jobPreferences?: Prisma.JobPreferencesUncheckedCreateNestedOneWithoutUserInput
+  aiPlatforms?: Prisma.AiPlatformUncheckedCreateNestedManyWithoutUserInput
+  crawlRuns?: Prisma.CrawlRunUncheckedCreateNestedManyWithoutUserInput
+  jobs?: Prisma.JobUncheckedCreateNestedManyWithoutUserInput
+  outreachEmails?: Prisma.OutreachEmailUncheckedCreateNestedManyWithoutUserInput
+  applications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
+  emailAccount?: Prisma.EmailAccountUncheckedCreateNestedOneWithoutUserInput
+  assistantThreads?: Prisma.AssistantThreadUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutJobDocumentsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutJobDocumentsInput, Prisma.UserUncheckedCreateWithoutJobDocumentsInput>
+}
+
+export type UserUpsertWithoutJobDocumentsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutJobDocumentsInput, Prisma.UserUncheckedUpdateWithoutJobDocumentsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutJobDocumentsInput, Prisma.UserUncheckedCreateWithoutJobDocumentsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutJobDocumentsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutJobDocumentsInput, Prisma.UserUncheckedUpdateWithoutJobDocumentsInput>
+}
+
+export type UserUpdateWithoutJobDocumentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experienceYears?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  primaryRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredJobType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workPreference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  englishLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  githubUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expectedSalary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  salaryPeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  noticePeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableHoursPerWeek?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  preferredTechStack?: Prisma.UserUpdatepreferredTechStackInput | string[]
+  preferredCompanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredIndustries?: Prisma.UserUpdatepreferredIndustriesInput | string[]
+  willingOverlapUsEu?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  degree?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  university?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  graduationYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  certifications?: Prisma.UserUpdatecertificationsInput | string[]
+  careerGoal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  skills?: Prisma.UserSkillUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
+  resumes?: Prisma.ResumeUpdateManyWithoutUserNestedInput
+  jobPreferences?: Prisma.JobPreferencesUpdateOneWithoutUserNestedInput
+  aiPlatforms?: Prisma.AiPlatformUpdateManyWithoutUserNestedInput
+  crawlRuns?: Prisma.CrawlRunUpdateManyWithoutUserNestedInput
+  jobs?: Prisma.JobUpdateManyWithoutUserNestedInput
+  outreachEmails?: Prisma.OutreachEmailUpdateManyWithoutUserNestedInput
+  applications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
+  emailAccount?: Prisma.EmailAccountUpdateOneWithoutUserNestedInput
+  assistantThreads?: Prisma.AssistantThreadUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutJobDocumentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experienceYears?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  primaryRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredJobType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workPreference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  englishLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  githubUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expectedSalary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  salaryPeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  noticePeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableHoursPerWeek?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  preferredTechStack?: Prisma.UserUpdatepreferredTechStackInput | string[]
+  preferredCompanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredIndustries?: Prisma.UserUpdatepreferredIndustriesInput | string[]
+  willingOverlapUsEu?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  degree?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  university?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  graduationYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  certifications?: Prisma.UserUpdatecertificationsInput | string[]
+  careerGoal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  skills?: Prisma.UserSkillUncheckedUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
+  resumes?: Prisma.ResumeUncheckedUpdateManyWithoutUserNestedInput
+  jobPreferences?: Prisma.JobPreferencesUncheckedUpdateOneWithoutUserNestedInput
+  aiPlatforms?: Prisma.AiPlatformUncheckedUpdateManyWithoutUserNestedInput
+  crawlRuns?: Prisma.CrawlRunUncheckedUpdateManyWithoutUserNestedInput
+  jobs?: Prisma.JobUncheckedUpdateManyWithoutUserNestedInput
+  outreachEmails?: Prisma.OutreachEmailUncheckedUpdateManyWithoutUserNestedInput
+  applications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
+  emailAccount?: Prisma.EmailAccountUncheckedUpdateOneWithoutUserNestedInput
+  assistantThreads?: Prisma.AssistantThreadUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutAssistantThreadsInput = {
+  id?: string
+  fullName: string
+  email: string
+  username: string
+  passwordHash: string
+  country?: string | null
+  city?: string | null
+  timezone?: string | null
+  experienceYears?: number | null
+  primaryRole?: string | null
+  preferredJobType?: string | null
+  workPreference?: string | null
+  englishLevel?: string | null
+  githubUrl?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  expectedSalary?: number | null
+  salaryPeriod?: string | null
+  noticePeriod?: string | null
+  availableHoursPerWeek?: number | null
+  preferredTechStack?: Prisma.UserCreatepreferredTechStackInput | string[]
+  preferredCompanySize?: string | null
+  preferredIndustries?: Prisma.UserCreatepreferredIndustriesInput | string[]
+  willingOverlapUsEu?: boolean
+  degree?: string | null
+  university?: string | null
+  graduationYear?: number | null
+  certifications?: Prisma.UserCreatecertificationsInput | string[]
+  careerGoal?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  skills?: Prisma.UserSkillCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
+  resumes?: Prisma.ResumeCreateNestedManyWithoutUserInput
+  jobPreferences?: Prisma.JobPreferencesCreateNestedOneWithoutUserInput
+  aiPlatforms?: Prisma.AiPlatformCreateNestedManyWithoutUserInput
+  crawlRuns?: Prisma.CrawlRunCreateNestedManyWithoutUserInput
+  jobs?: Prisma.JobCreateNestedManyWithoutUserInput
+  outreachEmails?: Prisma.OutreachEmailCreateNestedManyWithoutUserInput
+  applications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
+  emailAccount?: Prisma.EmailAccountCreateNestedOneWithoutUserInput
+  jobDocuments?: Prisma.JobDocumentCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutAssistantThreadsInput = {
+  id?: string
+  fullName: string
+  email: string
+  username: string
+  passwordHash: string
+  country?: string | null
+  city?: string | null
+  timezone?: string | null
+  experienceYears?: number | null
+  primaryRole?: string | null
+  preferredJobType?: string | null
+  workPreference?: string | null
+  englishLevel?: string | null
+  githubUrl?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  expectedSalary?: number | null
+  salaryPeriod?: string | null
+  noticePeriod?: string | null
+  availableHoursPerWeek?: number | null
+  preferredTechStack?: Prisma.UserCreatepreferredTechStackInput | string[]
+  preferredCompanySize?: string | null
+  preferredIndustries?: Prisma.UserCreatepreferredIndustriesInput | string[]
+  willingOverlapUsEu?: boolean
+  degree?: string | null
+  university?: string | null
+  graduationYear?: number | null
+  certifications?: Prisma.UserCreatecertificationsInput | string[]
+  careerGoal?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  skills?: Prisma.UserSkillUncheckedCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
+  resumes?: Prisma.ResumeUncheckedCreateNestedManyWithoutUserInput
+  jobPreferences?: Prisma.JobPreferencesUncheckedCreateNestedOneWithoutUserInput
+  aiPlatforms?: Prisma.AiPlatformUncheckedCreateNestedManyWithoutUserInput
+  crawlRuns?: Prisma.CrawlRunUncheckedCreateNestedManyWithoutUserInput
+  jobs?: Prisma.JobUncheckedCreateNestedManyWithoutUserInput
+  outreachEmails?: Prisma.OutreachEmailUncheckedCreateNestedManyWithoutUserInput
+  applications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
+  emailAccount?: Prisma.EmailAccountUncheckedCreateNestedOneWithoutUserInput
+  jobDocuments?: Prisma.JobDocumentUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutAssistantThreadsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAssistantThreadsInput, Prisma.UserUncheckedCreateWithoutAssistantThreadsInput>
+}
+
+export type UserUpsertWithoutAssistantThreadsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAssistantThreadsInput, Prisma.UserUncheckedUpdateWithoutAssistantThreadsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAssistantThreadsInput, Prisma.UserUncheckedCreateWithoutAssistantThreadsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAssistantThreadsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAssistantThreadsInput, Prisma.UserUncheckedUpdateWithoutAssistantThreadsInput>
+}
+
+export type UserUpdateWithoutAssistantThreadsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experienceYears?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  primaryRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredJobType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workPreference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  englishLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  githubUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expectedSalary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  salaryPeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  noticePeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableHoursPerWeek?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  preferredTechStack?: Prisma.UserUpdatepreferredTechStackInput | string[]
+  preferredCompanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredIndustries?: Prisma.UserUpdatepreferredIndustriesInput | string[]
+  willingOverlapUsEu?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  degree?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  university?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  graduationYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  certifications?: Prisma.UserUpdatecertificationsInput | string[]
+  careerGoal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  skills?: Prisma.UserSkillUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
+  resumes?: Prisma.ResumeUpdateManyWithoutUserNestedInput
+  jobPreferences?: Prisma.JobPreferencesUpdateOneWithoutUserNestedInput
+  aiPlatforms?: Prisma.AiPlatformUpdateManyWithoutUserNestedInput
+  crawlRuns?: Prisma.CrawlRunUpdateManyWithoutUserNestedInput
+  jobs?: Prisma.JobUpdateManyWithoutUserNestedInput
+  outreachEmails?: Prisma.OutreachEmailUpdateManyWithoutUserNestedInput
+  applications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
+  emailAccount?: Prisma.EmailAccountUpdateOneWithoutUserNestedInput
+  jobDocuments?: Prisma.JobDocumentUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAssistantThreadsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timezone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experienceYears?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  primaryRole?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredJobType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workPreference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  englishLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  githubUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expectedSalary?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  salaryPeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  noticePeriod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  availableHoursPerWeek?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  preferredTechStack?: Prisma.UserUpdatepreferredTechStackInput | string[]
+  preferredCompanySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredIndustries?: Prisma.UserUpdatepreferredIndustriesInput | string[]
+  willingOverlapUsEu?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  degree?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  university?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  graduationYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  certifications?: Prisma.UserUpdatecertificationsInput | string[]
+  careerGoal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  skills?: Prisma.UserSkillUncheckedUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
+  resumes?: Prisma.ResumeUncheckedUpdateManyWithoutUserNestedInput
+  jobPreferences?: Prisma.JobPreferencesUncheckedUpdateOneWithoutUserNestedInput
+  aiPlatforms?: Prisma.AiPlatformUncheckedUpdateManyWithoutUserNestedInput
+  crawlRuns?: Prisma.CrawlRunUncheckedUpdateManyWithoutUserNestedInput
+  jobs?: Prisma.JobUncheckedUpdateManyWithoutUserNestedInput
+  outreachEmails?: Prisma.OutreachEmailUncheckedUpdateManyWithoutUserNestedInput
+  applications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
+  emailAccount?: Prisma.EmailAccountUncheckedUpdateOneWithoutUserNestedInput
+  jobDocuments?: Prisma.JobDocumentUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -2843,6 +3602,9 @@ export type UserCountOutputType = {
   crawlRuns: number
   jobs: number
   outreachEmails: number
+  applications: number
+  jobDocuments: number
+  assistantThreads: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2853,6 +3615,9 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   crawlRuns?: boolean | UserCountOutputTypeCountCrawlRunsArgs
   jobs?: boolean | UserCountOutputTypeCountJobsArgs
   outreachEmails?: boolean | UserCountOutputTypeCountOutreachEmailsArgs
+  applications?: boolean | UserCountOutputTypeCountApplicationsArgs
+  jobDocuments?: boolean | UserCountOutputTypeCountJobDocumentsArgs
+  assistantThreads?: boolean | UserCountOutputTypeCountAssistantThreadsArgs
 }
 
 /**
@@ -2914,6 +3679,27 @@ export type UserCountOutputTypeCountOutreachEmailsArgs<ExtArgs extends runtime.T
   where?: Prisma.OutreachEmailWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountApplicationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.JobApplicationWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountJobDocumentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.JobDocumentWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAssistantThreadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AssistantThreadWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2955,7 +3741,10 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   crawlRuns?: boolean | Prisma.User$crawlRunsArgs<ExtArgs>
   jobs?: boolean | Prisma.User$jobsArgs<ExtArgs>
   outreachEmails?: boolean | Prisma.User$outreachEmailsArgs<ExtArgs>
+  applications?: boolean | Prisma.User$applicationsArgs<ExtArgs>
   emailAccount?: boolean | Prisma.User$emailAccountArgs<ExtArgs>
+  jobDocuments?: boolean | Prisma.User$jobDocumentsArgs<ExtArgs>
+  assistantThreads?: boolean | Prisma.User$assistantThreadsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -3071,7 +3860,10 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   crawlRuns?: boolean | Prisma.User$crawlRunsArgs<ExtArgs>
   jobs?: boolean | Prisma.User$jobsArgs<ExtArgs>
   outreachEmails?: boolean | Prisma.User$outreachEmailsArgs<ExtArgs>
+  applications?: boolean | Prisma.User$applicationsArgs<ExtArgs>
   emailAccount?: boolean | Prisma.User$emailAccountArgs<ExtArgs>
+  jobDocuments?: boolean | Prisma.User$jobDocumentsArgs<ExtArgs>
+  assistantThreads?: boolean | Prisma.User$assistantThreadsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -3088,7 +3880,10 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     crawlRuns: Prisma.$CrawlRunPayload<ExtArgs>[]
     jobs: Prisma.$JobPayload<ExtArgs>[]
     outreachEmails: Prisma.$OutreachEmailPayload<ExtArgs>[]
+    applications: Prisma.$JobApplicationPayload<ExtArgs>[]
     emailAccount: Prisma.$EmailAccountPayload<ExtArgs> | null
+    jobDocuments: Prisma.$JobDocumentPayload<ExtArgs>[]
+    assistantThreads: Prisma.$AssistantThreadPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3524,7 +4319,10 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   crawlRuns<T extends Prisma.User$crawlRunsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$crawlRunsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CrawlRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   jobs<T extends Prisma.User$jobsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$jobsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   outreachEmails<T extends Prisma.User$outreachEmailsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$outreachEmailsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OutreachEmailPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  applications<T extends Prisma.User$applicationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JobApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   emailAccount<T extends Prisma.User$emailAccountArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$emailAccountArgs<ExtArgs>>): Prisma.Prisma__EmailAccountClient<runtime.Types.Result.GetResult<Prisma.$EmailAccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  jobDocuments<T extends Prisma.User$jobDocumentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$jobDocumentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JobDocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  assistantThreads<T extends Prisma.User$assistantThreadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$assistantThreadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AssistantThreadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4165,6 +4963,30 @@ export type User$outreachEmailsArgs<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 /**
+ * User.applications
+ */
+export type User$applicationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the JobApplication
+   */
+  select?: Prisma.JobApplicationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the JobApplication
+   */
+  omit?: Prisma.JobApplicationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.JobApplicationInclude<ExtArgs> | null
+  where?: Prisma.JobApplicationWhereInput
+  orderBy?: Prisma.JobApplicationOrderByWithRelationInput | Prisma.JobApplicationOrderByWithRelationInput[]
+  cursor?: Prisma.JobApplicationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.JobApplicationScalarFieldEnum | Prisma.JobApplicationScalarFieldEnum[]
+}
+
+/**
  * User.emailAccount
  */
 export type User$emailAccountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -4181,6 +5003,54 @@ export type User$emailAccountArgs<ExtArgs extends runtime.Types.Extensions.Inter
    */
   include?: Prisma.EmailAccountInclude<ExtArgs> | null
   where?: Prisma.EmailAccountWhereInput
+}
+
+/**
+ * User.jobDocuments
+ */
+export type User$jobDocumentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the JobDocument
+   */
+  select?: Prisma.JobDocumentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the JobDocument
+   */
+  omit?: Prisma.JobDocumentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.JobDocumentInclude<ExtArgs> | null
+  where?: Prisma.JobDocumentWhereInput
+  orderBy?: Prisma.JobDocumentOrderByWithRelationInput | Prisma.JobDocumentOrderByWithRelationInput[]
+  cursor?: Prisma.JobDocumentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.JobDocumentScalarFieldEnum | Prisma.JobDocumentScalarFieldEnum[]
+}
+
+/**
+ * User.assistantThreads
+ */
+export type User$assistantThreadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AssistantThread
+   */
+  select?: Prisma.AssistantThreadSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AssistantThread
+   */
+  omit?: Prisma.AssistantThreadOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AssistantThreadInclude<ExtArgs> | null
+  where?: Prisma.AssistantThreadWhereInput
+  orderBy?: Prisma.AssistantThreadOrderByWithRelationInput | Prisma.AssistantThreadOrderByWithRelationInput[]
+  cursor?: Prisma.AssistantThreadWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AssistantThreadScalarFieldEnum | Prisma.AssistantThreadScalarFieldEnum[]
 }
 
 /**

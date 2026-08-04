@@ -69,11 +69,37 @@ export async function POST(request: Request) {
         fileUrl: true,
         mimeType: true,
         atsScore: true,
+        parsedJson: true,
         createdAt: true,
       },
     })
 
-    return NextResponse.json({ resume })
+    // Best-effort parse + profile merge (upload still succeeds if parse fails)
+    let parseResult: {
+      profileUpdated: boolean
+      usedAi: boolean
+      atsScore: number | null
+    } | null = null
+
+    try {
+      const { parseAndApplyResume } = await import("@/lib/resume/parse")
+      const parsed = await parseAndApplyResume({
+        userId: currentUser.id,
+        resumeId: resume.id,
+        applyToProfile: true,
+      })
+      parseResult = {
+        profileUpdated: parsed.profileUpdated,
+        usedAi: parsed.usedAi,
+        atsScore: parsed.resume.atsScore,
+      }
+      resume.atsScore = parsed.resume.atsScore
+      resume.parsedJson = parsed.resume.parsedJson
+    } catch (parseError) {
+      console.error("Resume auto-parse skipped:", parseError)
+    }
+
+    return NextResponse.json({ resume, parseResult })
   } catch (error) {
     console.error("Resume upload failed:", error)
     return NextResponse.json(

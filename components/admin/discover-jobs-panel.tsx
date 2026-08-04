@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react"
 import { toast } from "sonner"
-import { Loader2Icon, RadarIcon } from "lucide-react"
+import { Loader2Icon, RadarIcon, ZapIcon } from "lucide-react"
 import { CrawlRunner } from "@/components/admin/crawl-runner"
 import {
   JobDetailDrawer,
@@ -24,6 +24,7 @@ export function DiscoverJobsPanel() {
   const [hasContact, setHasContact] = useState(false)
   const [enrichingId, setEnrichingId] = useState<string | null>(null)
   const [batchEnriching, setBatchEnriching] = useState(false)
+  const [batchApplying, setBatchApplying] = useState(false)
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [drawerOpen, setDrawerOpen] = useState(false)
 
@@ -104,6 +105,36 @@ export function DiscoverJobsPanel() {
     }
   }
 
+  async function handleBatchAutoApply() {
+    setBatchApplying(true)
+    try {
+      const response = await fetch("/api/auto-apply/batch", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ limit: 5 }),
+      })
+      const data = await response.json()
+      if (!response.ok) {
+        toast.error(data.error ?? "Batch auto-apply failed")
+        return
+      }
+      toast.success(
+        `Auto-apply prepared ${data.succeeded}/${data.attempted} job(s) (score ≥ ${data.minScore})`
+      )
+      const firstOk = (
+        data.results as Array<{ ok: boolean; applyUrl?: string }>
+      ).find((item) => item.ok && item.applyUrl)
+      if (firstOk?.applyUrl) {
+        window.open(firstOk.applyUrl, "_blank", "noopener,noreferrer")
+      }
+      await loadJobs()
+    } catch {
+      toast.error("Batch auto-apply failed")
+    } finally {
+      setBatchApplying(false)
+    }
+  }
+
   return (
     <div className="flex flex-col gap-6">
       <CrawlRunner onCompleted={() => void loadJobs()} />
@@ -154,6 +185,17 @@ export function DiscoverJobsPanel() {
               <RadarIcon className="size-3.5" />
             )}
             Enrich top matches
+          </Button>
+          <Button
+            disabled={batchApplying}
+            onClick={() => void handleBatchAutoApply()}
+          >
+            {batchApplying ? (
+              <Loader2Icon className="size-3.5 animate-spin" />
+            ) : (
+              <ZapIcon className="size-3.5" />
+            )}
+            Auto-apply top matches
           </Button>
         </div>
       </div>

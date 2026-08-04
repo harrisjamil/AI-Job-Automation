@@ -28,10 +28,16 @@ export type AggregateJobPreferences = {
 
 export type JobPreferencesAvgAggregateOutputType = {
   crawlIntervalHours: number | null
+  alertMinScore: number | null
+  autoApplyMinScore: number | null
+  autoApplyFollowUpDays: number | null
 }
 
 export type JobPreferencesSumAggregateOutputType = {
   crawlIntervalHours: number | null
+  alertMinScore: number | null
+  autoApplyMinScore: number | null
+  autoApplyFollowUpDays: number | null
 }
 
 export type JobPreferencesMinAggregateOutputType = {
@@ -40,6 +46,14 @@ export type JobPreferencesMinAggregateOutputType = {
   scheduledCrawlEnabled: boolean | null
   crawlIntervalHours: number | null
   lastScheduledAt: Date | null
+  alertsEnabled: boolean | null
+  alertMinScore: number | null
+  lastAlertedAt: Date | null
+  followUpRemindersEnabled: boolean | null
+  autoApplyEnabled: boolean | null
+  autoApplyMinScore: number | null
+  autoApplyMarkApplied: boolean | null
+  autoApplyFollowUpDays: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -50,6 +64,14 @@ export type JobPreferencesMaxAggregateOutputType = {
   scheduledCrawlEnabled: boolean | null
   crawlIntervalHours: number | null
   lastScheduledAt: Date | null
+  alertsEnabled: boolean | null
+  alertMinScore: number | null
+  lastAlertedAt: Date | null
+  followUpRemindersEnabled: boolean | null
+  autoApplyEnabled: boolean | null
+  autoApplyMinScore: number | null
+  autoApplyMarkApplied: boolean | null
+  autoApplyFollowUpDays: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -64,6 +86,14 @@ export type JobPreferencesCountAggregateOutputType = {
   scheduledCrawlEnabled: number
   crawlIntervalHours: number
   lastScheduledAt: number
+  alertsEnabled: number
+  alertMinScore: number
+  lastAlertedAt: number
+  followUpRemindersEnabled: number
+  autoApplyEnabled: number
+  autoApplyMinScore: number
+  autoApplyMarkApplied: number
+  autoApplyFollowUpDays: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -72,10 +102,16 @@ export type JobPreferencesCountAggregateOutputType = {
 
 export type JobPreferencesAvgAggregateInputType = {
   crawlIntervalHours?: true
+  alertMinScore?: true
+  autoApplyMinScore?: true
+  autoApplyFollowUpDays?: true
 }
 
 export type JobPreferencesSumAggregateInputType = {
   crawlIntervalHours?: true
+  alertMinScore?: true
+  autoApplyMinScore?: true
+  autoApplyFollowUpDays?: true
 }
 
 export type JobPreferencesMinAggregateInputType = {
@@ -84,6 +120,14 @@ export type JobPreferencesMinAggregateInputType = {
   scheduledCrawlEnabled?: true
   crawlIntervalHours?: true
   lastScheduledAt?: true
+  alertsEnabled?: true
+  alertMinScore?: true
+  lastAlertedAt?: true
+  followUpRemindersEnabled?: true
+  autoApplyEnabled?: true
+  autoApplyMinScore?: true
+  autoApplyMarkApplied?: true
+  autoApplyFollowUpDays?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -94,6 +138,14 @@ export type JobPreferencesMaxAggregateInputType = {
   scheduledCrawlEnabled?: true
   crawlIntervalHours?: true
   lastScheduledAt?: true
+  alertsEnabled?: true
+  alertMinScore?: true
+  lastAlertedAt?: true
+  followUpRemindersEnabled?: true
+  autoApplyEnabled?: true
+  autoApplyMinScore?: true
+  autoApplyMarkApplied?: true
+  autoApplyFollowUpDays?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -108,6 +160,14 @@ export type JobPreferencesCountAggregateInputType = {
   scheduledCrawlEnabled?: true
   crawlIntervalHours?: true
   lastScheduledAt?: true
+  alertsEnabled?: true
+  alertMinScore?: true
+  lastAlertedAt?: true
+  followUpRemindersEnabled?: true
+  autoApplyEnabled?: true
+  autoApplyMinScore?: true
+  autoApplyMarkApplied?: true
+  autoApplyFollowUpDays?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -209,6 +269,14 @@ export type JobPreferencesGroupByOutputType = {
   scheduledCrawlEnabled: boolean
   crawlIntervalHours: number
   lastScheduledAt: Date | null
+  alertsEnabled: boolean
+  alertMinScore: number
+  lastAlertedAt: Date | null
+  followUpRemindersEnabled: boolean
+  autoApplyEnabled: boolean
+  autoApplyMinScore: number
+  autoApplyMarkApplied: boolean
+  autoApplyFollowUpDays: number
   createdAt: Date
   updatedAt: Date
   _count: JobPreferencesCountAggregateOutputType | null
@@ -246,6 +314,14 @@ export type JobPreferencesWhereInput = {
   scheduledCrawlEnabled?: Prisma.BoolFilter<"JobPreferences"> | boolean
   crawlIntervalHours?: Prisma.IntFilter<"JobPreferences"> | number
   lastScheduledAt?: Prisma.DateTimeNullableFilter<"JobPreferences"> | Date | string | null
+  alertsEnabled?: Prisma.BoolFilter<"JobPreferences"> | boolean
+  alertMinScore?: Prisma.IntFilter<"JobPreferences"> | number
+  lastAlertedAt?: Prisma.DateTimeNullableFilter<"JobPreferences"> | Date | string | null
+  followUpRemindersEnabled?: Prisma.BoolFilter<"JobPreferences"> | boolean
+  autoApplyEnabled?: Prisma.BoolFilter<"JobPreferences"> | boolean
+  autoApplyMinScore?: Prisma.IntFilter<"JobPreferences"> | number
+  autoApplyMarkApplied?: Prisma.BoolFilter<"JobPreferences"> | boolean
+  autoApplyFollowUpDays?: Prisma.IntFilter<"JobPreferences"> | number
   createdAt?: Prisma.DateTimeFilter<"JobPreferences"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"JobPreferences"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -261,6 +337,14 @@ export type JobPreferencesOrderByWithRelationInput = {
   scheduledCrawlEnabled?: Prisma.SortOrder
   crawlIntervalHours?: Prisma.SortOrder
   lastScheduledAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  alertsEnabled?: Prisma.SortOrder
+  alertMinScore?: Prisma.SortOrder
+  lastAlertedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  followUpRemindersEnabled?: Prisma.SortOrder
+  autoApplyEnabled?: Prisma.SortOrder
+  autoApplyMinScore?: Prisma.SortOrder
+  autoApplyMarkApplied?: Prisma.SortOrder
+  autoApplyFollowUpDays?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -279,6 +363,14 @@ export type JobPreferencesWhereUniqueInput = Prisma.AtLeast<{
   scheduledCrawlEnabled?: Prisma.BoolFilter<"JobPreferences"> | boolean
   crawlIntervalHours?: Prisma.IntFilter<"JobPreferences"> | number
   lastScheduledAt?: Prisma.DateTimeNullableFilter<"JobPreferences"> | Date | string | null
+  alertsEnabled?: Prisma.BoolFilter<"JobPreferences"> | boolean
+  alertMinScore?: Prisma.IntFilter<"JobPreferences"> | number
+  lastAlertedAt?: Prisma.DateTimeNullableFilter<"JobPreferences"> | Date | string | null
+  followUpRemindersEnabled?: Prisma.BoolFilter<"JobPreferences"> | boolean
+  autoApplyEnabled?: Prisma.BoolFilter<"JobPreferences"> | boolean
+  autoApplyMinScore?: Prisma.IntFilter<"JobPreferences"> | number
+  autoApplyMarkApplied?: Prisma.BoolFilter<"JobPreferences"> | boolean
+  autoApplyFollowUpDays?: Prisma.IntFilter<"JobPreferences"> | number
   createdAt?: Prisma.DateTimeFilter<"JobPreferences"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"JobPreferences"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -294,6 +386,14 @@ export type JobPreferencesOrderByWithAggregationInput = {
   scheduledCrawlEnabled?: Prisma.SortOrder
   crawlIntervalHours?: Prisma.SortOrder
   lastScheduledAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  alertsEnabled?: Prisma.SortOrder
+  alertMinScore?: Prisma.SortOrder
+  lastAlertedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  followUpRemindersEnabled?: Prisma.SortOrder
+  autoApplyEnabled?: Prisma.SortOrder
+  autoApplyMinScore?: Prisma.SortOrder
+  autoApplyMarkApplied?: Prisma.SortOrder
+  autoApplyFollowUpDays?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.JobPreferencesCountOrderByAggregateInput
@@ -316,6 +416,14 @@ export type JobPreferencesScalarWhereWithAggregatesInput = {
   scheduledCrawlEnabled?: Prisma.BoolWithAggregatesFilter<"JobPreferences"> | boolean
   crawlIntervalHours?: Prisma.IntWithAggregatesFilter<"JobPreferences"> | number
   lastScheduledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"JobPreferences"> | Date | string | null
+  alertsEnabled?: Prisma.BoolWithAggregatesFilter<"JobPreferences"> | boolean
+  alertMinScore?: Prisma.IntWithAggregatesFilter<"JobPreferences"> | number
+  lastAlertedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"JobPreferences"> | Date | string | null
+  followUpRemindersEnabled?: Prisma.BoolWithAggregatesFilter<"JobPreferences"> | boolean
+  autoApplyEnabled?: Prisma.BoolWithAggregatesFilter<"JobPreferences"> | boolean
+  autoApplyMinScore?: Prisma.IntWithAggregatesFilter<"JobPreferences"> | number
+  autoApplyMarkApplied?: Prisma.BoolWithAggregatesFilter<"JobPreferences"> | boolean
+  autoApplyFollowUpDays?: Prisma.IntWithAggregatesFilter<"JobPreferences"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"JobPreferences"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"JobPreferences"> | Date | string
 }
@@ -329,6 +437,14 @@ export type JobPreferencesCreateInput = {
   scheduledCrawlEnabled?: boolean
   crawlIntervalHours?: number
   lastScheduledAt?: Date | string | null
+  alertsEnabled?: boolean
+  alertMinScore?: number
+  lastAlertedAt?: Date | string | null
+  followUpRemindersEnabled?: boolean
+  autoApplyEnabled?: boolean
+  autoApplyMinScore?: number
+  autoApplyMarkApplied?: boolean
+  autoApplyFollowUpDays?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutJobPreferencesInput
@@ -344,6 +460,14 @@ export type JobPreferencesUncheckedCreateInput = {
   scheduledCrawlEnabled?: boolean
   crawlIntervalHours?: number
   lastScheduledAt?: Date | string | null
+  alertsEnabled?: boolean
+  alertMinScore?: number
+  lastAlertedAt?: Date | string | null
+  followUpRemindersEnabled?: boolean
+  autoApplyEnabled?: boolean
+  autoApplyMinScore?: number
+  autoApplyMarkApplied?: boolean
+  autoApplyFollowUpDays?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -357,6 +481,14 @@ export type JobPreferencesUpdateInput = {
   scheduledCrawlEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   crawlIntervalHours?: Prisma.IntFieldUpdateOperationsInput | number
   lastScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  alertsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  alertMinScore?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAlertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  followUpRemindersEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  autoApplyEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  autoApplyMinScore?: Prisma.IntFieldUpdateOperationsInput | number
+  autoApplyMarkApplied?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  autoApplyFollowUpDays?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutJobPreferencesNestedInput
@@ -372,6 +504,14 @@ export type JobPreferencesUncheckedUpdateInput = {
   scheduledCrawlEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   crawlIntervalHours?: Prisma.IntFieldUpdateOperationsInput | number
   lastScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  alertsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  alertMinScore?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAlertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  followUpRemindersEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  autoApplyEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  autoApplyMinScore?: Prisma.IntFieldUpdateOperationsInput | number
+  autoApplyMarkApplied?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  autoApplyFollowUpDays?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -386,6 +526,14 @@ export type JobPreferencesCreateManyInput = {
   scheduledCrawlEnabled?: boolean
   crawlIntervalHours?: number
   lastScheduledAt?: Date | string | null
+  alertsEnabled?: boolean
+  alertMinScore?: number
+  lastAlertedAt?: Date | string | null
+  followUpRemindersEnabled?: boolean
+  autoApplyEnabled?: boolean
+  autoApplyMinScore?: number
+  autoApplyMarkApplied?: boolean
+  autoApplyFollowUpDays?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -399,6 +547,14 @@ export type JobPreferencesUpdateManyMutationInput = {
   scheduledCrawlEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   crawlIntervalHours?: Prisma.IntFieldUpdateOperationsInput | number
   lastScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  alertsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  alertMinScore?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAlertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  followUpRemindersEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  autoApplyEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  autoApplyMinScore?: Prisma.IntFieldUpdateOperationsInput | number
+  autoApplyMarkApplied?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  autoApplyFollowUpDays?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -413,6 +569,14 @@ export type JobPreferencesUncheckedUpdateManyInput = {
   scheduledCrawlEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   crawlIntervalHours?: Prisma.IntFieldUpdateOperationsInput | number
   lastScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  alertsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  alertMinScore?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAlertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  followUpRemindersEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  autoApplyEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  autoApplyMinScore?: Prisma.IntFieldUpdateOperationsInput | number
+  autoApplyMarkApplied?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  autoApplyFollowUpDays?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -432,12 +596,23 @@ export type JobPreferencesCountOrderByAggregateInput = {
   scheduledCrawlEnabled?: Prisma.SortOrder
   crawlIntervalHours?: Prisma.SortOrder
   lastScheduledAt?: Prisma.SortOrder
+  alertsEnabled?: Prisma.SortOrder
+  alertMinScore?: Prisma.SortOrder
+  lastAlertedAt?: Prisma.SortOrder
+  followUpRemindersEnabled?: Prisma.SortOrder
+  autoApplyEnabled?: Prisma.SortOrder
+  autoApplyMinScore?: Prisma.SortOrder
+  autoApplyMarkApplied?: Prisma.SortOrder
+  autoApplyFollowUpDays?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type JobPreferencesAvgOrderByAggregateInput = {
   crawlIntervalHours?: Prisma.SortOrder
+  alertMinScore?: Prisma.SortOrder
+  autoApplyMinScore?: Prisma.SortOrder
+  autoApplyFollowUpDays?: Prisma.SortOrder
 }
 
 export type JobPreferencesMaxOrderByAggregateInput = {
@@ -446,6 +621,14 @@ export type JobPreferencesMaxOrderByAggregateInput = {
   scheduledCrawlEnabled?: Prisma.SortOrder
   crawlIntervalHours?: Prisma.SortOrder
   lastScheduledAt?: Prisma.SortOrder
+  alertsEnabled?: Prisma.SortOrder
+  alertMinScore?: Prisma.SortOrder
+  lastAlertedAt?: Prisma.SortOrder
+  followUpRemindersEnabled?: Prisma.SortOrder
+  autoApplyEnabled?: Prisma.SortOrder
+  autoApplyMinScore?: Prisma.SortOrder
+  autoApplyMarkApplied?: Prisma.SortOrder
+  autoApplyFollowUpDays?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -456,12 +639,23 @@ export type JobPreferencesMinOrderByAggregateInput = {
   scheduledCrawlEnabled?: Prisma.SortOrder
   crawlIntervalHours?: Prisma.SortOrder
   lastScheduledAt?: Prisma.SortOrder
+  alertsEnabled?: Prisma.SortOrder
+  alertMinScore?: Prisma.SortOrder
+  lastAlertedAt?: Prisma.SortOrder
+  followUpRemindersEnabled?: Prisma.SortOrder
+  autoApplyEnabled?: Prisma.SortOrder
+  autoApplyMinScore?: Prisma.SortOrder
+  autoApplyMarkApplied?: Prisma.SortOrder
+  autoApplyFollowUpDays?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type JobPreferencesSumOrderByAggregateInput = {
   crawlIntervalHours?: Prisma.SortOrder
+  alertMinScore?: Prisma.SortOrder
+  autoApplyMinScore?: Prisma.SortOrder
+  autoApplyFollowUpDays?: Prisma.SortOrder
 }
 
 export type JobPreferencesCreateNestedOneWithoutUserInput = {
@@ -549,6 +743,14 @@ export type JobPreferencesCreateWithoutUserInput = {
   scheduledCrawlEnabled?: boolean
   crawlIntervalHours?: number
   lastScheduledAt?: Date | string | null
+  alertsEnabled?: boolean
+  alertMinScore?: number
+  lastAlertedAt?: Date | string | null
+  followUpRemindersEnabled?: boolean
+  autoApplyEnabled?: boolean
+  autoApplyMinScore?: number
+  autoApplyMarkApplied?: boolean
+  autoApplyFollowUpDays?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -562,6 +764,14 @@ export type JobPreferencesUncheckedCreateWithoutUserInput = {
   scheduledCrawlEnabled?: boolean
   crawlIntervalHours?: number
   lastScheduledAt?: Date | string | null
+  alertsEnabled?: boolean
+  alertMinScore?: number
+  lastAlertedAt?: Date | string | null
+  followUpRemindersEnabled?: boolean
+  autoApplyEnabled?: boolean
+  autoApplyMinScore?: number
+  autoApplyMarkApplied?: boolean
+  autoApplyFollowUpDays?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -591,6 +801,14 @@ export type JobPreferencesUpdateWithoutUserInput = {
   scheduledCrawlEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   crawlIntervalHours?: Prisma.IntFieldUpdateOperationsInput | number
   lastScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  alertsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  alertMinScore?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAlertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  followUpRemindersEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  autoApplyEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  autoApplyMinScore?: Prisma.IntFieldUpdateOperationsInput | number
+  autoApplyMarkApplied?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  autoApplyFollowUpDays?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -604,6 +822,14 @@ export type JobPreferencesUncheckedUpdateWithoutUserInput = {
   scheduledCrawlEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   crawlIntervalHours?: Prisma.IntFieldUpdateOperationsInput | number
   lastScheduledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  alertsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  alertMinScore?: Prisma.IntFieldUpdateOperationsInput | number
+  lastAlertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  followUpRemindersEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  autoApplyEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  autoApplyMinScore?: Prisma.IntFieldUpdateOperationsInput | number
+  autoApplyMarkApplied?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  autoApplyFollowUpDays?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -620,6 +846,14 @@ export type JobPreferencesSelect<ExtArgs extends runtime.Types.Extensions.Intern
   scheduledCrawlEnabled?: boolean
   crawlIntervalHours?: boolean
   lastScheduledAt?: boolean
+  alertsEnabled?: boolean
+  alertMinScore?: boolean
+  lastAlertedAt?: boolean
+  followUpRemindersEnabled?: boolean
+  autoApplyEnabled?: boolean
+  autoApplyMinScore?: boolean
+  autoApplyMarkApplied?: boolean
+  autoApplyFollowUpDays?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -635,6 +869,14 @@ export type JobPreferencesSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   scheduledCrawlEnabled?: boolean
   crawlIntervalHours?: boolean
   lastScheduledAt?: boolean
+  alertsEnabled?: boolean
+  alertMinScore?: boolean
+  lastAlertedAt?: boolean
+  followUpRemindersEnabled?: boolean
+  autoApplyEnabled?: boolean
+  autoApplyMinScore?: boolean
+  autoApplyMarkApplied?: boolean
+  autoApplyFollowUpDays?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -650,6 +892,14 @@ export type JobPreferencesSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   scheduledCrawlEnabled?: boolean
   crawlIntervalHours?: boolean
   lastScheduledAt?: boolean
+  alertsEnabled?: boolean
+  alertMinScore?: boolean
+  lastAlertedAt?: boolean
+  followUpRemindersEnabled?: boolean
+  autoApplyEnabled?: boolean
+  autoApplyMinScore?: boolean
+  autoApplyMarkApplied?: boolean
+  autoApplyFollowUpDays?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -665,11 +915,19 @@ export type JobPreferencesSelectScalar = {
   scheduledCrawlEnabled?: boolean
   crawlIntervalHours?: boolean
   lastScheduledAt?: boolean
+  alertsEnabled?: boolean
+  alertMinScore?: boolean
+  lastAlertedAt?: boolean
+  followUpRemindersEnabled?: boolean
+  autoApplyEnabled?: boolean
+  autoApplyMinScore?: boolean
+  autoApplyMarkApplied?: boolean
+  autoApplyFollowUpDays?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type JobPreferencesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"userId" | "targetRoles" | "targetCountries" | "includeKeywords" | "excludeKeywords" | "remoteOnly" | "scheduledCrawlEnabled" | "crawlIntervalHours" | "lastScheduledAt" | "createdAt" | "updatedAt", ExtArgs["result"]["jobPreferences"]>
+export type JobPreferencesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"userId" | "targetRoles" | "targetCountries" | "includeKeywords" | "excludeKeywords" | "remoteOnly" | "scheduledCrawlEnabled" | "crawlIntervalHours" | "lastScheduledAt" | "alertsEnabled" | "alertMinScore" | "lastAlertedAt" | "followUpRemindersEnabled" | "autoApplyEnabled" | "autoApplyMinScore" | "autoApplyMarkApplied" | "autoApplyFollowUpDays" | "createdAt" | "updatedAt", ExtArgs["result"]["jobPreferences"]>
 export type JobPreferencesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -695,6 +953,29 @@ export type $JobPreferencesPayload<ExtArgs extends runtime.Types.Extensions.Inte
     scheduledCrawlEnabled: boolean
     crawlIntervalHours: number
     lastScheduledAt: Date | null
+    /**
+     * Email digest when high-score jobs appear after a crawl
+     */
+    alertsEnabled: boolean
+    alertMinScore: number
+    lastAlertedAt: Date | null
+    /**
+     * Daily email when application follow-up dates are due
+     */
+    followUpRemindersEnabled: boolean
+    /**
+     * Prepare apply packages for high-score jobs (cover letter + resume + tracker)
+     */
+    autoApplyEnabled: boolean
+    autoApplyMinScore: number
+    /**
+     * After preparing, set application status to applied and suggest opening the URL
+     */
+    autoApplyMarkApplied: boolean
+    /**
+     * Days until follow-up after auto-apply (0 = skip)
+     */
+    autoApplyFollowUpDays: number
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["jobPreferences"]>
@@ -1130,6 +1411,14 @@ export interface JobPreferencesFieldRefs {
   readonly scheduledCrawlEnabled: Prisma.FieldRef<"JobPreferences", 'Boolean'>
   readonly crawlIntervalHours: Prisma.FieldRef<"JobPreferences", 'Int'>
   readonly lastScheduledAt: Prisma.FieldRef<"JobPreferences", 'DateTime'>
+  readonly alertsEnabled: Prisma.FieldRef<"JobPreferences", 'Boolean'>
+  readonly alertMinScore: Prisma.FieldRef<"JobPreferences", 'Int'>
+  readonly lastAlertedAt: Prisma.FieldRef<"JobPreferences", 'DateTime'>
+  readonly followUpRemindersEnabled: Prisma.FieldRef<"JobPreferences", 'Boolean'>
+  readonly autoApplyEnabled: Prisma.FieldRef<"JobPreferences", 'Boolean'>
+  readonly autoApplyMinScore: Prisma.FieldRef<"JobPreferences", 'Int'>
+  readonly autoApplyMarkApplied: Prisma.FieldRef<"JobPreferences", 'Boolean'>
+  readonly autoApplyFollowUpDays: Prisma.FieldRef<"JobPreferences", 'Int'>
   readonly createdAt: Prisma.FieldRef<"JobPreferences", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"JobPreferences", 'DateTime'>
 }

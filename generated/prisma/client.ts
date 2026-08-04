@@ -97,6 +97,11 @@ export type CrawlRun = Prisma.CrawlRunModel
  */
 export type Job = Prisma.JobModel
 /**
+ * Model JobApplication
+ * Tracks formal application pipeline for a discovered job.
+ */
+export type JobApplication = Prisma.JobApplicationModel
+/**
  * Model JobContact
  * 
  */
@@ -111,3 +116,18 @@ export type OutreachEmail = Prisma.OutreachEmailModel
  * 
  */
 export type EmailAccount = Prisma.EmailAccountModel
+/**
+ * Model JobDocument
+ * Per-job cover letter or tailored resume draft.
+ */
+export type JobDocument = Prisma.JobDocumentModel
+/**
+ * Model AssistantThread
+ * 
+ */
+export type AssistantThread = Prisma.AssistantThreadModel
+/**
+ * Model AssistantMessage
+ * 
+ */
+export type AssistantMessage = Prisma.AssistantMessageModel

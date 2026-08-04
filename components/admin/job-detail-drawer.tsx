@@ -3,11 +3,15 @@
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
 import {
+  BookmarkPlusIcon,
+  CopyIcon,
   ExternalLinkIcon,
+  FileTextIcon,
   Loader2Icon,
   MailIcon,
   RadarIcon,
   SparklesIcon,
+  ZapIcon,
 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -45,6 +49,30 @@ type JobDetail = Omit<JobListItem, "contacts"> & {
   }>
 }
 
+type JobDocument = {
+  id: string
+  type: string
+  title: string | null
+  content: string
+}
+
+type ApplyPackage = {
+  coverLetter: { content: string }
+  tailoredResume: { content: string }
+  profileAnswers: {
+    fullName: string
+    email: string
+    linkedinUrl: string | null
+    githubUrl: string | null
+    expectedSalary: number | null
+    salaryPeriod: string | null
+    noticePeriod: string | null
+  }
+  checklist: string[]
+}
+
+type DrawerTab = "outreach" | "cover_letter" | "tailored_resume" | "auto_apply"
+
 export function JobDetailDrawer({
   jobId,
   open,
@@ -61,10 +89,22 @@ export function JobDetailDrawer({
   const [enriching, setEnriching] = useState(false)
   const [drafting, setDrafting] = useState(false)
   const [sending, setSending] = useState(false)
+  const [tracking, setTracking] = useState(false)
+  const [docGenerating, setDocGenerating] = useState(false)
+  const [docSaving, setDocSaving] = useState(false)
+  const [autoApplying, setAutoApplying] = useState(false)
+  const [applyPackage, setApplyPackage] = useState<ApplyPackage | null>(null)
+  const [tab, setTab] = useState<DrawerTab>("outreach")
   const [toEmail, setToEmail] = useState("")
   const [subject, setSubject] = useState("")
   const [body, setBody] = useState("")
   const [activeOutreachId, setActiveOutreachId] = useState<string | null>(null)
+  const [coverDoc, setCoverDoc] = useState<JobDocument | null>(null)
+  const [resumeDoc, setResumeDoc] = useState<JobDocument | null>(null)
+  const [coverTitle, setCoverTitle] = useState("")
+  const [coverContent, setCoverContent] = useState("")
+  const [resumeTitle, setResumeTitle] = useState("")
+  const [resumeContent, setResumeContent] = useState("")
 
   useEffect(() => {
     if (!open || !jobId) return
@@ -73,9 +113,12 @@ export function JobDetailDrawer({
     async function load() {
       setLoading(true)
       try {
-        const response = await fetch(`/api/jobs/${jobId}`)
-        const data = await response.json()
-        if (!response.ok) {
+        const [jobResponse, docsResponse] = await Promise.all([
+          fetch(`/api/jobs/${jobId}`),
+          fetch(`/api/documents?jobId=${jobId}`),
+        ])
+        const data = await jobResponse.json()
+        if (!jobResponse.ok) {
           toast.error(data.error ?? "Failed to load job")
           return
         }
@@ -94,6 +137,20 @@ export function JobDetailDrawer({
           setActiveOutreachId(null)
           setSubject("")
           setBody("")
+        }
+
+        if (docsResponse.ok) {
+          const docsData = await docsResponse.json()
+          const documents = (docsData.documents ?? []) as JobDocument[]
+          const cover = documents.find((d) => d.type === "cover_letter") ?? null
+          const tailored =
+            documents.find((d) => d.type === "tailored_resume") ?? null
+          setCoverDoc(cover)
+          setResumeDoc(tailored)
+          setCoverTitle(cover?.title ?? "")
+          setCoverContent(cover?.content ?? "")
+          setResumeTitle(tailored?.title ?? "")
+          setResumeContent(tailored?.content ?? "")
         }
       } finally {
         if (!cancelled) setLoading(false)
@@ -137,6 +194,33 @@ export function JobDetailDrawer({
       toast.error("Could not extract contacts")
     } finally {
       setEnriching(false)
+    }
+  }
+
+  async function handleTrack(status: "saved" | "applied" = "saved") {
+    if (!jobId) return
+    setTracking(true)
+    try {
+      const response = await fetch("/api/applications", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ jobId, status }),
+      })
+      const data = await response.json()
+      if (!response.ok) {
+        toast.error(data.error ?? "Could not track application")
+        return
+      }
+      toast.success(
+        status === "applied"
+          ? "Marked as applied in tracker"
+          : "Saved to application tracker"
+      )
+      onUpdated?.()
+    } catch {
+      toast.error("Could not track application")
+    } finally {
+      setTracking(false)
     }
   }
 
@@ -213,6 +297,13 @@ export function JobDetailDrawer({
         return
       }
       toast.success("Email sent")
+      if (jobId) {
+        void fetch("/api/applications", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ jobId, status: "outreach" }),
+        })
+      }
       onUpdated?.()
       if (jobId) {
         const reload = await fetch(`/api/jobs/${jobId}`)
@@ -226,10 +317,131 @@ export function JobDetailDrawer({
     }
   }
 
+  async function handleGenerateDocument(type: "cover_letter" | "tailored_resume") {
+    if (!jobId) return
+    setDocGenerating(true)
+    try {
+      const response = await fetch("/api/documents", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ jobId, type }),
+      })
+      const data = await response.json()
+      if (!response.ok) {
+        toast.error(data.error ?? "Failed to generate document")
+        return
+      }
+      const document = data.document as JobDocument
+      if (type === "cover_letter") {
+        setCoverDoc(document)
+        setCoverTitle(document.title ?? "")
+        setCoverContent(document.content)
+        toast.success("Cover letter ready")
+      } else {
+        setResumeDoc(document)
+        setResumeTitle(document.title ?? "")
+        setResumeContent(document.content)
+        toast.success("Tailored resume ready")
+      }
+    } catch {
+      toast.error("Failed to generate document")
+    } finally {
+      setDocGenerating(false)
+    }
+  }
+
+  async function handleSaveDocument(type: "cover_letter" | "tailored_resume") {
+    const doc = type === "cover_letter" ? coverDoc : resumeDoc
+    if (!doc) {
+      toast.error("Generate a document first")
+      return
+    }
+    setDocSaving(true)
+    try {
+      const response = await fetch(`/api/documents/${doc.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(
+          type === "cover_letter"
+            ? { title: coverTitle, content: coverContent }
+            : { title: resumeTitle, content: resumeContent }
+        ),
+      })
+      const data = await response.json()
+      if (!response.ok) {
+        toast.error(data.error ?? "Failed to save")
+        return
+      }
+      const document = data.document as JobDocument
+      if (type === "cover_letter") setCoverDoc(document)
+      else setResumeDoc(document)
+      toast.success("Saved")
+    } catch {
+      toast.error("Failed to save")
+    } finally {
+      setDocSaving(false)
+    }
+  }
+
+  async function handleCopy(text: string, label: string) {
+    if (!text.trim()) {
+      toast.error(`Nothing to copy — generate a ${label} first`)
+      return
+    }
+    try {
+      await navigator.clipboard.writeText(text)
+      toast.success(`${label} copied`)
+    } catch {
+      toast.error("Could not copy to clipboard")
+    }
+  }
+
+  async function handleAutoApply(regenerate = false) {
+    if (!jobId) return
+    setAutoApplying(true)
+    setTab("auto_apply")
+    try {
+      const response = await fetch(`/api/jobs/${jobId}/auto-apply`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ regenerateDocuments: regenerate }),
+      })
+      const data = await response.json()
+      if (!response.ok) {
+        toast.error(data.error ?? "Auto-apply failed")
+        return
+      }
+      const pkg = data.applyPackage as ApplyPackage
+      setApplyPackage(pkg)
+      setCoverContent(pkg.coverLetter.content)
+      setResumeContent(pkg.tailoredResume.content)
+      if (data.applyUrl) {
+        window.open(data.applyUrl, "_blank", "noopener,noreferrer")
+      }
+      toast.success(
+        data.markedApplied
+          ? "Materials ready — marked Applied and opened posting"
+          : "Materials ready — opened posting"
+      )
+      onUpdated?.()
+    } catch {
+      toast.error("Auto-apply failed")
+    } finally {
+      setAutoApplying(false)
+    }
+  }
+
   const plainDescription = (job?.description ?? "")
     .replace(/<[^>]+>/g, " ")
     .replace(/\s+/g, " ")
     .trim()
+
+  const tabs: Array<{ id: DrawerTab; label: string }> = [
+    { id: "outreach", label: "Outreach" },
+    { id: "cover_letter", label: "Cover letter" },
+    { id: "tailored_resume", label: "Resume" },
+    { id: "auto_apply", label: "Auto-apply" },
+  ]
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -278,6 +490,39 @@ export function JobDetailDrawer({
               >
                 <ExternalLinkIcon className="size-3.5" />
                 Open posting
+              </Button>
+              <Button
+                size="sm"
+                variant="secondary"
+                disabled={tracking}
+                onClick={() => void handleTrack("saved")}
+              >
+                {tracking ? (
+                  <Loader2Icon className="size-3.5 animate-spin" />
+                ) : (
+                  <BookmarkPlusIcon className="size-3.5" />
+                )}
+                Track application
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                disabled={tracking}
+                onClick={() => void handleTrack("applied")}
+              >
+                Mark applied
+              </Button>
+              <Button
+                size="sm"
+                disabled={autoApplying}
+                onClick={() => void handleAutoApply(false)}
+              >
+                {autoApplying ? (
+                  <Loader2Icon className="size-3.5 animate-spin" />
+                ) : (
+                  <ZapIcon className="size-3.5" />
+                )}
+                Auto-apply
               </Button>
               <Button
                 size="sm"
@@ -337,7 +582,10 @@ export function JobDetailDrawer({
                       <Button
                         size="xs"
                         variant="ghost"
-                        onClick={() => setToEmail(contact.email)}
+                        onClick={() => {
+                          setToEmail(contact.email)
+                          setTab("outreach")
+                        }}
                       >
                         Use
                       </Button>
@@ -348,68 +596,336 @@ export function JobDetailDrawer({
             </div>
 
             <div className="space-y-3 rounded-xl border p-4">
-              <div className="flex items-center gap-2">
-                <MailIcon className="size-4" />
-                <p className="font-medium">Outreach email</p>
+              <div className="flex flex-wrap gap-1 rounded-lg bg-muted/60 p-1">
+                {tabs.map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => setTab(item.id)}
+                    className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+                      tab === item.id
+                        ? "bg-background text-foreground shadow-sm"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                ))}
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="toEmail">To</Label>
-                <Input
-                  id="toEmail"
-                  value={toEmail}
-                  onChange={(event) => setToEmail(event.target.value)}
-                  placeholder="recruiter@company.com"
-                />
-              </div>
-              <div className="flex flex-wrap gap-2">
-                <Button
-                  size="sm"
-                  disabled={drafting}
-                  onClick={() => void handleDraft()}
-                >
-                  {drafting ? (
-                    <Loader2Icon className="size-3.5 animate-spin" />
+
+              {tab === "outreach" ? (
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <MailIcon className="size-4" />
+                    <p className="font-medium">Outreach email</p>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="toEmail">To</Label>
+                    <Input
+                      id="toEmail"
+                      value={toEmail}
+                      onChange={(event) => setToEmail(event.target.value)}
+                      placeholder="recruiter@company.com"
+                    />
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <Button
+                      size="sm"
+                      disabled={drafting}
+                      onClick={() => void handleDraft()}
+                    >
+                      {drafting ? (
+                        <Loader2Icon className="size-3.5 animate-spin" />
+                      ) : (
+                        <SparklesIcon className="size-3.5" />
+                      )}
+                      AI draft
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => void handleSaveDraft()}
+                    >
+                      Save draft
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="secondary"
+                      disabled={sending}
+                      onClick={() => void handleSend()}
+                    >
+                      {sending ? (
+                        <Loader2Icon className="size-3.5 animate-spin" />
+                      ) : null}
+                      Send
+                    </Button>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="subject">Subject</Label>
+                    <Input
+                      id="subject"
+                      value={subject}
+                      onChange={(event) => setSubject(event.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="body">Body</Label>
+                    <Textarea
+                      id="body"
+                      rows={10}
+                      value={body}
+                      onChange={(event) => setBody(event.target.value)}
+                    />
+                  </div>
+                </div>
+              ) : null}
+
+              {tab === "cover_letter" ? (
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <FileTextIcon className="size-4" />
+                    <p className="font-medium">Cover letter</p>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <Button
+                      size="sm"
+                      disabled={docGenerating}
+                      onClick={() => void handleGenerateDocument("cover_letter")}
+                    >
+                      {docGenerating ? (
+                        <Loader2Icon className="size-3.5 animate-spin" />
+                      ) : (
+                        <SparklesIcon className="size-3.5" />
+                      )}
+                      Generate
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      disabled={docSaving || !coverDoc}
+                      onClick={() => void handleSaveDocument("cover_letter")}
+                    >
+                      {docSaving ? (
+                        <Loader2Icon className="size-3.5 animate-spin" />
+                      ) : null}
+                      Save
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="secondary"
+                      onClick={() =>
+                        void handleCopy(coverContent, "Cover letter")
+                      }
+                    >
+                      <CopyIcon className="size-3.5" />
+                      Copy
+                    </Button>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="coverTitle">Title</Label>
+                    <Input
+                      id="coverTitle"
+                      value={coverTitle}
+                      onChange={(event) => setCoverTitle(event.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="coverContent">Letter</Label>
+                    <Textarea
+                      id="coverContent"
+                      rows={12}
+                      value={coverContent}
+                      onChange={(event) => setCoverContent(event.target.value)}
+                      placeholder="Generate a cover letter tailored to this role…"
+                    />
+                  </div>
+                </div>
+              ) : null}
+
+              {tab === "tailored_resume" ? (
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <FileTextIcon className="size-4" />
+                    <p className="font-medium">Tailored resume</p>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <Button
+                      size="sm"
+                      disabled={docGenerating}
+                      onClick={() =>
+                        void handleGenerateDocument("tailored_resume")
+                      }
+                    >
+                      {docGenerating ? (
+                        <Loader2Icon className="size-3.5 animate-spin" />
+                      ) : (
+                        <SparklesIcon className="size-3.5" />
+                      )}
+                      Generate
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      disabled={docSaving || !resumeDoc}
+                      onClick={() => void handleSaveDocument("tailored_resume")}
+                    >
+                      {docSaving ? (
+                        <Loader2Icon className="size-3.5 animate-spin" />
+                      ) : null}
+                      Save
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="secondary"
+                      onClick={() =>
+                        void handleCopy(resumeContent, "Tailored resume")
+                      }
+                    >
+                      <CopyIcon className="size-3.5" />
+                      Copy
+                    </Button>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="resumeTitle">Title</Label>
+                    <Input
+                      id="resumeTitle"
+                      value={resumeTitle}
+                      onChange={(event) => setResumeTitle(event.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="resumeContent">Markdown</Label>
+                    <Textarea
+                      id="resumeContent"
+                      rows={14}
+                      value={resumeContent}
+                      onChange={(event) => setResumeContent(event.target.value)}
+                      placeholder="Generate a resume tailored to this role…"
+                      className="font-mono text-sm"
+                    />
+                  </div>
+                </div>
+              ) : null}
+
+              {tab === "auto_apply" ? (
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <ZapIcon className="size-4" />
+                    <p className="font-medium">Auto-apply package</p>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    Generates a cover letter and tailored resume, updates your
+                    tracker, then opens the employer posting so you can paste
+                    into their form.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <Button
+                      size="sm"
+                      disabled={autoApplying}
+                      onClick={() => void handleAutoApply(false)}
+                    >
+                      {autoApplying ? (
+                        <Loader2Icon className="size-3.5 animate-spin" />
+                      ) : (
+                        <ZapIcon className="size-3.5" />
+                      )}
+                      Prepare & open
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      disabled={autoApplying}
+                      onClick={() => void handleAutoApply(true)}
+                    >
+                      Regenerate materials
+                    </Button>
+                    {job.url ? (
+                      <Button
+                        size="sm"
+                        variant="secondary"
+                        nativeButton={false}
+                        render={
+                          <a href={job.url} target="_blank" rel="noreferrer" />
+                        }
+                      >
+                        <ExternalLinkIcon className="size-3.5" />
+                        Open posting
+                      </Button>
+                    ) : null}
+                  </div>
+
+                  {applyPackage ? (
+                    <div className="space-y-3 rounded-lg border bg-muted/30 p-3">
+                      <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                        Checklist
+                      </p>
+                      <ol className="list-decimal space-y-1 pl-4 text-sm text-muted-foreground">
+                        {applyPackage.checklist.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ol>
+                      <div className="flex flex-wrap gap-2">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() =>
+                            void handleCopy(
+                              applyPackage.coverLetter.content,
+                              "Cover letter"
+                            )
+                          }
+                        >
+                          <CopyIcon className="size-3.5" />
+                          Copy cover letter
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() =>
+                            void handleCopy(
+                              applyPackage.tailoredResume.content,
+                              "Resume"
+                            )
+                          }
+                        >
+                          <CopyIcon className="size-3.5" />
+                          Copy resume
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() =>
+                            void handleCopy(
+                              [
+                                applyPackage.profileAnswers.fullName,
+                                applyPackage.profileAnswers.email,
+                                applyPackage.profileAnswers.linkedinUrl,
+                                applyPackage.profileAnswers.githubUrl,
+                                applyPackage.profileAnswers.expectedSalary
+                                  ? `Salary: ${applyPackage.profileAnswers.expectedSalary}${applyPackage.profileAnswers.salaryPeriod ? ` / ${applyPackage.profileAnswers.salaryPeriod}` : ""}`
+                                  : null,
+                                applyPackage.profileAnswers.noticePeriod
+                                  ? `Notice: ${applyPackage.profileAnswers.noticePeriod}`
+                                  : null,
+                              ]
+                                .filter(Boolean)
+                                .join("\n"),
+                              "Profile answers"
+                            )
+                          }
+                        >
+                          <CopyIcon className="size-3.5" />
+                          Copy profile answers
+                        </Button>
+                      </div>
+                    </div>
                   ) : (
-                    <SparklesIcon className="size-3.5" />
+                    <p className="text-sm text-muted-foreground">
+                      Run Prepare & open to build your apply package.
+                    </p>
                   )}
-                  AI draft
-                </Button>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() => void handleSaveDraft()}
-                >
-                  Save draft
-                </Button>
-                <Button
-                  size="sm"
-                  variant="secondary"
-                  disabled={sending}
-                  onClick={() => void handleSend()}
-                >
-                  {sending ? (
-                    <Loader2Icon className="size-3.5 animate-spin" />
-                  ) : null}
-                  Send
-                </Button>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="subject">Subject</Label>
-                <Input
-                  id="subject"
-                  value={subject}
-                  onChange={(event) => setSubject(event.target.value)}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="body">Body</Label>
-                <Textarea
-                  id="body"
-                  rows={10}
-                  value={body}
-                  onChange={(event) => setBody(event.target.value)}
-                />
-              </div>
+                </div>
+              ) : null}
             </div>
 
             {plainDescription ? (

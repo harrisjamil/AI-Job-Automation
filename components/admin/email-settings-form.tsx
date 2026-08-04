@@ -32,6 +32,13 @@ type SettingsState = {
   excludeKeywords: string
   includeKeywords: string
   targetRoles: string
+  alertsEnabled: boolean
+  alertMinScore: string
+  followUpRemindersEnabled: boolean
+  autoApplyEnabled: boolean
+  autoApplyMinScore: string
+  autoApplyMarkApplied: boolean
+  autoApplyFollowUpDays: string
   hasApiKey: boolean
   hasSmtpPass: boolean
   apiKeyMasked: string | null
@@ -53,6 +60,13 @@ const initialState: SettingsState = {
   excludeKeywords: "",
   includeKeywords: "",
   targetRoles: "",
+  alertsEnabled: true,
+  alertMinScore: "55",
+  followUpRemindersEnabled: true,
+  autoApplyEnabled: false,
+  autoApplyMinScore: "70",
+  autoApplyMarkApplied: true,
+  autoApplyFollowUpDays: "7",
   hasApiKey: false,
   hasSmtpPass: false,
   apiKeyMasked: null,
@@ -96,6 +110,13 @@ export function EmailSettingsForm() {
           excludeKeywords: (crawl?.excludeKeywords ?? []).join(", "),
           includeKeywords: (crawl?.includeKeywords ?? []).join(", "),
           targetRoles: (crawl?.targetRoles ?? []).join(", "),
+          alertsEnabled: crawl?.alertsEnabled ?? true,
+          alertMinScore: String(crawl?.alertMinScore ?? 55),
+          followUpRemindersEnabled: crawl?.followUpRemindersEnabled ?? true,
+          autoApplyEnabled: crawl?.autoApplyEnabled ?? false,
+          autoApplyMinScore: String(crawl?.autoApplyMinScore ?? 70),
+          autoApplyMarkApplied: crawl?.autoApplyMarkApplied ?? true,
+          autoApplyFollowUpDays: String(crawl?.autoApplyFollowUpDays ?? 7),
           hasApiKey: Boolean(account?.hasApiKey),
           hasSmtpPass: Boolean(account?.hasSmtpPass),
           apiKeyMasked: account?.apiKeyMasked ?? null,
@@ -149,6 +170,13 @@ export function EmailSettingsForm() {
             excludeKeywords: splitCsv(form.excludeKeywords),
             includeKeywords: splitCsv(form.includeKeywords),
             targetRoles: splitCsv(form.targetRoles),
+            alertsEnabled: form.alertsEnabled,
+            alertMinScore: Number(form.alertMinScore) || 55,
+            followUpRemindersEnabled: form.followUpRemindersEnabled,
+            autoApplyEnabled: form.autoApplyEnabled,
+            autoApplyMinScore: Number(form.autoApplyMinScore) || 70,
+            autoApplyMarkApplied: form.autoApplyMarkApplied,
+            autoApplyFollowUpDays: Number(form.autoApplyFollowUpDays) || 7,
           },
         }),
       })
@@ -383,6 +411,122 @@ export function EmailSettingsForm() {
             onChange={(event) => update("targetRoles", event.target.value)}
             placeholder="Full Stack Developer, AI Engineer, Backend Developer"
           />
+        </div>
+      </section>
+
+      <section className="space-y-4 rounded-xl border p-5">
+        <div>
+          <h3 className="text-lg font-medium">High-score job alerts</h3>
+          <p className="text-sm text-muted-foreground">
+            After each crawl, email yourself a digest of new jobs at or above
+            your score threshold. Requires email sending to be configured above.
+          </p>
+        </div>
+        <div className="flex items-center gap-3">
+          <Switch
+            checked={form.alertsEnabled}
+            onCheckedChange={(checked) => update("alertsEnabled", checked)}
+            id="alertsEnabled"
+          />
+          <Label htmlFor="alertsEnabled">Email me when strong matches appear</Label>
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="alertMinScore">Minimum match score</Label>
+          <Input
+            id="alertMinScore"
+            type="number"
+            min={28}
+            max={100}
+            value={form.alertMinScore}
+            onChange={(event) => update("alertMinScore", event.target.value)}
+          />
+          <p className="text-xs text-muted-foreground">
+            Default 55. Lower = more alerts; higher = only top matches.
+          </p>
+        </div>
+      </section>
+
+      <section className="space-y-4 rounded-xl border p-5">
+        <div>
+          <h3 className="text-lg font-medium">Follow-up reminders</h3>
+          <p className="text-sm text-muted-foreground">
+            Get a daily email when application follow-up dates are due or
+            overdue. Set dates on the Applications page.
+          </p>
+        </div>
+        <div className="flex items-center gap-3">
+          <Switch
+            checked={form.followUpRemindersEnabled}
+            onCheckedChange={(checked) =>
+              update("followUpRemindersEnabled", checked)
+            }
+            id="followUpRemindersEnabled"
+          />
+          <Label htmlFor="followUpRemindersEnabled">
+            Email me about due follow-ups
+          </Label>
+        </div>
+      </section>
+
+      <section className="space-y-4 rounded-xl border p-5">
+        <div>
+          <h3 className="text-lg font-medium">Auto-apply</h3>
+          <p className="text-sm text-muted-foreground">
+            Prepare cover letters and tailored resumes for strong matches, mark
+            them Applied in your tracker, and open the employer posting so you
+            can paste materials into the ATS form. Most boards block fully
+            automated form submission.
+          </p>
+        </div>
+        <div className="flex items-center gap-3">
+          <Switch
+            checked={form.autoApplyEnabled}
+            onCheckedChange={(checked) => update("autoApplyEnabled", checked)}
+            id="autoApplyEnabled"
+          />
+          <Label htmlFor="autoApplyEnabled">
+            After crawls, auto-prepare top matches
+          </Label>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="space-y-2">
+            <Label htmlFor="autoApplyMinScore">Minimum match score</Label>
+            <Input
+              id="autoApplyMinScore"
+              type="number"
+              min={40}
+              max={100}
+              value={form.autoApplyMinScore}
+              onChange={(event) =>
+                update("autoApplyMinScore", event.target.value)
+              }
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="autoApplyFollowUpDays">Follow-up in (days)</Label>
+            <Input
+              id="autoApplyFollowUpDays"
+              type="number"
+              min={0}
+              max={60}
+              value={form.autoApplyFollowUpDays}
+              onChange={(event) =>
+                update("autoApplyFollowUpDays", event.target.value)
+              }
+            />
+          </div>
+        </div>
+        <div className="flex items-center gap-3">
+          <Switch
+            checked={form.autoApplyMarkApplied}
+            onCheckedChange={(checked) =>
+              update("autoApplyMarkApplied", checked)
+            }
+            id="autoApplyMarkApplied"
+          />
+          <Label htmlFor="autoApplyMarkApplied">
+            Mark as Applied when materials are ready
+          </Label>
         </div>
       </section>
 

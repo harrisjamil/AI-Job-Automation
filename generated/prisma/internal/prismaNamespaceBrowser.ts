@@ -62,9 +62,13 @@ export const ModelName = {
   JobSource: 'JobSource',
   CrawlRun: 'CrawlRun',
   Job: 'Job',
+  JobApplication: 'JobApplication',
   JobContact: 'JobContact',
   OutreachEmail: 'OutreachEmail',
-  EmailAccount: 'EmailAccount'
+  EmailAccount: 'EmailAccount',
+  JobDocument: 'JobDocument',
+  AssistantThread: 'AssistantThread',
+  AssistantMessage: 'AssistantMessage'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -201,6 +205,14 @@ export const JobPreferencesScalarFieldEnum = {
   scheduledCrawlEnabled: 'scheduledCrawlEnabled',
   crawlIntervalHours: 'crawlIntervalHours',
   lastScheduledAt: 'lastScheduledAt',
+  alertsEnabled: 'alertsEnabled',
+  alertMinScore: 'alertMinScore',
+  lastAlertedAt: 'lastAlertedAt',
+  followUpRemindersEnabled: 'followUpRemindersEnabled',
+  autoApplyEnabled: 'autoApplyEnabled',
+  autoApplyMinScore: 'autoApplyMinScore',
+  autoApplyMarkApplied: 'autoApplyMarkApplied',
+  autoApplyFollowUpDays: 'autoApplyFollowUpDays',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -285,11 +297,33 @@ export const JobScalarFieldEnum = {
   matchScore: 'matchScore',
   postedAt: 'postedAt',
   scrapedAt: 'scrapedAt',
+  alertedAt: 'alertedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type JobScalarFieldEnum = (typeof JobScalarFieldEnum)[keyof typeof JobScalarFieldEnum]
+
+
+export const JobApplicationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  jobId: 'jobId',
+  status: 'status',
+  notes: 'notes',
+  followUpAt: 'followUpAt',
+  followUpRemindedAt: 'followUpRemindedAt',
+  appliedAt: 'appliedAt',
+  statusChangedAt: 'statusChangedAt',
+  autoApplyStatus: 'autoApplyStatus',
+  autoApplyError: 'autoApplyError',
+  applyPackageJson: 'applyPackageJson',
+  autoPreparedAt: 'autoPreparedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type JobApplicationScalarFieldEnum = (typeof JobApplicationScalarFieldEnum)[keyof typeof JobApplicationScalarFieldEnum]
 
 
 export const JobContactScalarFieldEnum = {
@@ -344,6 +378,43 @@ export const EmailAccountScalarFieldEnum = {
 } as const
 
 export type EmailAccountScalarFieldEnum = (typeof EmailAccountScalarFieldEnum)[keyof typeof EmailAccountScalarFieldEnum]
+
+
+export const JobDocumentScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  jobId: 'jobId',
+  type: 'type',
+  title: 'title',
+  content: 'content',
+  structuredJson: 'structuredJson',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type JobDocumentScalarFieldEnum = (typeof JobDocumentScalarFieldEnum)[keyof typeof JobDocumentScalarFieldEnum]
+
+
+export const AssistantThreadScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AssistantThreadScalarFieldEnum = (typeof AssistantThreadScalarFieldEnum)[keyof typeof AssistantThreadScalarFieldEnum]
+
+
+export const AssistantMessageScalarFieldEnum = {
+  id: 'id',
+  threadId: 'threadId',
+  role: 'role',
+  content: 'content',
+  createdAt: 'createdAt'
+} as const
+
+export type AssistantMessageScalarFieldEnum = (typeof AssistantMessageScalarFieldEnum)[keyof typeof AssistantMessageScalarFieldEnum]
 
 
 export const SortOrder = {

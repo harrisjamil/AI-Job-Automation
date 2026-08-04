@@ -64,6 +64,7 @@ type ResumeInfo = {
   fileUrl: string
   mimeType: string | null
   atsScore: number | null
+  parsedJson?: unknown
   createdAt: string
 } | null
 
@@ -415,9 +416,65 @@ export function ProfileForm() {
       }
 
       updateField("resume", data.resume)
-      toast.success("Resume uploaded.")
+      if (data.parseResult?.profileUpdated) {
+        toast.success(
+          "Resume uploaded and parsed — profile fields updated. Refresh if skills look stale."
+        )
+        // Reload profile so skills/roles from parse appear
+        const profileResponse = await fetch("/api/profile")
+        if (profileResponse.ok) {
+          const profileData = await profileResponse.json()
+          if (profileData.profile) {
+            // Soft-reload page state via skills if present
+            window.location.reload()
+            return
+          }
+        }
+      } else if (data.parseResult) {
+        toast.success(
+          data.resume?.atsScore
+            ? `Resume uploaded (ATS score ${data.resume.atsScore}).`
+            : "Resume uploaded and parsed."
+        )
+      } else {
+        toast.success("Resume uploaded.")
+      }
     } catch {
       toast.error("Resume upload failed.")
+    } finally {
+      setUploading(false)
+    }
+  }
+
+  async function handleParseResume() {
+    if (!form.resume?.id) {
+      toast.error("Upload a resume first.")
+      return
+    }
+    setUploading(true)
+    try {
+      const response = await fetch("/api/profile/resume/parse", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          resumeId: form.resume.id,
+          applyToProfile: true,
+        }),
+      })
+      const data = await response.json()
+      if (!response.ok) {
+        toast.error(data.error ?? "Could not parse resume")
+        return
+      }
+      updateField("resume", data.resume)
+      toast.success(
+        data.usedAi
+          ? "Resume parsed with AI and applied to profile."
+          : "Resume parsed (connect an AI platform for richer extraction)."
+      )
+      window.location.reload()
+    } catch {
+      toast.error("Could not parse resume")
     } finally {
       setUploading(false)
     }
@@ -699,13 +756,13 @@ export function ProfileForm() {
 
       <SectionCard
         title="Resume"
-        description="Upload a PDF or Word resume so the AI can parse and optimize it."
+        description="Upload a PDF or DOCX. We extract text, AI-structure skills/roles, and apply them to your profile for better matching and outreach."
         required
       >
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <label className="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-dashed px-4 py-3 text-sm hover:bg-muted/40">
             <UploadIcon className="size-4" />
-            {uploading ? "Uploading..." : "Upload resume"}
+            {uploading ? "Working..." : "Upload resume"}
             <input
               type="file"
               accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
@@ -718,8 +775,24 @@ export function ProfileForm() {
             />
           </label>
           {form.resume ? (
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              disabled={uploading}
+              onClick={() => void handleParseResume()}
+            >
+              Re-parse & apply
+            </Button>
+          ) : null}
+          {form.resume ? (
             <p className="text-sm text-muted-foreground">
-              Current: <span className="text-foreground">{form.resume.fileName}</span>
+              Current:{" "}
+              <span className="text-foreground">{form.resume.fileName}</span>
+              {typeof form.resume.atsScore === "number"
+                ? ` · ATS ${form.resume.atsScore}`
+                : ""}
+              {form.resume.parsedJson ? " · Parsed" : ""}
             </p>
           ) : (
             <p className="text-sm text-muted-foreground">No resume uploaded yet.</p>

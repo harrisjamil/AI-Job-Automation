@@ -22,7 +22,7 @@ export async function draftOutreachEmail(options: {
       resumes: {
         orderBy: { createdAt: "desc" },
         take: 1,
-        select: { fileName: true },
+        select: { fileName: true, parsedJson: true, atsScore: true },
       },
     },
   })
@@ -45,14 +45,38 @@ export async function draftOutreachEmail(options: {
     .map((item) => `${item.skill.name} (${item.level})`)
     .join(", ")
 
+  const parsedResume = user.resumes[0]?.parsedJson as
+    | {
+        summary?: string
+        skills?: string[]
+        techStack?: string[]
+        careerGoal?: string
+        projects?: Array<{ title?: string; techStack?: string[] }>
+      }
+    | null
+    | undefined
+
+  const resumeHighlights = [
+    parsedResume?.summary,
+    parsedResume?.skills?.slice(0, 12).join(", "),
+    parsedResume?.projects
+      ?.slice(0, 2)
+      .map((p) => p.title)
+      .filter(Boolean)
+      .join("; "),
+  ]
+    .filter(Boolean)
+    .join(" | ")
+
   const platform = await getActiveAiPlatform(options.userId)
   let subject = `Application interest — ${job.title}`
   let body = `Hi${contact?.name ? ` ${contact.name}` : ""},
 
 I am ${user.fullName}, and I am interested in the ${job.title} role${job.company ? ` at ${job.company}` : ""}.
 
-My background includes: ${skills || "relevant technical skills"}.
-${user.careerGoal ? `Goal: ${user.careerGoal}` : ""}
+My background includes: ${skills || parsedResume?.skills?.join(", ") || "relevant technical skills"}.
+${user.careerGoal || parsedResume?.careerGoal ? `Goal: ${user.careerGoal || parsedResume?.careerGoal}` : ""}
+${parsedResume?.summary ? `\n${parsedResume.summary.slice(0, 280)}` : ""}
 
 I would welcome a chance to discuss how I can help your team.
 
@@ -69,12 +93,14 @@ ${user.portfolioUrl ? `Portfolio: ${user.portfolioUrl}` : ""}`
         platform,
         maxTokens: 700,
         system:
-          "Write a concise professional job outreach email. Return JSON {subject, body} only. No placeholders. Keep under 180 words. Sound human, not salesy.",
+          "Write a concise professional job outreach email tailored to this specific role using the candidate resume highlights. Return JSON {subject, body} only. No placeholders. Keep under 180 words. Sound human, not salesy. Mirror 2-3 skills from the job.",
         prompt: `Candidate: ${user.fullName}
 Email: ${user.email}
 Experience years: ${user.experienceYears ?? "n/a"}
-Skills: ${skills || "n/a"}
-Career goal: ${user.careerGoal || "n/a"}
+Skills: ${skills || parsedResume?.skills?.join(", ") || "n/a"}
+Career goal: ${user.careerGoal || parsedResume?.careerGoal || "n/a"}
+Resume highlights: ${resumeHighlights || "n/a"}
+Resume ATS score: ${user.resumes[0]?.atsScore ?? "n/a"}
 Links: ${[user.linkedinUrl, user.githubUrl, user.portfolioUrl].filter(Boolean).join(" | ") || "n/a"}
 Resume on file: ${user.resumes[0]?.fileName ?? "yes"}
 

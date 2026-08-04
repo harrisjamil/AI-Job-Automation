@@ -53,6 +53,7 @@ export type JobMinAggregateOutputType = {
   matchScore: number | null
   postedAt: Date | null
   scrapedAt: Date | null
+  alertedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -76,6 +77,7 @@ export type JobMaxAggregateOutputType = {
   matchScore: number | null
   postedAt: Date | null
   scrapedAt: Date | null
+  alertedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -101,6 +103,7 @@ export type JobCountAggregateOutputType = {
   matchScore: number
   postedAt: number
   scrapedAt: number
+  alertedAt: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -134,6 +137,7 @@ export type JobMinAggregateInputType = {
   matchScore?: true
   postedAt?: true
   scrapedAt?: true
+  alertedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -157,6 +161,7 @@ export type JobMaxAggregateInputType = {
   matchScore?: true
   postedAt?: true
   scrapedAt?: true
+  alertedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -182,6 +187,7 @@ export type JobCountAggregateInputType = {
   matchScore?: true
   postedAt?: true
   scrapedAt?: true
+  alertedAt?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -294,6 +300,7 @@ export type JobGroupByOutputType = {
   matchScore: number
   postedAt: Date | null
   scrapedAt: Date
+  alertedAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: JobCountAggregateOutputType | null
@@ -342,6 +349,7 @@ export type JobWhereInput = {
   matchScore?: Prisma.IntFilter<"Job"> | number
   postedAt?: Prisma.DateTimeNullableFilter<"Job"> | Date | string | null
   scrapedAt?: Prisma.DateTimeFilter<"Job"> | Date | string
+  alertedAt?: Prisma.DateTimeNullableFilter<"Job"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Job"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Job"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -349,6 +357,8 @@ export type JobWhereInput = {
   companyRef?: Prisma.XOR<Prisma.CompanyNullableScalarRelationFilter, Prisma.CompanyWhereInput> | null
   contacts?: Prisma.JobContactListRelationFilter
   outreachEmails?: Prisma.OutreachEmailListRelationFilter
+  application?: Prisma.XOR<Prisma.JobApplicationNullableScalarRelationFilter, Prisma.JobApplicationWhereInput> | null
+  documents?: Prisma.JobDocumentListRelationFilter
 }
 
 export type JobOrderByWithRelationInput = {
@@ -372,6 +382,7 @@ export type JobOrderByWithRelationInput = {
   matchScore?: Prisma.SortOrder
   postedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   scrapedAt?: Prisma.SortOrder
+  alertedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -379,6 +390,8 @@ export type JobOrderByWithRelationInput = {
   companyRef?: Prisma.CompanyOrderByWithRelationInput
   contacts?: Prisma.JobContactOrderByRelationAggregateInput
   outreachEmails?: Prisma.OutreachEmailOrderByRelationAggregateInput
+  application?: Prisma.JobApplicationOrderByWithRelationInput
+  documents?: Prisma.JobDocumentOrderByRelationAggregateInput
 }
 
 export type JobWhereUniqueInput = Prisma.AtLeast<{
@@ -406,6 +419,7 @@ export type JobWhereUniqueInput = Prisma.AtLeast<{
   matchScore?: Prisma.IntFilter<"Job"> | number
   postedAt?: Prisma.DateTimeNullableFilter<"Job"> | Date | string | null
   scrapedAt?: Prisma.DateTimeFilter<"Job"> | Date | string
+  alertedAt?: Prisma.DateTimeNullableFilter<"Job"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Job"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Job"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -413,6 +427,8 @@ export type JobWhereUniqueInput = Prisma.AtLeast<{
   companyRef?: Prisma.XOR<Prisma.CompanyNullableScalarRelationFilter, Prisma.CompanyWhereInput> | null
   contacts?: Prisma.JobContactListRelationFilter
   outreachEmails?: Prisma.OutreachEmailListRelationFilter
+  application?: Prisma.XOR<Prisma.JobApplicationNullableScalarRelationFilter, Prisma.JobApplicationWhereInput> | null
+  documents?: Prisma.JobDocumentListRelationFilter
 }, "id" | "userId_source_externalId">
 
 export type JobOrderByWithAggregationInput = {
@@ -436,6 +452,7 @@ export type JobOrderByWithAggregationInput = {
   matchScore?: Prisma.SortOrder
   postedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   scrapedAt?: Prisma.SortOrder
+  alertedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.JobCountOrderByAggregateInput
@@ -469,6 +486,7 @@ export type JobScalarWhereWithAggregatesInput = {
   matchScore?: Prisma.IntWithAggregatesFilter<"Job"> | number
   postedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Job"> | Date | string | null
   scrapedAt?: Prisma.DateTimeWithAggregatesFilter<"Job"> | Date | string
+  alertedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Job"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Job"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Job"> | Date | string
 }
@@ -491,6 +509,7 @@ export type JobCreateInput = {
   matchScore?: number
   postedAt?: Date | string | null
   scrapedAt?: Date | string
+  alertedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutJobsInput
@@ -498,6 +517,8 @@ export type JobCreateInput = {
   companyRef?: Prisma.CompanyCreateNestedOneWithoutJobsInput
   contacts?: Prisma.JobContactCreateNestedManyWithoutJobInput
   outreachEmails?: Prisma.OutreachEmailCreateNestedManyWithoutJobInput
+  application?: Prisma.JobApplicationCreateNestedOneWithoutJobInput
+  documents?: Prisma.JobDocumentCreateNestedManyWithoutJobInput
 }
 
 export type JobUncheckedCreateInput = {
@@ -521,10 +542,13 @@ export type JobUncheckedCreateInput = {
   matchScore?: number
   postedAt?: Date | string | null
   scrapedAt?: Date | string
+  alertedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   contacts?: Prisma.JobContactUncheckedCreateNestedManyWithoutJobInput
   outreachEmails?: Prisma.OutreachEmailUncheckedCreateNestedManyWithoutJobInput
+  application?: Prisma.JobApplicationUncheckedCreateNestedOneWithoutJobInput
+  documents?: Prisma.JobDocumentUncheckedCreateNestedManyWithoutJobInput
 }
 
 export type JobUpdateInput = {
@@ -545,6 +569,7 @@ export type JobUpdateInput = {
   matchScore?: Prisma.IntFieldUpdateOperationsInput | number
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutJobsNestedInput
@@ -552,6 +577,8 @@ export type JobUpdateInput = {
   companyRef?: Prisma.CompanyUpdateOneWithoutJobsNestedInput
   contacts?: Prisma.JobContactUpdateManyWithoutJobNestedInput
   outreachEmails?: Prisma.OutreachEmailUpdateManyWithoutJobNestedInput
+  application?: Prisma.JobApplicationUpdateOneWithoutJobNestedInput
+  documents?: Prisma.JobDocumentUpdateManyWithoutJobNestedInput
 }
 
 export type JobUncheckedUpdateInput = {
@@ -575,10 +602,13 @@ export type JobUncheckedUpdateInput = {
   matchScore?: Prisma.IntFieldUpdateOperationsInput | number
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contacts?: Prisma.JobContactUncheckedUpdateManyWithoutJobNestedInput
   outreachEmails?: Prisma.OutreachEmailUncheckedUpdateManyWithoutJobNestedInput
+  application?: Prisma.JobApplicationUncheckedUpdateOneWithoutJobNestedInput
+  documents?: Prisma.JobDocumentUncheckedUpdateManyWithoutJobNestedInput
 }
 
 export type JobCreateManyInput = {
@@ -602,6 +632,7 @@ export type JobCreateManyInput = {
   matchScore?: number
   postedAt?: Date | string | null
   scrapedAt?: Date | string
+  alertedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -624,6 +655,7 @@ export type JobUpdateManyMutationInput = {
   matchScore?: Prisma.IntFieldUpdateOperationsInput | number
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -649,6 +681,7 @@ export type JobUncheckedUpdateManyInput = {
   matchScore?: Prisma.IntFieldUpdateOperationsInput | number
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -690,6 +723,7 @@ export type JobCountOrderByAggregateInput = {
   matchScore?: Prisma.SortOrder
   postedAt?: Prisma.SortOrder
   scrapedAt?: Prisma.SortOrder
+  alertedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -717,6 +751,7 @@ export type JobMaxOrderByAggregateInput = {
   matchScore?: Prisma.SortOrder
   postedAt?: Prisma.SortOrder
   scrapedAt?: Prisma.SortOrder
+  alertedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -740,6 +775,7 @@ export type JobMinOrderByAggregateInput = {
   matchScore?: Prisma.SortOrder
   postedAt?: Prisma.SortOrder
   scrapedAt?: Prisma.SortOrder
+  alertedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -897,6 +933,20 @@ export type JobUpdateskillsMatchedInput = {
   push?: string | string[]
 }
 
+export type JobCreateNestedOneWithoutApplicationInput = {
+  create?: Prisma.XOR<Prisma.JobCreateWithoutApplicationInput, Prisma.JobUncheckedCreateWithoutApplicationInput>
+  connectOrCreate?: Prisma.JobCreateOrConnectWithoutApplicationInput
+  connect?: Prisma.JobWhereUniqueInput
+}
+
+export type JobUpdateOneRequiredWithoutApplicationNestedInput = {
+  create?: Prisma.XOR<Prisma.JobCreateWithoutApplicationInput, Prisma.JobUncheckedCreateWithoutApplicationInput>
+  connectOrCreate?: Prisma.JobCreateOrConnectWithoutApplicationInput
+  upsert?: Prisma.JobUpsertWithoutApplicationInput
+  connect?: Prisma.JobWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.JobUpdateToOneWithWhereWithoutApplicationInput, Prisma.JobUpdateWithoutApplicationInput>, Prisma.JobUncheckedUpdateWithoutApplicationInput>
+}
+
 export type JobCreateNestedOneWithoutContactsInput = {
   create?: Prisma.XOR<Prisma.JobCreateWithoutContactsInput, Prisma.JobUncheckedCreateWithoutContactsInput>
   connectOrCreate?: Prisma.JobCreateOrConnectWithoutContactsInput
@@ -925,6 +975,20 @@ export type JobUpdateOneRequiredWithoutOutreachEmailsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.JobUpdateToOneWithWhereWithoutOutreachEmailsInput, Prisma.JobUpdateWithoutOutreachEmailsInput>, Prisma.JobUncheckedUpdateWithoutOutreachEmailsInput>
 }
 
+export type JobCreateNestedOneWithoutDocumentsInput = {
+  create?: Prisma.XOR<Prisma.JobCreateWithoutDocumentsInput, Prisma.JobUncheckedCreateWithoutDocumentsInput>
+  connectOrCreate?: Prisma.JobCreateOrConnectWithoutDocumentsInput
+  connect?: Prisma.JobWhereUniqueInput
+}
+
+export type JobUpdateOneRequiredWithoutDocumentsNestedInput = {
+  create?: Prisma.XOR<Prisma.JobCreateWithoutDocumentsInput, Prisma.JobUncheckedCreateWithoutDocumentsInput>
+  connectOrCreate?: Prisma.JobCreateOrConnectWithoutDocumentsInput
+  upsert?: Prisma.JobUpsertWithoutDocumentsInput
+  connect?: Prisma.JobWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.JobUpdateToOneWithWhereWithoutDocumentsInput, Prisma.JobUpdateWithoutDocumentsInput>, Prisma.JobUncheckedUpdateWithoutDocumentsInput>
+}
+
 export type JobCreateWithoutUserInput = {
   id?: string
   externalId: string
@@ -943,12 +1007,15 @@ export type JobCreateWithoutUserInput = {
   matchScore?: number
   postedAt?: Date | string | null
   scrapedAt?: Date | string
+  alertedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   crawlRun?: Prisma.CrawlRunCreateNestedOneWithoutJobsInput
   companyRef?: Prisma.CompanyCreateNestedOneWithoutJobsInput
   contacts?: Prisma.JobContactCreateNestedManyWithoutJobInput
   outreachEmails?: Prisma.OutreachEmailCreateNestedManyWithoutJobInput
+  application?: Prisma.JobApplicationCreateNestedOneWithoutJobInput
+  documents?: Prisma.JobDocumentCreateNestedManyWithoutJobInput
 }
 
 export type JobUncheckedCreateWithoutUserInput = {
@@ -971,10 +1038,13 @@ export type JobUncheckedCreateWithoutUserInput = {
   matchScore?: number
   postedAt?: Date | string | null
   scrapedAt?: Date | string
+  alertedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   contacts?: Prisma.JobContactUncheckedCreateNestedManyWithoutJobInput
   outreachEmails?: Prisma.OutreachEmailUncheckedCreateNestedManyWithoutJobInput
+  application?: Prisma.JobApplicationUncheckedCreateNestedOneWithoutJobInput
+  documents?: Prisma.JobDocumentUncheckedCreateNestedManyWithoutJobInput
 }
 
 export type JobCreateOrConnectWithoutUserInput = {
@@ -1027,6 +1097,7 @@ export type JobScalarWhereInput = {
   matchScore?: Prisma.IntFilter<"Job"> | number
   postedAt?: Prisma.DateTimeNullableFilter<"Job"> | Date | string | null
   scrapedAt?: Prisma.DateTimeFilter<"Job"> | Date | string
+  alertedAt?: Prisma.DateTimeNullableFilter<"Job"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Job"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Job"> | Date | string
 }
@@ -1049,12 +1120,15 @@ export type JobCreateWithoutCompanyRefInput = {
   matchScore?: number
   postedAt?: Date | string | null
   scrapedAt?: Date | string
+  alertedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutJobsInput
   crawlRun?: Prisma.CrawlRunCreateNestedOneWithoutJobsInput
   contacts?: Prisma.JobContactCreateNestedManyWithoutJobInput
   outreachEmails?: Prisma.OutreachEmailCreateNestedManyWithoutJobInput
+  application?: Prisma.JobApplicationCreateNestedOneWithoutJobInput
+  documents?: Prisma.JobDocumentCreateNestedManyWithoutJobInput
 }
 
 export type JobUncheckedCreateWithoutCompanyRefInput = {
@@ -1077,10 +1151,13 @@ export type JobUncheckedCreateWithoutCompanyRefInput = {
   matchScore?: number
   postedAt?: Date | string | null
   scrapedAt?: Date | string
+  alertedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   contacts?: Prisma.JobContactUncheckedCreateNestedManyWithoutJobInput
   outreachEmails?: Prisma.OutreachEmailUncheckedCreateNestedManyWithoutJobInput
+  application?: Prisma.JobApplicationUncheckedCreateNestedOneWithoutJobInput
+  documents?: Prisma.JobDocumentUncheckedCreateNestedManyWithoutJobInput
 }
 
 export type JobCreateOrConnectWithoutCompanyRefInput = {
@@ -1127,12 +1204,15 @@ export type JobCreateWithoutCrawlRunInput = {
   matchScore?: number
   postedAt?: Date | string | null
   scrapedAt?: Date | string
+  alertedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutJobsInput
   companyRef?: Prisma.CompanyCreateNestedOneWithoutJobsInput
   contacts?: Prisma.JobContactCreateNestedManyWithoutJobInput
   outreachEmails?: Prisma.OutreachEmailCreateNestedManyWithoutJobInput
+  application?: Prisma.JobApplicationCreateNestedOneWithoutJobInput
+  documents?: Prisma.JobDocumentCreateNestedManyWithoutJobInput
 }
 
 export type JobUncheckedCreateWithoutCrawlRunInput = {
@@ -1155,10 +1235,13 @@ export type JobUncheckedCreateWithoutCrawlRunInput = {
   matchScore?: number
   postedAt?: Date | string | null
   scrapedAt?: Date | string
+  alertedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   contacts?: Prisma.JobContactUncheckedCreateNestedManyWithoutJobInput
   outreachEmails?: Prisma.OutreachEmailUncheckedCreateNestedManyWithoutJobInput
+  application?: Prisma.JobApplicationUncheckedCreateNestedOneWithoutJobInput
+  documents?: Prisma.JobDocumentUncheckedCreateNestedManyWithoutJobInput
 }
 
 export type JobCreateOrConnectWithoutCrawlRunInput = {
@@ -1187,6 +1270,138 @@ export type JobUpdateManyWithWhereWithoutCrawlRunInput = {
   data: Prisma.XOR<Prisma.JobUpdateManyMutationInput, Prisma.JobUncheckedUpdateManyWithoutCrawlRunInput>
 }
 
+export type JobCreateWithoutApplicationInput = {
+  id?: string
+  externalId: string
+  source: string
+  sourceCategory?: string
+  title: string
+  company?: string | null
+  location?: string | null
+  isRemote?: boolean
+  url: string
+  description?: string | null
+  salary?: string | null
+  tags?: Prisma.JobCreatetagsInput | string[]
+  fingerprint?: string | null
+  skillsMatched?: Prisma.JobCreateskillsMatchedInput | string[]
+  matchScore?: number
+  postedAt?: Date | string | null
+  scrapedAt?: Date | string
+  alertedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutJobsInput
+  crawlRun?: Prisma.CrawlRunCreateNestedOneWithoutJobsInput
+  companyRef?: Prisma.CompanyCreateNestedOneWithoutJobsInput
+  contacts?: Prisma.JobContactCreateNestedManyWithoutJobInput
+  outreachEmails?: Prisma.OutreachEmailCreateNestedManyWithoutJobInput
+  documents?: Prisma.JobDocumentCreateNestedManyWithoutJobInput
+}
+
+export type JobUncheckedCreateWithoutApplicationInput = {
+  id?: string
+  userId: string
+  crawlRunId?: string | null
+  companyId?: string | null
+  externalId: string
+  source: string
+  sourceCategory?: string
+  title: string
+  company?: string | null
+  location?: string | null
+  isRemote?: boolean
+  url: string
+  description?: string | null
+  salary?: string | null
+  tags?: Prisma.JobCreatetagsInput | string[]
+  fingerprint?: string | null
+  skillsMatched?: Prisma.JobCreateskillsMatchedInput | string[]
+  matchScore?: number
+  postedAt?: Date | string | null
+  scrapedAt?: Date | string
+  alertedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  contacts?: Prisma.JobContactUncheckedCreateNestedManyWithoutJobInput
+  outreachEmails?: Prisma.OutreachEmailUncheckedCreateNestedManyWithoutJobInput
+  documents?: Prisma.JobDocumentUncheckedCreateNestedManyWithoutJobInput
+}
+
+export type JobCreateOrConnectWithoutApplicationInput = {
+  where: Prisma.JobWhereUniqueInput
+  create: Prisma.XOR<Prisma.JobCreateWithoutApplicationInput, Prisma.JobUncheckedCreateWithoutApplicationInput>
+}
+
+export type JobUpsertWithoutApplicationInput = {
+  update: Prisma.XOR<Prisma.JobUpdateWithoutApplicationInput, Prisma.JobUncheckedUpdateWithoutApplicationInput>
+  create: Prisma.XOR<Prisma.JobCreateWithoutApplicationInput, Prisma.JobUncheckedCreateWithoutApplicationInput>
+  where?: Prisma.JobWhereInput
+}
+
+export type JobUpdateToOneWithWhereWithoutApplicationInput = {
+  where?: Prisma.JobWhereInput
+  data: Prisma.XOR<Prisma.JobUpdateWithoutApplicationInput, Prisma.JobUncheckedUpdateWithoutApplicationInput>
+}
+
+export type JobUpdateWithoutApplicationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalId?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  company?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRemote?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  salary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.JobUpdatetagsInput | string[]
+  fingerprint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skillsMatched?: Prisma.JobUpdateskillsMatchedInput | string[]
+  matchScore?: Prisma.IntFieldUpdateOperationsInput | number
+  postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutJobsNestedInput
+  crawlRun?: Prisma.CrawlRunUpdateOneWithoutJobsNestedInput
+  companyRef?: Prisma.CompanyUpdateOneWithoutJobsNestedInput
+  contacts?: Prisma.JobContactUpdateManyWithoutJobNestedInput
+  outreachEmails?: Prisma.OutreachEmailUpdateManyWithoutJobNestedInput
+  documents?: Prisma.JobDocumentUpdateManyWithoutJobNestedInput
+}
+
+export type JobUncheckedUpdateWithoutApplicationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  crawlRunId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalId?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  company?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRemote?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  salary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.JobUpdatetagsInput | string[]
+  fingerprint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skillsMatched?: Prisma.JobUpdateskillsMatchedInput | string[]
+  matchScore?: Prisma.IntFieldUpdateOperationsInput | number
+  postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  contacts?: Prisma.JobContactUncheckedUpdateManyWithoutJobNestedInput
+  outreachEmails?: Prisma.OutreachEmailUncheckedUpdateManyWithoutJobNestedInput
+  documents?: Prisma.JobDocumentUncheckedUpdateManyWithoutJobNestedInput
+}
+
 export type JobCreateWithoutContactsInput = {
   id?: string
   externalId: string
@@ -1205,12 +1420,15 @@ export type JobCreateWithoutContactsInput = {
   matchScore?: number
   postedAt?: Date | string | null
   scrapedAt?: Date | string
+  alertedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutJobsInput
   crawlRun?: Prisma.CrawlRunCreateNestedOneWithoutJobsInput
   companyRef?: Prisma.CompanyCreateNestedOneWithoutJobsInput
   outreachEmails?: Prisma.OutreachEmailCreateNestedManyWithoutJobInput
+  application?: Prisma.JobApplicationCreateNestedOneWithoutJobInput
+  documents?: Prisma.JobDocumentCreateNestedManyWithoutJobInput
 }
 
 export type JobUncheckedCreateWithoutContactsInput = {
@@ -1234,9 +1452,12 @@ export type JobUncheckedCreateWithoutContactsInput = {
   matchScore?: number
   postedAt?: Date | string | null
   scrapedAt?: Date | string
+  alertedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   outreachEmails?: Prisma.OutreachEmailUncheckedCreateNestedManyWithoutJobInput
+  application?: Prisma.JobApplicationUncheckedCreateNestedOneWithoutJobInput
+  documents?: Prisma.JobDocumentUncheckedCreateNestedManyWithoutJobInput
 }
 
 export type JobCreateOrConnectWithoutContactsInput = {
@@ -1273,12 +1494,15 @@ export type JobUpdateWithoutContactsInput = {
   matchScore?: Prisma.IntFieldUpdateOperationsInput | number
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutJobsNestedInput
   crawlRun?: Prisma.CrawlRunUpdateOneWithoutJobsNestedInput
   companyRef?: Prisma.CompanyUpdateOneWithoutJobsNestedInput
   outreachEmails?: Prisma.OutreachEmailUpdateManyWithoutJobNestedInput
+  application?: Prisma.JobApplicationUpdateOneWithoutJobNestedInput
+  documents?: Prisma.JobDocumentUpdateManyWithoutJobNestedInput
 }
 
 export type JobUncheckedUpdateWithoutContactsInput = {
@@ -1302,9 +1526,12 @@ export type JobUncheckedUpdateWithoutContactsInput = {
   matchScore?: Prisma.IntFieldUpdateOperationsInput | number
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   outreachEmails?: Prisma.OutreachEmailUncheckedUpdateManyWithoutJobNestedInput
+  application?: Prisma.JobApplicationUncheckedUpdateOneWithoutJobNestedInput
+  documents?: Prisma.JobDocumentUncheckedUpdateManyWithoutJobNestedInput
 }
 
 export type JobCreateWithoutOutreachEmailsInput = {
@@ -1325,12 +1552,15 @@ export type JobCreateWithoutOutreachEmailsInput = {
   matchScore?: number
   postedAt?: Date | string | null
   scrapedAt?: Date | string
+  alertedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutJobsInput
   crawlRun?: Prisma.CrawlRunCreateNestedOneWithoutJobsInput
   companyRef?: Prisma.CompanyCreateNestedOneWithoutJobsInput
   contacts?: Prisma.JobContactCreateNestedManyWithoutJobInput
+  application?: Prisma.JobApplicationCreateNestedOneWithoutJobInput
+  documents?: Prisma.JobDocumentCreateNestedManyWithoutJobInput
 }
 
 export type JobUncheckedCreateWithoutOutreachEmailsInput = {
@@ -1354,9 +1584,12 @@ export type JobUncheckedCreateWithoutOutreachEmailsInput = {
   matchScore?: number
   postedAt?: Date | string | null
   scrapedAt?: Date | string
+  alertedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   contacts?: Prisma.JobContactUncheckedCreateNestedManyWithoutJobInput
+  application?: Prisma.JobApplicationUncheckedCreateNestedOneWithoutJobInput
+  documents?: Prisma.JobDocumentUncheckedCreateNestedManyWithoutJobInput
 }
 
 export type JobCreateOrConnectWithoutOutreachEmailsInput = {
@@ -1393,12 +1626,15 @@ export type JobUpdateWithoutOutreachEmailsInput = {
   matchScore?: Prisma.IntFieldUpdateOperationsInput | number
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutJobsNestedInput
   crawlRun?: Prisma.CrawlRunUpdateOneWithoutJobsNestedInput
   companyRef?: Prisma.CompanyUpdateOneWithoutJobsNestedInput
   contacts?: Prisma.JobContactUpdateManyWithoutJobNestedInput
+  application?: Prisma.JobApplicationUpdateOneWithoutJobNestedInput
+  documents?: Prisma.JobDocumentUpdateManyWithoutJobNestedInput
 }
 
 export type JobUncheckedUpdateWithoutOutreachEmailsInput = {
@@ -1422,9 +1658,144 @@ export type JobUncheckedUpdateWithoutOutreachEmailsInput = {
   matchScore?: Prisma.IntFieldUpdateOperationsInput | number
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contacts?: Prisma.JobContactUncheckedUpdateManyWithoutJobNestedInput
+  application?: Prisma.JobApplicationUncheckedUpdateOneWithoutJobNestedInput
+  documents?: Prisma.JobDocumentUncheckedUpdateManyWithoutJobNestedInput
+}
+
+export type JobCreateWithoutDocumentsInput = {
+  id?: string
+  externalId: string
+  source: string
+  sourceCategory?: string
+  title: string
+  company?: string | null
+  location?: string | null
+  isRemote?: boolean
+  url: string
+  description?: string | null
+  salary?: string | null
+  tags?: Prisma.JobCreatetagsInput | string[]
+  fingerprint?: string | null
+  skillsMatched?: Prisma.JobCreateskillsMatchedInput | string[]
+  matchScore?: number
+  postedAt?: Date | string | null
+  scrapedAt?: Date | string
+  alertedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutJobsInput
+  crawlRun?: Prisma.CrawlRunCreateNestedOneWithoutJobsInput
+  companyRef?: Prisma.CompanyCreateNestedOneWithoutJobsInput
+  contacts?: Prisma.JobContactCreateNestedManyWithoutJobInput
+  outreachEmails?: Prisma.OutreachEmailCreateNestedManyWithoutJobInput
+  application?: Prisma.JobApplicationCreateNestedOneWithoutJobInput
+}
+
+export type JobUncheckedCreateWithoutDocumentsInput = {
+  id?: string
+  userId: string
+  crawlRunId?: string | null
+  companyId?: string | null
+  externalId: string
+  source: string
+  sourceCategory?: string
+  title: string
+  company?: string | null
+  location?: string | null
+  isRemote?: boolean
+  url: string
+  description?: string | null
+  salary?: string | null
+  tags?: Prisma.JobCreatetagsInput | string[]
+  fingerprint?: string | null
+  skillsMatched?: Prisma.JobCreateskillsMatchedInput | string[]
+  matchScore?: number
+  postedAt?: Date | string | null
+  scrapedAt?: Date | string
+  alertedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  contacts?: Prisma.JobContactUncheckedCreateNestedManyWithoutJobInput
+  outreachEmails?: Prisma.OutreachEmailUncheckedCreateNestedManyWithoutJobInput
+  application?: Prisma.JobApplicationUncheckedCreateNestedOneWithoutJobInput
+}
+
+export type JobCreateOrConnectWithoutDocumentsInput = {
+  where: Prisma.JobWhereUniqueInput
+  create: Prisma.XOR<Prisma.JobCreateWithoutDocumentsInput, Prisma.JobUncheckedCreateWithoutDocumentsInput>
+}
+
+export type JobUpsertWithoutDocumentsInput = {
+  update: Prisma.XOR<Prisma.JobUpdateWithoutDocumentsInput, Prisma.JobUncheckedUpdateWithoutDocumentsInput>
+  create: Prisma.XOR<Prisma.JobCreateWithoutDocumentsInput, Prisma.JobUncheckedCreateWithoutDocumentsInput>
+  where?: Prisma.JobWhereInput
+}
+
+export type JobUpdateToOneWithWhereWithoutDocumentsInput = {
+  where?: Prisma.JobWhereInput
+  data: Prisma.XOR<Prisma.JobUpdateWithoutDocumentsInput, Prisma.JobUncheckedUpdateWithoutDocumentsInput>
+}
+
+export type JobUpdateWithoutDocumentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  externalId?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  company?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRemote?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  salary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.JobUpdatetagsInput | string[]
+  fingerprint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skillsMatched?: Prisma.JobUpdateskillsMatchedInput | string[]
+  matchScore?: Prisma.IntFieldUpdateOperationsInput | number
+  postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutJobsNestedInput
+  crawlRun?: Prisma.CrawlRunUpdateOneWithoutJobsNestedInput
+  companyRef?: Prisma.CompanyUpdateOneWithoutJobsNestedInput
+  contacts?: Prisma.JobContactUpdateManyWithoutJobNestedInput
+  outreachEmails?: Prisma.OutreachEmailUpdateManyWithoutJobNestedInput
+  application?: Prisma.JobApplicationUpdateOneWithoutJobNestedInput
+}
+
+export type JobUncheckedUpdateWithoutDocumentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  crawlRunId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalId?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  company?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRemote?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  salary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.JobUpdatetagsInput | string[]
+  fingerprint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skillsMatched?: Prisma.JobUpdateskillsMatchedInput | string[]
+  matchScore?: Prisma.IntFieldUpdateOperationsInput | number
+  postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  contacts?: Prisma.JobContactUncheckedUpdateManyWithoutJobNestedInput
+  outreachEmails?: Prisma.OutreachEmailUncheckedUpdateManyWithoutJobNestedInput
+  application?: Prisma.JobApplicationUncheckedUpdateOneWithoutJobNestedInput
 }
 
 export type JobCreateManyUserInput = {
@@ -1447,6 +1818,7 @@ export type JobCreateManyUserInput = {
   matchScore?: number
   postedAt?: Date | string | null
   scrapedAt?: Date | string
+  alertedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1469,12 +1841,15 @@ export type JobUpdateWithoutUserInput = {
   matchScore?: Prisma.IntFieldUpdateOperationsInput | number
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   crawlRun?: Prisma.CrawlRunUpdateOneWithoutJobsNestedInput
   companyRef?: Prisma.CompanyUpdateOneWithoutJobsNestedInput
   contacts?: Prisma.JobContactUpdateManyWithoutJobNestedInput
   outreachEmails?: Prisma.OutreachEmailUpdateManyWithoutJobNestedInput
+  application?: Prisma.JobApplicationUpdateOneWithoutJobNestedInput
+  documents?: Prisma.JobDocumentUpdateManyWithoutJobNestedInput
 }
 
 export type JobUncheckedUpdateWithoutUserInput = {
@@ -1497,10 +1872,13 @@ export type JobUncheckedUpdateWithoutUserInput = {
   matchScore?: Prisma.IntFieldUpdateOperationsInput | number
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contacts?: Prisma.JobContactUncheckedUpdateManyWithoutJobNestedInput
   outreachEmails?: Prisma.OutreachEmailUncheckedUpdateManyWithoutJobNestedInput
+  application?: Prisma.JobApplicationUncheckedUpdateOneWithoutJobNestedInput
+  documents?: Prisma.JobDocumentUncheckedUpdateManyWithoutJobNestedInput
 }
 
 export type JobUncheckedUpdateManyWithoutUserInput = {
@@ -1523,6 +1901,7 @@ export type JobUncheckedUpdateManyWithoutUserInput = {
   matchScore?: Prisma.IntFieldUpdateOperationsInput | number
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1547,6 +1926,7 @@ export type JobCreateManyCompanyRefInput = {
   matchScore?: number
   postedAt?: Date | string | null
   scrapedAt?: Date | string
+  alertedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1569,12 +1949,15 @@ export type JobUpdateWithoutCompanyRefInput = {
   matchScore?: Prisma.IntFieldUpdateOperationsInput | number
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutJobsNestedInput
   crawlRun?: Prisma.CrawlRunUpdateOneWithoutJobsNestedInput
   contacts?: Prisma.JobContactUpdateManyWithoutJobNestedInput
   outreachEmails?: Prisma.OutreachEmailUpdateManyWithoutJobNestedInput
+  application?: Prisma.JobApplicationUpdateOneWithoutJobNestedInput
+  documents?: Prisma.JobDocumentUpdateManyWithoutJobNestedInput
 }
 
 export type JobUncheckedUpdateWithoutCompanyRefInput = {
@@ -1597,10 +1980,13 @@ export type JobUncheckedUpdateWithoutCompanyRefInput = {
   matchScore?: Prisma.IntFieldUpdateOperationsInput | number
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contacts?: Prisma.JobContactUncheckedUpdateManyWithoutJobNestedInput
   outreachEmails?: Prisma.OutreachEmailUncheckedUpdateManyWithoutJobNestedInput
+  application?: Prisma.JobApplicationUncheckedUpdateOneWithoutJobNestedInput
+  documents?: Prisma.JobDocumentUncheckedUpdateManyWithoutJobNestedInput
 }
 
 export type JobUncheckedUpdateManyWithoutCompanyRefInput = {
@@ -1623,6 +2009,7 @@ export type JobUncheckedUpdateManyWithoutCompanyRefInput = {
   matchScore?: Prisma.IntFieldUpdateOperationsInput | number
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1647,6 +2034,7 @@ export type JobCreateManyCrawlRunInput = {
   matchScore?: number
   postedAt?: Date | string | null
   scrapedAt?: Date | string
+  alertedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1669,12 +2057,15 @@ export type JobUpdateWithoutCrawlRunInput = {
   matchScore?: Prisma.IntFieldUpdateOperationsInput | number
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutJobsNestedInput
   companyRef?: Prisma.CompanyUpdateOneWithoutJobsNestedInput
   contacts?: Prisma.JobContactUpdateManyWithoutJobNestedInput
   outreachEmails?: Prisma.OutreachEmailUpdateManyWithoutJobNestedInput
+  application?: Prisma.JobApplicationUpdateOneWithoutJobNestedInput
+  documents?: Prisma.JobDocumentUpdateManyWithoutJobNestedInput
 }
 
 export type JobUncheckedUpdateWithoutCrawlRunInput = {
@@ -1697,10 +2088,13 @@ export type JobUncheckedUpdateWithoutCrawlRunInput = {
   matchScore?: Prisma.IntFieldUpdateOperationsInput | number
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contacts?: Prisma.JobContactUncheckedUpdateManyWithoutJobNestedInput
   outreachEmails?: Prisma.OutreachEmailUncheckedUpdateManyWithoutJobNestedInput
+  application?: Prisma.JobApplicationUncheckedUpdateOneWithoutJobNestedInput
+  documents?: Prisma.JobDocumentUncheckedUpdateManyWithoutJobNestedInput
 }
 
 export type JobUncheckedUpdateManyWithoutCrawlRunInput = {
@@ -1723,6 +2117,7 @@ export type JobUncheckedUpdateManyWithoutCrawlRunInput = {
   matchScore?: Prisma.IntFieldUpdateOperationsInput | number
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1735,11 +2130,13 @@ export type JobUncheckedUpdateManyWithoutCrawlRunInput = {
 export type JobCountOutputType = {
   contacts: number
   outreachEmails: number
+  documents: number
 }
 
 export type JobCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   contacts?: boolean | JobCountOutputTypeCountContactsArgs
   outreachEmails?: boolean | JobCountOutputTypeCountOutreachEmailsArgs
+  documents?: boolean | JobCountOutputTypeCountDocumentsArgs
 }
 
 /**
@@ -1766,6 +2163,13 @@ export type JobCountOutputTypeCountOutreachEmailsArgs<ExtArgs extends runtime.Ty
   where?: Prisma.OutreachEmailWhereInput
 }
 
+/**
+ * JobCountOutputType without action
+ */
+export type JobCountOutputTypeCountDocumentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.JobDocumentWhereInput
+}
+
 
 export type JobSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1788,6 +2192,7 @@ export type JobSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   matchScore?: boolean
   postedAt?: boolean
   scrapedAt?: boolean
+  alertedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1795,6 +2200,8 @@ export type JobSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   companyRef?: boolean | Prisma.Job$companyRefArgs<ExtArgs>
   contacts?: boolean | Prisma.Job$contactsArgs<ExtArgs>
   outreachEmails?: boolean | Prisma.Job$outreachEmailsArgs<ExtArgs>
+  application?: boolean | Prisma.Job$applicationArgs<ExtArgs>
+  documents?: boolean | Prisma.Job$documentsArgs<ExtArgs>
   _count?: boolean | Prisma.JobCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["job"]>
 
@@ -1819,6 +2226,7 @@ export type JobSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extension
   matchScore?: boolean
   postedAt?: boolean
   scrapedAt?: boolean
+  alertedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1847,6 +2255,7 @@ export type JobSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extension
   matchScore?: boolean
   postedAt?: boolean
   scrapedAt?: boolean
+  alertedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1875,17 +2284,20 @@ export type JobSelectScalar = {
   matchScore?: boolean
   postedAt?: boolean
   scrapedAt?: boolean
+  alertedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type JobOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "crawlRunId" | "companyId" | "externalId" | "source" | "sourceCategory" | "title" | "company" | "location" | "isRemote" | "url" | "description" | "salary" | "tags" | "fingerprint" | "skillsMatched" | "matchScore" | "postedAt" | "scrapedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["job"]>
+export type JobOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "crawlRunId" | "companyId" | "externalId" | "source" | "sourceCategory" | "title" | "company" | "location" | "isRemote" | "url" | "description" | "salary" | "tags" | "fingerprint" | "skillsMatched" | "matchScore" | "postedAt" | "scrapedAt" | "alertedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["job"]>
 export type JobInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   crawlRun?: boolean | Prisma.Job$crawlRunArgs<ExtArgs>
   companyRef?: boolean | Prisma.Job$companyRefArgs<ExtArgs>
   contacts?: boolean | Prisma.Job$contactsArgs<ExtArgs>
   outreachEmails?: boolean | Prisma.Job$outreachEmailsArgs<ExtArgs>
+  application?: boolean | Prisma.Job$applicationArgs<ExtArgs>
+  documents?: boolean | Prisma.Job$documentsArgs<ExtArgs>
   _count?: boolean | Prisma.JobCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type JobIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1907,6 +2319,8 @@ export type $JobPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     companyRef: Prisma.$CompanyPayload<ExtArgs> | null
     contacts: Prisma.$JobContactPayload<ExtArgs>[]
     outreachEmails: Prisma.$OutreachEmailPayload<ExtArgs>[]
+    application: Prisma.$JobApplicationPayload<ExtArgs> | null
+    documents: Prisma.$JobDocumentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1929,6 +2343,7 @@ export type $JobPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     matchScore: number
     postedAt: Date | null
     scrapedAt: Date
+    alertedAt: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["job"]>
@@ -2330,6 +2745,8 @@ export interface Prisma__JobClient<T, Null = never, ExtArgs extends runtime.Type
   companyRef<T extends Prisma.Job$companyRefArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Job$companyRefArgs<ExtArgs>>): Prisma.Prisma__CompanyClient<runtime.Types.Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   contacts<T extends Prisma.Job$contactsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Job$contactsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JobContactPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   outreachEmails<T extends Prisma.Job$outreachEmailsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Job$outreachEmailsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OutreachEmailPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  application<T extends Prisma.Job$applicationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Job$applicationArgs<ExtArgs>>): Prisma.Prisma__JobApplicationClient<runtime.Types.Result.GetResult<Prisma.$JobApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  documents<T extends Prisma.Job$documentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Job$documentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JobDocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2379,6 +2796,7 @@ export interface JobFieldRefs {
   readonly matchScore: Prisma.FieldRef<"Job", 'Int'>
   readonly postedAt: Prisma.FieldRef<"Job", 'DateTime'>
   readonly scrapedAt: Prisma.FieldRef<"Job", 'DateTime'>
+  readonly alertedAt: Prisma.FieldRef<"Job", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Job", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Job", 'DateTime'>
 }
@@ -2865,6 +3283,49 @@ export type Job$outreachEmailsArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.OutreachEmailScalarFieldEnum | Prisma.OutreachEmailScalarFieldEnum[]
+}
+
+/**
+ * Job.application
+ */
+export type Job$applicationArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the JobApplication
+   */
+  select?: Prisma.JobApplicationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the JobApplication
+   */
+  omit?: Prisma.JobApplicationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.JobApplicationInclude<ExtArgs> | null
+  where?: Prisma.JobApplicationWhereInput
+}
+
+/**
+ * Job.documents
+ */
+export type Job$documentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the JobDocument
+   */
+  select?: Prisma.JobDocumentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the JobDocument
+   */
+  omit?: Prisma.JobDocumentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.JobDocumentInclude<ExtArgs> | null
+  where?: Prisma.JobDocumentWhereInput
+  orderBy?: Prisma.JobDocumentOrderByWithRelationInput | Prisma.JobDocumentOrderByWithRelationInput[]
+  cursor?: Prisma.JobDocumentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.JobDocumentScalarFieldEnum | Prisma.JobDocumentScalarFieldEnum[]
 }
 
 /**

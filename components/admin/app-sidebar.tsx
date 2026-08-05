@@ -14,6 +14,8 @@ import {
   ClipboardListIcon,
   RadarIcon,
   MessageSquareIcon,
+  ChartColumnIcon,
+  ListChecksIcon,
 } from "lucide-react"
 import { BrandLogo } from "@/components/brand-logo"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -73,6 +75,16 @@ const mainNav = [
     title: "Applications",
     url: "/admin/applications",
     icon: ClipboardListIcon,
+  },
+  {
+    title: "Apply queue",
+    url: "/admin/apply-queue",
+    icon: ListChecksIcon,
+  },
+  {
+    title: "Analytics",
+    url: "/admin/analytics",
+    icon: ChartColumnIcon,
   },
   {
     title: "Assistant",

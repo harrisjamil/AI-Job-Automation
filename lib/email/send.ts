@@ -1,11 +1,6 @@
 import nodemailer from "nodemailer"
+import { decryptSecret, maskRevealedSecret } from "@/lib/crypto/secrets"
 import { prisma } from "@/lib/prisma"
-
-function maskSecret(value: string | null | undefined) {
-  if (!value) return null
-  if (value.length <= 8) return "••••••••"
-  return `${value.slice(0, 4)}••••${value.slice(-4)}`
-}
 
 export function serializeEmailAccount(
   account: {
@@ -20,6 +15,13 @@ export function serializeEmailAccount(
     smtpPass: string | null
     smtpSecure: boolean
     isActive: boolean
+    imapHost?: string | null
+    imapPort?: number | null
+    imapUser?: string | null
+    imapPass?: string | null
+    imapSecure?: boolean
+    replySyncEnabled?: boolean
+    lastReplySyncAt?: Date | null
   } | null
 ) {
   if (!account) return null
@@ -28,7 +30,7 @@ export function serializeEmailAccount(
     provider: account.provider,
     fromEmail: account.fromEmail,
     fromName: account.fromName,
-    apiKeyMasked: maskSecret(account.apiKey),
+    apiKeyMasked: maskRevealedSecret(account.apiKey),
     hasApiKey: Boolean(account.apiKey),
     smtpHost: account.smtpHost,
     smtpPort: account.smtpPort,
@@ -36,6 +38,13 @@ export function serializeEmailAccount(
     hasSmtpPass: Boolean(account.smtpPass),
     smtpSecure: account.smtpSecure,
     isActive: account.isActive,
+    imapHost: account.imapHost ?? null,
+    imapPort: account.imapPort ?? null,
+    imapUser: account.imapUser ?? null,
+    hasImapPass: Boolean(account.imapPass),
+    imapSecure: account.imapSecure ?? true,
+    replySyncEnabled: account.replySyncEnabled ?? false,
+    lastReplySyncAt: account.lastReplySyncAt ?? null,
   }
 }
 
@@ -62,7 +71,8 @@ export async function sendOutreachEmail(outreachId: string, userId: string) {
     account?.fromEmail ||
     process.env.RESEND_FROM_EMAIL ||
     process.env.SMTP_FROM_EMAIL
-  const fromName = account?.fromName || process.env.RESEND_FROM_NAME || "Job Outreach"
+  const fromName =
+    account?.fromName || process.env.RESEND_FROM_NAME || "Job Outreach"
 
   if (!provider || !fromEmail) {
     throw new Error(
@@ -79,7 +89,7 @@ export async function sendOutreachEmail(outreachId: string, userId: string) {
     let providerMessageId: string | null = null
 
     if (provider === "resend") {
-      const apiKey = account?.apiKey || envResendKey
+      const apiKey = decryptSecret(account?.apiKey) || envResendKey
       if (!apiKey) {
         throw new Error("Resend API key is missing")
       }
@@ -117,7 +127,8 @@ export async function sendOutreachEmail(outreachId: string, userId: string) {
       const host = account?.smtpHost || process.env.SMTP_HOST
       const port = account?.smtpPort || Number(process.env.SMTP_PORT || 587)
       const user = account?.smtpUser || process.env.SMTP_USER
-      const pass = account?.smtpPass || process.env.SMTP_PASS
+      const pass =
+        decryptSecret(account?.smtpPass) || process.env.SMTP_PASS || null
       const secure =
         account?.smtpSecure ?? process.env.SMTP_SECURE === "true"
 

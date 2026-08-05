@@ -1,6 +1,7 @@
 "use client"
 
 import { EmailSettingsForm } from "@/components/admin/email-settings-form"
+import { ExtensionTokenPanel } from "@/components/admin/extension-token-panel"
 
 export default function SettingsPage() {
   return (
@@ -8,10 +9,11 @@ export default function SettingsPage() {
       <div>
         <h2 className="text-2xl font-semibold tracking-tight">Settings</h2>
         <p className="text-muted-foreground">
-          Configure outbound email and default crawl preferences for worldwide
-          job discovery.
+          Configure email, crawl health, alerts (in-app / Slack), auto-apply,
+          IMAP reply sync, and the Chrome form-fill extension.
         </p>
       </div>
+      <ExtensionTokenPanel />
       <EmailSettingsForm />
     </div>
   )

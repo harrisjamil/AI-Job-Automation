@@ -1,6 +1,11 @@
 import type { Prisma } from "@/generated/prisma/client"
+import {
+  buildCustomAnswers,
+  type CustomAnswer,
+} from "@/lib/auto-apply-answers"
 import { draftCoverLetter } from "@/lib/documents/cover-letter"
 import { draftTailoredResume } from "@/lib/documents/tailor-resume"
+import type { GapAnalysis } from "@/lib/jobs/gap-analysis"
 import { prisma } from "@/lib/prisma"
 
 export type ApplyPackage = {
@@ -38,6 +43,8 @@ export type ApplyPackage = {
     country: string | null
     city: string | null
   }
+  /** Answers for common ATS custom questions */
+  customAnswers: CustomAnswer[]
   checklist: string[]
 }
 
@@ -53,8 +60,9 @@ function buildChecklist(pkg: ApplyPackage): string[] {
     pkg.profileAnswers.expectedSalary
       ? `Salary expectation: ${pkg.profileAnswers.expectedSalary}${pkg.profileAnswers.salaryPeriod ? ` / ${pkg.profileAnswers.salaryPeriod}` : ""}`
       : "Fill salary expectation if asked",
+    "Upload the resume PDF if the form has a file field (extension can assist)",
     "Submit the application on the employer site",
-    "Confirm status is Applied in the tracker (already updated if auto-mark is on)",
+    "Click Mark submitted in the Chrome extension (or confirm Applied in the tracker)",
   ]
 }
 
@@ -146,7 +154,39 @@ export async function runAutoApply(options: {
         workPreference: true,
         country: true,
         city: true,
+        careerGoal: true,
+        preferredTechStack: true,
+        englishLevel: true,
+        degree: true,
+        university: true,
+        willingOverlapUsEu: true,
+        skills: {
+          select: { skill: { select: { name: true } } },
+        },
       },
+    })
+
+    const gap = job.gapAnalysisJson as GapAnalysis | null
+
+    const customAnswers = buildCustomAnswers({
+      profile: {
+        fullName: user.fullName,
+        primaryRole: user.primaryRole,
+        experienceYears: user.experienceYears,
+        careerGoal: user.careerGoal,
+        workPreference: user.workPreference,
+        noticePeriod: user.noticePeriod,
+        expectedSalary: user.expectedSalary,
+        salaryPeriod: user.salaryPeriod,
+        preferredTechStack: user.preferredTechStack ?? [],
+        englishLevel: user.englishLevel,
+        degree: user.degree,
+        university: user.university,
+        willingOverlapUsEu: user.willingOverlapUsEu,
+        skills: user.skills.map((s) => s.skill.name),
+      },
+      coverLetter: cover.content,
+      gap,
     })
 
     const applyPackage: ApplyPackage = {
@@ -183,6 +223,7 @@ export async function runAutoApply(options: {
         country: user.country,
         city: user.city,
       },
+      customAnswers,
       checklist: [],
     }
     applyPackage.checklist = buildChecklist(applyPackage)

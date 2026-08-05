@@ -4,6 +4,7 @@ import {
   isAiProvider,
   maskApiKey,
 } from "@/lib/ai-platforms"
+import { decryptSecret, encryptSecret } from "@/lib/crypto/secrets"
 import { prisma } from "@/lib/prisma"
 import { getCurrentUser } from "@/lib/session"
 
@@ -21,11 +22,12 @@ function serializePlatform(platform: {
   createdAt: Date
   updatedAt: Date
 }) {
+  const revealed = decryptSecret(platform.apiKey) || ""
   return {
     id: platform.id,
     provider: platform.provider,
     name: platform.name,
-    apiKeyMasked: maskApiKey(platform.apiKey),
+    apiKeyMasked: maskApiKey(revealed || "••••••••"),
     hasApiKey: Boolean(platform.apiKey),
     modelId: platform.modelId,
     baseUrl: platform.baseUrl,
@@ -91,7 +93,7 @@ export async function POST(request: Request) {
         userId: currentUser.id,
         provider,
         name,
-        apiKey,
+        apiKey: encryptSecret(apiKey)!,
         modelId,
         baseUrl: baseUrl || meta?.defaultBaseUrl || null,
         isActive,

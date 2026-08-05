@@ -55,6 +55,8 @@ model User {
   emailAccount        EmailAccount?
   jobDocuments        JobDocument[]
   assistantThreads    AssistantThread[]
+  extensionTokens     ExtensionToken[]
+  notifications       AppNotification[]
 
   @@index([email])
   @@index([username])
@@ -165,6 +167,17 @@ model JobPreferences {
   /// Days until follow-up after auto-apply (0 = skip)
   autoApplyFollowUpDays Int @default(7)
 
+  /// Slack incoming webhook for high-score / crawl / interview alerts
+  slackWebhookUrl String?
+  /// Store notifications in-app (header bell)
+  inAppAlertsEnabled Boolean @default(true)
+  /// Email/Slack when an interview date is approaching
+  interviewRemindersEnabled Boolean @default(true)
+
+  /// Last scheduled/manual crawl failure message (for Settings health)
+  lastCrawlError    String?
+  lastCrawlFailedAt DateTime?
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
@@ -268,6 +281,10 @@ model Job {
   application    JobApplication?
   documents      JobDocument[]
   alertedAt      DateTime?
+  gapAnalysisJson    Json?
+  gapAnalyzedAt      DateTime?
+  interviewPrepJson  Json?
+  interviewPrepAt    DateTime?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -302,6 +319,17 @@ model JobApplication {
   /// Snapshot of materials used for apply (cover letter, resume, profile answers)
   applyPackageJson Json?
   autoPreparedAt   DateTime?
+  /// none | awaiting | replied | bounced | ghosted
+  replyStatus      String    @default("none")
+  lastReplyAt      DateTime?
+  /// Number of automated outreach follow-ups sent for this application
+  outreachFollowUpCount Int @default(0)
+  lastOutreachFollowUpAt DateTime?
+
+  /// Scheduled interview datetime (local intent; stored as UTC)
+  interviewAt DateTime?
+  /// Set after an interview reminder notification/email is sent
+  interviewRemindedAt DateTime?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   job  Job @relation(fields: [jobId], references: [id], onDelete: Cascade)
@@ -312,6 +340,8 @@ model JobApplication {
   @@index([userId])
   @@index([userId, status])
   @@index([userId, followUpAt])
+  @@index([userId, replyStatus])
+  @@index([userId, interviewAt])
 }
 
 model JobContact {
@@ -373,10 +403,38 @@ model EmailAccount {
   smtpSecure Boolean @default(true)
   isActive  Boolean @default(true)
 
+  /// IMAP inbox for automatic reply detection (optional)
+  imapHost   String?
+  imapPort   Int?
+  imapUser   String?
+  imapPass   String?
+  imapSecure Boolean @default(true)
+  replySyncEnabled Boolean @default(false)
+  lastReplySyncAt  DateTime?
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+/// In-app notification feed (header bell).
+model AppNotification {
+  id     String  @id @default(cuid())
+  userId String
+  /// high_score_jobs | crawl_failed | interview_reminder | reply_detected | follow_up | system
+  type   String
+  title  String
+  body   String?
+  href   String?
+  readAt DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
+  @@index([userId, readAt])
 }
 
 /// Per-job cover letter or tailored resume draft.
@@ -427,4 +485,23 @@ model AssistantMessage {
 
   @@index([threadId])
   @@index([threadId, createdAt])
+}
+
+/// API tokens for the Chrome form-fill extension.
+model ExtensionToken {
+  id         String    @id @default(cuid())
+  userId     String
+  tokenHash  String    @unique
+  /// Prefix shown in UI (e.g. aja_xxxx…)
+  tokenPrefix String
+  label      String    @default("Chrome extension")
+  lastUsedAt DateTime?
+  revokedAt  DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
 }

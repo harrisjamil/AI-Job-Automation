@@ -1,3 +1,5 @@
+import { sendSlackWebhook } from "@/lib/alerts/slack"
+import { createNotification } from "@/lib/notifications"
 import { prisma } from "@/lib/prisma"
 import { sendUserEmail } from "@/lib/email/send-user"
 
@@ -21,6 +23,8 @@ export async function sendHighScoreJobAlerts(
         select: {
           alertsEnabled: true,
           alertMinScore: true,
+          slackWebhookUrl: true,
+          inAppAlertsEnabled: true,
         },
       },
     },
@@ -103,6 +107,7 @@ Review them here: ${appUrl}/admin/jobs
     <p style="color:#666;font-size:12px">AI Job Automation</p>
   `
 
+  let emailOk = false
   try {
     await sendUserEmail({
       userId,
@@ -111,11 +116,31 @@ Review them here: ${appUrl}/admin/jobs
       text,
       html,
     })
+    emailOk = true
   } catch (error) {
     const message =
       error instanceof Error ? error.message : "Failed to send alert email"
     console.error("High-score alert failed:", message)
-    return { sent: false, reason: "send_failed" as const, error: message }
+  }
+
+  await createNotification({
+    userId,
+    type: "high_score_jobs",
+    title: `${jobs.length} high-match job${jobs.length === 1 ? "" : "s"}`,
+    body: jobs
+      .slice(0, 3)
+      .map((j) => `[${j.matchScore}] ${j.title}`)
+      .join(" · "),
+    href: "/admin/jobs",
+  })
+
+  await sendSlackWebhook(
+    prefs?.slackWebhookUrl,
+    `${subject}\n${lines.slice(0, 5).join("\n")}\n${appUrl}/admin/jobs`
+  )
+
+  if (!emailOk && !prefs?.slackWebhookUrl && prefs?.inAppAlertsEnabled === false) {
+    return { sent: false, reason: "send_failed" as const }
   }
 
   const now = new Date()
@@ -136,7 +161,7 @@ Review them here: ${appUrl}/admin/jobs
     }),
   ])
 
-  return { sent: true as const, count: jobs.length }
+  return { sent: true as const, count: jobs.length, emailOk }
 }
 
 function escapeHtml(value: string) {

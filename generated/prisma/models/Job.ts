@@ -54,6 +54,8 @@ export type JobMinAggregateOutputType = {
   postedAt: Date | null
   scrapedAt: Date | null
   alertedAt: Date | null
+  gapAnalyzedAt: Date | null
+  interviewPrepAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -78,6 +80,8 @@ export type JobMaxAggregateOutputType = {
   postedAt: Date | null
   scrapedAt: Date | null
   alertedAt: Date | null
+  gapAnalyzedAt: Date | null
+  interviewPrepAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -104,6 +108,10 @@ export type JobCountAggregateOutputType = {
   postedAt: number
   scrapedAt: number
   alertedAt: number
+  gapAnalysisJson: number
+  gapAnalyzedAt: number
+  interviewPrepJson: number
+  interviewPrepAt: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -138,6 +146,8 @@ export type JobMinAggregateInputType = {
   postedAt?: true
   scrapedAt?: true
   alertedAt?: true
+  gapAnalyzedAt?: true
+  interviewPrepAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -162,6 +172,8 @@ export type JobMaxAggregateInputType = {
   postedAt?: true
   scrapedAt?: true
   alertedAt?: true
+  gapAnalyzedAt?: true
+  interviewPrepAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -188,6 +200,10 @@ export type JobCountAggregateInputType = {
   postedAt?: true
   scrapedAt?: true
   alertedAt?: true
+  gapAnalysisJson?: true
+  gapAnalyzedAt?: true
+  interviewPrepJson?: true
+  interviewPrepAt?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -301,6 +317,10 @@ export type JobGroupByOutputType = {
   postedAt: Date | null
   scrapedAt: Date
   alertedAt: Date | null
+  gapAnalysisJson: runtime.JsonValue | null
+  gapAnalyzedAt: Date | null
+  interviewPrepJson: runtime.JsonValue | null
+  interviewPrepAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: JobCountAggregateOutputType | null
@@ -350,6 +370,10 @@ export type JobWhereInput = {
   postedAt?: Prisma.DateTimeNullableFilter<"Job"> | Date | string | null
   scrapedAt?: Prisma.DateTimeFilter<"Job"> | Date | string
   alertedAt?: Prisma.DateTimeNullableFilter<"Job"> | Date | string | null
+  gapAnalysisJson?: Prisma.JsonNullableFilter<"Job">
+  gapAnalyzedAt?: Prisma.DateTimeNullableFilter<"Job"> | Date | string | null
+  interviewPrepJson?: Prisma.JsonNullableFilter<"Job">
+  interviewPrepAt?: Prisma.DateTimeNullableFilter<"Job"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Job"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Job"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -383,6 +407,10 @@ export type JobOrderByWithRelationInput = {
   postedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   scrapedAt?: Prisma.SortOrder
   alertedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  gapAnalysisJson?: Prisma.SortOrderInput | Prisma.SortOrder
+  gapAnalyzedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  interviewPrepJson?: Prisma.SortOrderInput | Prisma.SortOrder
+  interviewPrepAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -420,6 +448,10 @@ export type JobWhereUniqueInput = Prisma.AtLeast<{
   postedAt?: Prisma.DateTimeNullableFilter<"Job"> | Date | string | null
   scrapedAt?: Prisma.DateTimeFilter<"Job"> | Date | string
   alertedAt?: Prisma.DateTimeNullableFilter<"Job"> | Date | string | null
+  gapAnalysisJson?: Prisma.JsonNullableFilter<"Job">
+  gapAnalyzedAt?: Prisma.DateTimeNullableFilter<"Job"> | Date | string | null
+  interviewPrepJson?: Prisma.JsonNullableFilter<"Job">
+  interviewPrepAt?: Prisma.DateTimeNullableFilter<"Job"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Job"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Job"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -453,6 +485,10 @@ export type JobOrderByWithAggregationInput = {
   postedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   scrapedAt?: Prisma.SortOrder
   alertedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  gapAnalysisJson?: Prisma.SortOrderInput | Prisma.SortOrder
+  gapAnalyzedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  interviewPrepJson?: Prisma.SortOrderInput | Prisma.SortOrder
+  interviewPrepAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.JobCountOrderByAggregateInput
@@ -487,6 +523,10 @@ export type JobScalarWhereWithAggregatesInput = {
   postedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Job"> | Date | string | null
   scrapedAt?: Prisma.DateTimeWithAggregatesFilter<"Job"> | Date | string
   alertedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Job"> | Date | string | null
+  gapAnalysisJson?: Prisma.JsonNullableWithAggregatesFilter<"Job">
+  gapAnalyzedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Job"> | Date | string | null
+  interviewPrepJson?: Prisma.JsonNullableWithAggregatesFilter<"Job">
+  interviewPrepAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Job"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Job"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Job"> | Date | string
 }
@@ -510,6 +550,10 @@ export type JobCreateInput = {
   postedAt?: Date | string | null
   scrapedAt?: Date | string
   alertedAt?: Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutJobsInput
@@ -543,6 +587,10 @@ export type JobUncheckedCreateInput = {
   postedAt?: Date | string | null
   scrapedAt?: Date | string
   alertedAt?: Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   contacts?: Prisma.JobContactUncheckedCreateNestedManyWithoutJobInput
@@ -570,6 +618,10 @@ export type JobUpdateInput = {
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutJobsNestedInput
@@ -603,6 +655,10 @@ export type JobUncheckedUpdateInput = {
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contacts?: Prisma.JobContactUncheckedUpdateManyWithoutJobNestedInput
@@ -633,6 +689,10 @@ export type JobCreateManyInput = {
   postedAt?: Date | string | null
   scrapedAt?: Date | string
   alertedAt?: Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -656,6 +716,10 @@ export type JobUpdateManyMutationInput = {
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -682,6 +746,10 @@ export type JobUncheckedUpdateManyInput = {
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -724,6 +792,10 @@ export type JobCountOrderByAggregateInput = {
   postedAt?: Prisma.SortOrder
   scrapedAt?: Prisma.SortOrder
   alertedAt?: Prisma.SortOrder
+  gapAnalysisJson?: Prisma.SortOrder
+  gapAnalyzedAt?: Prisma.SortOrder
+  interviewPrepJson?: Prisma.SortOrder
+  interviewPrepAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -752,6 +824,8 @@ export type JobMaxOrderByAggregateInput = {
   postedAt?: Prisma.SortOrder
   scrapedAt?: Prisma.SortOrder
   alertedAt?: Prisma.SortOrder
+  gapAnalyzedAt?: Prisma.SortOrder
+  interviewPrepAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -776,6 +850,8 @@ export type JobMinOrderByAggregateInput = {
   postedAt?: Prisma.SortOrder
   scrapedAt?: Prisma.SortOrder
   alertedAt?: Prisma.SortOrder
+  gapAnalyzedAt?: Prisma.SortOrder
+  interviewPrepAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -1008,6 +1084,10 @@ export type JobCreateWithoutUserInput = {
   postedAt?: Date | string | null
   scrapedAt?: Date | string
   alertedAt?: Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   crawlRun?: Prisma.CrawlRunCreateNestedOneWithoutJobsInput
@@ -1039,6 +1119,10 @@ export type JobUncheckedCreateWithoutUserInput = {
   postedAt?: Date | string | null
   scrapedAt?: Date | string
   alertedAt?: Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   contacts?: Prisma.JobContactUncheckedCreateNestedManyWithoutJobInput
@@ -1098,6 +1182,10 @@ export type JobScalarWhereInput = {
   postedAt?: Prisma.DateTimeNullableFilter<"Job"> | Date | string | null
   scrapedAt?: Prisma.DateTimeFilter<"Job"> | Date | string
   alertedAt?: Prisma.DateTimeNullableFilter<"Job"> | Date | string | null
+  gapAnalysisJson?: Prisma.JsonNullableFilter<"Job">
+  gapAnalyzedAt?: Prisma.DateTimeNullableFilter<"Job"> | Date | string | null
+  interviewPrepJson?: Prisma.JsonNullableFilter<"Job">
+  interviewPrepAt?: Prisma.DateTimeNullableFilter<"Job"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Job"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Job"> | Date | string
 }
@@ -1121,6 +1209,10 @@ export type JobCreateWithoutCompanyRefInput = {
   postedAt?: Date | string | null
   scrapedAt?: Date | string
   alertedAt?: Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutJobsInput
@@ -1152,6 +1244,10 @@ export type JobUncheckedCreateWithoutCompanyRefInput = {
   postedAt?: Date | string | null
   scrapedAt?: Date | string
   alertedAt?: Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   contacts?: Prisma.JobContactUncheckedCreateNestedManyWithoutJobInput
@@ -1205,6 +1301,10 @@ export type JobCreateWithoutCrawlRunInput = {
   postedAt?: Date | string | null
   scrapedAt?: Date | string
   alertedAt?: Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutJobsInput
@@ -1236,6 +1336,10 @@ export type JobUncheckedCreateWithoutCrawlRunInput = {
   postedAt?: Date | string | null
   scrapedAt?: Date | string
   alertedAt?: Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   contacts?: Prisma.JobContactUncheckedCreateNestedManyWithoutJobInput
@@ -1289,6 +1393,10 @@ export type JobCreateWithoutApplicationInput = {
   postedAt?: Date | string | null
   scrapedAt?: Date | string
   alertedAt?: Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutJobsInput
@@ -1321,6 +1429,10 @@ export type JobUncheckedCreateWithoutApplicationInput = {
   postedAt?: Date | string | null
   scrapedAt?: Date | string
   alertedAt?: Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   contacts?: Prisma.JobContactUncheckedCreateNestedManyWithoutJobInput
@@ -1363,6 +1475,10 @@ export type JobUpdateWithoutApplicationInput = {
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutJobsNestedInput
@@ -1395,6 +1511,10 @@ export type JobUncheckedUpdateWithoutApplicationInput = {
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contacts?: Prisma.JobContactUncheckedUpdateManyWithoutJobNestedInput
@@ -1421,6 +1541,10 @@ export type JobCreateWithoutContactsInput = {
   postedAt?: Date | string | null
   scrapedAt?: Date | string
   alertedAt?: Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutJobsInput
@@ -1453,6 +1577,10 @@ export type JobUncheckedCreateWithoutContactsInput = {
   postedAt?: Date | string | null
   scrapedAt?: Date | string
   alertedAt?: Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   outreachEmails?: Prisma.OutreachEmailUncheckedCreateNestedManyWithoutJobInput
@@ -1495,6 +1623,10 @@ export type JobUpdateWithoutContactsInput = {
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutJobsNestedInput
@@ -1527,6 +1659,10 @@ export type JobUncheckedUpdateWithoutContactsInput = {
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   outreachEmails?: Prisma.OutreachEmailUncheckedUpdateManyWithoutJobNestedInput
@@ -1553,6 +1689,10 @@ export type JobCreateWithoutOutreachEmailsInput = {
   postedAt?: Date | string | null
   scrapedAt?: Date | string
   alertedAt?: Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutJobsInput
@@ -1585,6 +1725,10 @@ export type JobUncheckedCreateWithoutOutreachEmailsInput = {
   postedAt?: Date | string | null
   scrapedAt?: Date | string
   alertedAt?: Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   contacts?: Prisma.JobContactUncheckedCreateNestedManyWithoutJobInput
@@ -1627,6 +1771,10 @@ export type JobUpdateWithoutOutreachEmailsInput = {
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutJobsNestedInput
@@ -1659,6 +1807,10 @@ export type JobUncheckedUpdateWithoutOutreachEmailsInput = {
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contacts?: Prisma.JobContactUncheckedUpdateManyWithoutJobNestedInput
@@ -1685,6 +1837,10 @@ export type JobCreateWithoutDocumentsInput = {
   postedAt?: Date | string | null
   scrapedAt?: Date | string
   alertedAt?: Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutJobsInput
@@ -1717,6 +1873,10 @@ export type JobUncheckedCreateWithoutDocumentsInput = {
   postedAt?: Date | string | null
   scrapedAt?: Date | string
   alertedAt?: Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   contacts?: Prisma.JobContactUncheckedCreateNestedManyWithoutJobInput
@@ -1759,6 +1919,10 @@ export type JobUpdateWithoutDocumentsInput = {
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutJobsNestedInput
@@ -1791,6 +1955,10 @@ export type JobUncheckedUpdateWithoutDocumentsInput = {
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contacts?: Prisma.JobContactUncheckedUpdateManyWithoutJobNestedInput
@@ -1819,6 +1987,10 @@ export type JobCreateManyUserInput = {
   postedAt?: Date | string | null
   scrapedAt?: Date | string
   alertedAt?: Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1842,6 +2014,10 @@ export type JobUpdateWithoutUserInput = {
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   crawlRun?: Prisma.CrawlRunUpdateOneWithoutJobsNestedInput
@@ -1873,6 +2049,10 @@ export type JobUncheckedUpdateWithoutUserInput = {
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contacts?: Prisma.JobContactUncheckedUpdateManyWithoutJobNestedInput
@@ -1902,6 +2082,10 @@ export type JobUncheckedUpdateManyWithoutUserInput = {
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1927,6 +2111,10 @@ export type JobCreateManyCompanyRefInput = {
   postedAt?: Date | string | null
   scrapedAt?: Date | string
   alertedAt?: Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1950,6 +2138,10 @@ export type JobUpdateWithoutCompanyRefInput = {
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutJobsNestedInput
@@ -1981,6 +2173,10 @@ export type JobUncheckedUpdateWithoutCompanyRefInput = {
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contacts?: Prisma.JobContactUncheckedUpdateManyWithoutJobNestedInput
@@ -2010,6 +2206,10 @@ export type JobUncheckedUpdateManyWithoutCompanyRefInput = {
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -2035,6 +2235,10 @@ export type JobCreateManyCrawlRunInput = {
   postedAt?: Date | string | null
   scrapedAt?: Date | string
   alertedAt?: Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -2058,6 +2262,10 @@ export type JobUpdateWithoutCrawlRunInput = {
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutJobsNestedInput
@@ -2089,6 +2297,10 @@ export type JobUncheckedUpdateWithoutCrawlRunInput = {
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   contacts?: Prisma.JobContactUncheckedUpdateManyWithoutJobNestedInput
@@ -2118,6 +2330,10 @@ export type JobUncheckedUpdateManyWithoutCrawlRunInput = {
   postedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   scrapedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   alertedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gapAnalysisJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  gapAnalyzedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  interviewPrepJson?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  interviewPrepAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -2193,6 +2409,10 @@ export type JobSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   postedAt?: boolean
   scrapedAt?: boolean
   alertedAt?: boolean
+  gapAnalysisJson?: boolean
+  gapAnalyzedAt?: boolean
+  interviewPrepJson?: boolean
+  interviewPrepAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -2227,6 +2447,10 @@ export type JobSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extension
   postedAt?: boolean
   scrapedAt?: boolean
   alertedAt?: boolean
+  gapAnalysisJson?: boolean
+  gapAnalyzedAt?: boolean
+  interviewPrepJson?: boolean
+  interviewPrepAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -2256,6 +2480,10 @@ export type JobSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extension
   postedAt?: boolean
   scrapedAt?: boolean
   alertedAt?: boolean
+  gapAnalysisJson?: boolean
+  gapAnalyzedAt?: boolean
+  interviewPrepJson?: boolean
+  interviewPrepAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -2285,11 +2513,15 @@ export type JobSelectScalar = {
   postedAt?: boolean
   scrapedAt?: boolean
   alertedAt?: boolean
+  gapAnalysisJson?: boolean
+  gapAnalyzedAt?: boolean
+  interviewPrepJson?: boolean
+  interviewPrepAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type JobOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "crawlRunId" | "companyId" | "externalId" | "source" | "sourceCategory" | "title" | "company" | "location" | "isRemote" | "url" | "description" | "salary" | "tags" | "fingerprint" | "skillsMatched" | "matchScore" | "postedAt" | "scrapedAt" | "alertedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["job"]>
+export type JobOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "crawlRunId" | "companyId" | "externalId" | "source" | "sourceCategory" | "title" | "company" | "location" | "isRemote" | "url" | "description" | "salary" | "tags" | "fingerprint" | "skillsMatched" | "matchScore" | "postedAt" | "scrapedAt" | "alertedAt" | "gapAnalysisJson" | "gapAnalyzedAt" | "interviewPrepJson" | "interviewPrepAt" | "createdAt" | "updatedAt", ExtArgs["result"]["job"]>
 export type JobInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   crawlRun?: boolean | Prisma.Job$crawlRunArgs<ExtArgs>
@@ -2344,6 +2576,10 @@ export type $JobPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     postedAt: Date | null
     scrapedAt: Date
     alertedAt: Date | null
+    gapAnalysisJson: runtime.JsonValue | null
+    gapAnalyzedAt: Date | null
+    interviewPrepJson: runtime.JsonValue | null
+    interviewPrepAt: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["job"]>
@@ -2797,6 +3033,10 @@ export interface JobFieldRefs {
   readonly postedAt: Prisma.FieldRef<"Job", 'DateTime'>
   readonly scrapedAt: Prisma.FieldRef<"Job", 'DateTime'>
   readonly alertedAt: Prisma.FieldRef<"Job", 'DateTime'>
+  readonly gapAnalysisJson: Prisma.FieldRef<"Job", 'Json'>
+  readonly gapAnalyzedAt: Prisma.FieldRef<"Job", 'DateTime'>
+  readonly interviewPrepJson: Prisma.FieldRef<"Job", 'Json'>
+  readonly interviewPrepAt: Prisma.FieldRef<"Job", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Job", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Job", 'DateTime'>
 }

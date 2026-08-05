@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer"
+import { decryptSecret } from "@/lib/crypto/secrets"
 import { prisma } from "@/lib/prisma"
 
 type SendUserEmailOptions = {
@@ -34,7 +35,7 @@ export async function sendUserEmail(options: SendUserEmailOptions) {
   }
 
   if (provider === "resend") {
-    const apiKey = account?.apiKey || envResendKey
+    const apiKey = decryptSecret(account?.apiKey) || envResendKey
     if (!apiKey) {
       throw new Error("Resend API key is missing")
     }
@@ -75,7 +76,8 @@ export async function sendUserEmail(options: SendUserEmailOptions) {
     const host = account?.smtpHost || process.env.SMTP_HOST
     const port = account?.smtpPort || Number(process.env.SMTP_PORT || 587)
     const user = account?.smtpUser || process.env.SMTP_USER
-    const pass = account?.smtpPass || process.env.SMTP_PASS
+    const pass =
+      decryptSecret(account?.smtpPass) || process.env.SMTP_PASS || null
     const secure = account?.smtpSecure ?? process.env.SMTP_SECURE === "true"
 
     if (!host || !user || !pass) {

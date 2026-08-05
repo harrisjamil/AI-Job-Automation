@@ -6,6 +6,7 @@ import {
   BookmarkPlusIcon,
   CopyIcon,
   ExternalLinkIcon,
+  DownloadIcon,
   FileTextIcon,
   Loader2Icon,
   MailIcon,
@@ -71,7 +72,36 @@ type ApplyPackage = {
   checklist: string[]
 }
 
-type DrawerTab = "outreach" | "cover_letter" | "tailored_resume" | "auto_apply"
+type GapAnalysis = {
+  matchSummary: string
+  overlappingSkills: string[]
+  missingSkills: string[]
+  rewriteBullets: string[]
+  emphasize: string[]
+  risks: string[]
+  scoreHint: number
+}
+
+type InterviewPrep = {
+  likelyQuestions: Array<{ question: string; tip: string }>
+  starStories: Array<{
+    title: string
+    situation: string
+    action: string
+    result: string
+  }>
+  talkingPoints: string[]
+  questionsToAsk: string[]
+  cheatSheet: string
+}
+
+type DrawerTab =
+  | "outreach"
+  | "cover_letter"
+  | "tailored_resume"
+  | "auto_apply"
+  | "gap"
+  | "interview"
 
 export function JobDetailDrawer({
   jobId,
@@ -94,6 +124,10 @@ export function JobDetailDrawer({
   const [docSaving, setDocSaving] = useState(false)
   const [autoApplying, setAutoApplying] = useState(false)
   const [applyPackage, setApplyPackage] = useState<ApplyPackage | null>(null)
+  const [gap, setGap] = useState<GapAnalysis | null>(null)
+  const [gapLoading, setGapLoading] = useState(false)
+  const [interview, setInterview] = useState<InterviewPrep | null>(null)
+  const [interviewLoading, setInterviewLoading] = useState(false)
   const [tab, setTab] = useState<DrawerTab>("outreach")
   const [toEmail, setToEmail] = useState("")
   const [subject, setSubject] = useState("")
@@ -431,6 +465,53 @@ export function JobDetailDrawer({
     }
   }
 
+  async function handleGapAnalysis() {
+    if (!jobId) return
+    setGapLoading(true)
+    try {
+      const response = await fetch(`/api/jobs/${jobId}/gap-analysis`, {
+        method: "POST",
+      })
+      const data = await response.json()
+      if (!response.ok) {
+        toast.error(data.error ?? "Gap analysis failed")
+        return
+      }
+      setGap(data.analysis as GapAnalysis)
+      toast.success("Gap analysis ready")
+    } catch {
+      toast.error("Gap analysis failed")
+    } finally {
+      setGapLoading(false)
+    }
+  }
+
+  async function handleInterviewPrep() {
+    if (!jobId) return
+    setInterviewLoading(true)
+    try {
+      const response = await fetch(`/api/jobs/${jobId}/interview-prep`, {
+        method: "POST",
+      })
+      const data = await response.json()
+      if (!response.ok) {
+        toast.error(data.error ?? "Interview prep failed")
+        return
+      }
+      setInterview(data.prep as InterviewPrep)
+      toast.success("Interview prep ready")
+    } catch {
+      toast.error("Interview prep failed")
+    } finally {
+      setInterviewLoading(false)
+    }
+  }
+
+  function downloadPdf(type: "cover_letter" | "tailored_resume") {
+    if (!jobId) return
+    window.open(`/api/jobs/${jobId}/pdf?type=${type}`, "_blank")
+  }
+
   const plainDescription = (job?.description ?? "")
     .replace(/<[^>]+>/g, " ")
     .replace(/\s+/g, " ")
@@ -441,6 +522,8 @@ export function JobDetailDrawer({
     { id: "cover_letter", label: "Cover letter" },
     { id: "tailored_resume", label: "Resume" },
     { id: "auto_apply", label: "Auto-apply" },
+    { id: "gap", label: "Gap" },
+    { id: "interview", label: "Interview" },
   ]
 
   return (
@@ -720,6 +803,15 @@ export function JobDetailDrawer({
                       <CopyIcon className="size-3.5" />
                       Copy
                     </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      disabled={!coverDoc && !coverContent}
+                      onClick={() => downloadPdf("cover_letter")}
+                    >
+                      <DownloadIcon className="size-3.5" />
+                      PDF
+                    </Button>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="coverTitle">Title</Label>
@@ -783,6 +875,15 @@ export function JobDetailDrawer({
                     >
                       <CopyIcon className="size-3.5" />
                       Copy
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      disabled={!resumeDoc && !resumeContent}
+                      onClick={() => downloadPdf("tailored_resume")}
+                    >
+                      <DownloadIcon className="size-3.5" />
+                      PDF
                     </Button>
                   </div>
                   <div className="space-y-2">
@@ -922,6 +1023,158 @@ export function JobDetailDrawer({
                   ) : (
                     <p className="text-sm text-muted-foreground">
                       Run Prepare & open to build your apply package.
+                    </p>
+                  )}
+                </div>
+              ) : null}
+
+              {tab === "gap" ? (
+                <div className="space-y-3">
+                  <p className="font-medium">JD gap analysis</p>
+                  <Button
+                    size="sm"
+                    disabled={gapLoading}
+                    onClick={() => void handleGapAnalysis()}
+                  >
+                    {gapLoading ? (
+                      <Loader2Icon className="size-3.5 animate-spin" />
+                    ) : (
+                      <SparklesIcon className="size-3.5" />
+                    )}
+                    Analyze fit
+                  </Button>
+                  {gap ? (
+                    <div className="space-y-3 text-sm">
+                      <p>{gap.matchSummary}</p>
+                      <p>
+                        <span className="font-medium">Score hint:</span>{" "}
+                        {gap.scoreHint}
+                      </p>
+                      <div>
+                        <p className="font-medium">Overlap</p>
+                        <p className="text-muted-foreground">
+                          {gap.overlappingSkills.join(", ") || "None"}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="font-medium">Missing</p>
+                        <p className="text-muted-foreground">
+                          {gap.missingSkills.join(", ") || "None"}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="font-medium">Rewrite bullets</p>
+                        <ul className="list-disc space-y-1 pl-4 text-muted-foreground">
+                          {gap.rewriteBullets.map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <p className="font-medium">Emphasize</p>
+                        <p className="text-muted-foreground">
+                          {gap.emphasize.join(", ")}
+                        </p>
+                      </div>
+                      {gap.risks.length > 0 ? (
+                        <div>
+                          <p className="font-medium">Risks</p>
+                          <ul className="list-disc space-y-1 pl-4 text-muted-foreground">
+                            {gap.risks.map((item) => (
+                              <li key={item}>{item}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      ) : null}
+                    </div>
+                  ) : (
+                    <p className="text-sm text-muted-foreground">
+                      Run analysis to see skill gaps and rewrite guidance.
+                    </p>
+                  )}
+                </div>
+              ) : null}
+
+              {tab === "interview" ? (
+                <div className="space-y-3">
+                  <p className="font-medium">Interview prep</p>
+                  <div className="flex flex-wrap gap-2">
+                    <Button
+                      size="sm"
+                      disabled={interviewLoading}
+                      onClick={() => void handleInterviewPrep()}
+                    >
+                      {interviewLoading ? (
+                        <Loader2Icon className="size-3.5 animate-spin" />
+                      ) : (
+                        <SparklesIcon className="size-3.5" />
+                      )}
+                      Generate pack
+                    </Button>
+                    {interview ? (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() =>
+                          void handleCopy(
+                            interview.cheatSheet,
+                            "Interview cheat sheet"
+                          )
+                        }
+                      >
+                        <CopyIcon className="size-3.5" />
+                        Copy cheat sheet
+                      </Button>
+                    ) : null}
+                  </div>
+                  {interview ? (
+                    <div className="space-y-4 text-sm">
+                      <div>
+                        <p className="font-medium">Likely questions</p>
+                        <ul className="mt-1 space-y-2">
+                          {interview.likelyQuestions.map((item) => (
+                            <li key={item.question} className="rounded-lg border p-2">
+                              <p className="font-medium">{item.question}</p>
+                              <p className="text-muted-foreground">{item.tip}</p>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <p className="font-medium">STAR stories</p>
+                        <ul className="mt-1 space-y-2">
+                          {interview.starStories.map((story) => (
+                            <li key={story.title} className="rounded-lg border p-2">
+                              <p className="font-medium">{story.title}</p>
+                              <p className="text-muted-foreground">
+                                S: {story.situation}
+                              </p>
+                              <p className="text-muted-foreground">
+                                A: {story.action}
+                              </p>
+                              <p className="text-muted-foreground">
+                                R: {story.result}
+                              </p>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div>
+                        <p className="font-medium">Ask them</p>
+                        <ul className="list-disc space-y-1 pl-4 text-muted-foreground">
+                          {interview.questionsToAsk.map((q) => (
+                            <li key={q}>{q}</li>
+                          ))}
+                        </ul>
+                      </div>
+                      <pre className="whitespace-pre-wrap rounded-lg bg-muted/50 p-3 text-xs">
+                        {interview.cheatSheet}
+                      </pre>
+                    </div>
+                  ) : (
+                    <p className="text-sm text-muted-foreground">
+                      Generate a prep pack from this job description and your
+                      profile.
                     </p>
                   )}
                 </div>

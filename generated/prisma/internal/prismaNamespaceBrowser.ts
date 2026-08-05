@@ -66,9 +66,11 @@ export const ModelName = {
   JobContact: 'JobContact',
   OutreachEmail: 'OutreachEmail',
   EmailAccount: 'EmailAccount',
+  AppNotification: 'AppNotification',
   JobDocument: 'JobDocument',
   AssistantThread: 'AssistantThread',
-  AssistantMessage: 'AssistantMessage'
+  AssistantMessage: 'AssistantMessage',
+  ExtensionToken: 'ExtensionToken'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -213,6 +215,11 @@ export const JobPreferencesScalarFieldEnum = {
   autoApplyMinScore: 'autoApplyMinScore',
   autoApplyMarkApplied: 'autoApplyMarkApplied',
   autoApplyFollowUpDays: 'autoApplyFollowUpDays',
+  slackWebhookUrl: 'slackWebhookUrl',
+  inAppAlertsEnabled: 'inAppAlertsEnabled',
+  interviewRemindersEnabled: 'interviewRemindersEnabled',
+  lastCrawlError: 'lastCrawlError',
+  lastCrawlFailedAt: 'lastCrawlFailedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -298,6 +305,10 @@ export const JobScalarFieldEnum = {
   postedAt: 'postedAt',
   scrapedAt: 'scrapedAt',
   alertedAt: 'alertedAt',
+  gapAnalysisJson: 'gapAnalysisJson',
+  gapAnalyzedAt: 'gapAnalyzedAt',
+  interviewPrepJson: 'interviewPrepJson',
+  interviewPrepAt: 'interviewPrepAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -319,6 +330,12 @@ export const JobApplicationScalarFieldEnum = {
   autoApplyError: 'autoApplyError',
   applyPackageJson: 'applyPackageJson',
   autoPreparedAt: 'autoPreparedAt',
+  replyStatus: 'replyStatus',
+  lastReplyAt: 'lastReplyAt',
+  outreachFollowUpCount: 'outreachFollowUpCount',
+  lastOutreachFollowUpAt: 'lastOutreachFollowUpAt',
+  interviewAt: 'interviewAt',
+  interviewRemindedAt: 'interviewRemindedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -373,11 +390,32 @@ export const EmailAccountScalarFieldEnum = {
   smtpPass: 'smtpPass',
   smtpSecure: 'smtpSecure',
   isActive: 'isActive',
+  imapHost: 'imapHost',
+  imapPort: 'imapPort',
+  imapUser: 'imapUser',
+  imapPass: 'imapPass',
+  imapSecure: 'imapSecure',
+  replySyncEnabled: 'replySyncEnabled',
+  lastReplySyncAt: 'lastReplySyncAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type EmailAccountScalarFieldEnum = (typeof EmailAccountScalarFieldEnum)[keyof typeof EmailAccountScalarFieldEnum]
+
+
+export const AppNotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  title: 'title',
+  body: 'body',
+  href: 'href',
+  readAt: 'readAt',
+  createdAt: 'createdAt'
+} as const
+
+export type AppNotificationScalarFieldEnum = (typeof AppNotificationScalarFieldEnum)[keyof typeof AppNotificationScalarFieldEnum]
 
 
 export const JobDocumentScalarFieldEnum = {
@@ -415,6 +453,21 @@ export const AssistantMessageScalarFieldEnum = {
 } as const
 
 export type AssistantMessageScalarFieldEnum = (typeof AssistantMessageScalarFieldEnum)[keyof typeof AssistantMessageScalarFieldEnum]
+
+
+export const ExtensionTokenScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  tokenHash: 'tokenHash',
+  tokenPrefix: 'tokenPrefix',
+  label: 'label',
+  lastUsedAt: 'lastUsedAt',
+  revokedAt: 'revokedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ExtensionTokenScalarFieldEnum = (typeof ExtensionTokenScalarFieldEnum)[keyof typeof ExtensionTokenScalarFieldEnum]
 
 
 export const SortOrder = {

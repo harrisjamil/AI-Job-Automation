@@ -1,3 +1,5 @@
+import { sendSlackWebhook } from "@/lib/alerts/slack"
+import { createNotification } from "@/lib/notifications"
 import { prisma } from "@/lib/prisma"
 import { runJobCrawl } from "@/lib/jobs/ingest"
 
@@ -39,7 +41,11 @@ export async function runScheduledCrawls(options?: {
       const crawlRun = await runJobCrawl(pref.userId)
       await prisma.jobPreferences.update({
         where: { userId: pref.userId },
-        data: { lastScheduledAt: new Date() },
+        data: {
+          lastScheduledAt: new Date(),
+          lastCrawlError: null,
+          lastCrawlFailedAt: null,
+        },
       })
       results.push({
         userId: pref.userId,
@@ -47,10 +53,30 @@ export async function runScheduledCrawls(options?: {
         jobsFound: crawlRun.jobsFound,
       })
     } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Scheduled crawl failed"
+      await prisma.jobPreferences.update({
+        where: { userId: pref.userId },
+        data: {
+          lastCrawlError: message,
+          lastCrawlFailedAt: new Date(),
+        },
+      })
+      await createNotification({
+        userId: pref.userId,
+        type: "crawl_failed",
+        title: "Scheduled crawl failed",
+        body: message,
+        href: "/admin/settings",
+      })
+      await sendSlackWebhook(
+        pref.slackWebhookUrl,
+        `Crawl failed: ${message}`
+      )
       results.push({
         userId: pref.userId,
         ok: false,
-        error: error instanceof Error ? error.message : "Scheduled crawl failed",
+        error: message,
       })
     }
   }
@@ -60,5 +86,58 @@ export async function runScheduledCrawls(options?: {
     due: due.length,
     ran: results.length,
     results,
+  }
+}
+
+/** Crawl health snapshot for Settings UI. */
+export async function getCrawlHealth(userId: string) {
+  const [prefs, lastRun, lastFailed, recentRuns] = await Promise.all([
+    prisma.jobPreferences.findUnique({ where: { userId } }),
+    prisma.crawlRun.findFirst({
+      where: { userId },
+      orderBy: { startedAt: "desc" },
+    }),
+    prisma.crawlRun.findFirst({
+      where: { userId, status: "failed" },
+      orderBy: { startedAt: "desc" },
+    }),
+    prisma.crawlRun.findMany({
+      where: { userId },
+      orderBy: { startedAt: "desc" },
+      take: 5,
+      select: {
+        id: true,
+        status: true,
+        jobsFound: true,
+        startedAt: true,
+        finishedAt: true,
+        error: true,
+        sources: true,
+      },
+    }),
+  ])
+
+  const intervalHours = prefs?.crawlIntervalHours ?? 6
+  let nextScheduledAt: Date | null = null
+  if (prefs?.scheduledCrawlEnabled) {
+    const base = prefs.lastScheduledAt ?? lastRun?.startedAt ?? null
+    nextScheduledAt = base
+      ? new Date(base.getTime() + intervalHours * 60 * 60 * 1000)
+      : new Date()
+  }
+
+  return {
+    scheduledCrawlEnabled: prefs?.scheduledCrawlEnabled ?? false,
+    crawlIntervalHours: intervalHours,
+    lastScheduledAt: prefs?.lastScheduledAt ?? null,
+    lastAlertedAt: prefs?.lastAlertedAt ?? null,
+    lastCrawlError: prefs?.lastCrawlError ?? null,
+    lastCrawlFailedAt: prefs?.lastCrawlFailedAt ?? null,
+    nextScheduledAt,
+    lastRun,
+    lastFailed,
+    recentRuns,
+    cronHint:
+      "Vercel cron hits /api/cron/crawl every 6 hours (see vercel.json). Protect with CRON_SECRET.",
   }
 }

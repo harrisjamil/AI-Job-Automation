@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server"
+import { encryptSecret } from "@/lib/crypto/secrets"
 import { serializeEmailAccount } from "@/lib/email/send"
+import { getCrawlHealth } from "@/lib/jobs/scheduler"
 import { prisma } from "@/lib/prisma"
 import { getCurrentUser } from "@/lib/session"
 
@@ -16,6 +18,8 @@ export async function GET() {
   const prefs = await prisma.jobPreferences.findUnique({
     where: { userId: user.id },
   })
+
+  const health = await getCrawlHealth(user.id)
 
   return NextResponse.json({
     emailAccount: serializeEmailAccount(account),
@@ -34,13 +38,18 @@ export async function GET() {
       autoApplyMinScore: prefs?.autoApplyMinScore ?? 70,
       autoApplyMarkApplied: prefs?.autoApplyMarkApplied ?? true,
       autoApplyFollowUpDays: prefs?.autoApplyFollowUpDays ?? 7,
+      slackWebhookUrl: prefs?.slackWebhookUrl ?? "",
+      inAppAlertsEnabled: prefs?.inAppAlertsEnabled ?? true,
+      interviewRemindersEnabled: prefs?.interviewRemindersEnabled ?? true,
     },
+    crawlHealth: health,
     envHints: {
       hasResendEnv: Boolean(process.env.RESEND_API_KEY),
       hasSmtpEnv: Boolean(process.env.SMTP_HOST),
       hasAdzunaEnv: Boolean(
         process.env.ADZUNA_APP_ID && process.env.ADZUNA_APP_KEY
       ),
+      hasCronSecret: Boolean(process.env.CRON_SECRET),
     },
   })
 }
@@ -65,14 +74,18 @@ export async function PUT(request: Request) {
       isActive?: boolean
       clearApiKey?: boolean
       clearSmtpPass?: boolean
+      imapHost?: string
+      imapPort?: number | string
+      imapUser?: string
+      imapPass?: string
+      imapSecure?: boolean
+      replySyncEnabled?: boolean
+      clearImapPass?: boolean
     }
     crawlDefaults?: {
       remoteOnly?: boolean
       scheduledCrawlEnabled?: boolean
       crawlIntervalHours?: number
-      excludeKeywords?: string[]
-      includeKeywords?: string[]
-      targetRoles?: string[]
       alertsEnabled?: boolean
       alertMinScore?: number
       followUpRemindersEnabled?: boolean
@@ -80,6 +93,9 @@ export async function PUT(request: Request) {
       autoApplyMinScore?: number
       autoApplyMarkApplied?: boolean
       autoApplyFollowUpDays?: number
+      slackWebhookUrl?: string | null
+      inAppAlertsEnabled?: boolean
+      interviewRemindersEnabled?: boolean
     }
   }
 
@@ -111,13 +127,18 @@ export async function PUT(request: Request) {
     const apiKey = ea.clearApiKey
       ? null
       : ea.apiKey?.trim()
-        ? ea.apiKey.trim()
+        ? encryptSecret(ea.apiKey.trim())
         : existing?.apiKey
     const smtpPass = ea.clearSmtpPass
       ? null
       : ea.smtpPass?.trim()
-        ? ea.smtpPass.trim()
+        ? encryptSecret(ea.smtpPass.trim())
         : existing?.smtpPass
+    const imapPass = ea.clearImapPass
+      ? null
+      : ea.imapPass?.trim()
+        ? encryptSecret(ea.imapPass.trim())
+        : existing?.imapPass
 
     emailAccount = await prisma.emailAccount.upsert({
       where: { userId: user.id },
@@ -133,6 +154,12 @@ export async function PUT(request: Request) {
         smtpPass: smtpPass ?? null,
         smtpSecure: ea.smtpSecure ?? true,
         isActive: ea.isActive ?? true,
+        imapHost: ea.imapHost?.trim() || null,
+        imapPort: ea.imapPort ? Number(ea.imapPort) : null,
+        imapUser: ea.imapUser?.trim() || null,
+        imapPass: imapPass ?? null,
+        imapSecure: ea.imapSecure ?? true,
+        replySyncEnabled: ea.replySyncEnabled ?? false,
       },
       update: {
         provider,
@@ -145,6 +172,24 @@ export async function PUT(request: Request) {
         smtpPass: smtpPass ?? null,
         smtpSecure: ea.smtpSecure ?? true,
         isActive: ea.isActive ?? true,
+        ...(ea.imapHost !== undefined
+          ? { imapHost: ea.imapHost?.trim() || null }
+          : {}),
+        ...(ea.imapPort !== undefined
+          ? { imapPort: ea.imapPort ? Number(ea.imapPort) : null }
+          : {}),
+        ...(ea.imapUser !== undefined
+          ? { imapUser: ea.imapUser?.trim() || null }
+          : {}),
+        ...(ea.imapPass !== undefined || ea.clearImapPass
+          ? { imapPass: imapPass ?? null }
+          : {}),
+        ...(typeof ea.imapSecure === "boolean"
+          ? { imapSecure: ea.imapSecure }
+          : {}),
+        ...(typeof ea.replySyncEnabled === "boolean"
+          ? { replySyncEnabled: ea.replySyncEnabled }
+          : {}),
       },
     })
   }
@@ -158,9 +203,6 @@ export async function PUT(request: Request) {
         remoteOnly: cd.remoteOnly ?? true,
         scheduledCrawlEnabled: cd.scheduledCrawlEnabled ?? false,
         crawlIntervalHours: cd.crawlIntervalHours ?? 6,
-        excludeKeywords: cd.excludeKeywords ?? [],
-        includeKeywords: cd.includeKeywords ?? [],
-        targetRoles: cd.targetRoles ?? [],
         alertsEnabled: cd.alertsEnabled ?? true,
         alertMinScore: cd.alertMinScore ?? 55,
         followUpRemindersEnabled: cd.followUpRemindersEnabled ?? true,
@@ -168,6 +210,9 @@ export async function PUT(request: Request) {
         autoApplyMinScore: cd.autoApplyMinScore ?? 70,
         autoApplyMarkApplied: cd.autoApplyMarkApplied ?? true,
         autoApplyFollowUpDays: cd.autoApplyFollowUpDays ?? 7,
+        slackWebhookUrl: cd.slackWebhookUrl?.trim() || null,
+        inAppAlertsEnabled: cd.inAppAlertsEnabled ?? true,
+        interviewRemindersEnabled: cd.interviewRemindersEnabled ?? true,
       },
       update: {
         ...(typeof cd.remoteOnly === "boolean"
@@ -177,21 +222,22 @@ export async function PUT(request: Request) {
           ? { scheduledCrawlEnabled: cd.scheduledCrawlEnabled }
           : {}),
         ...(typeof cd.crawlIntervalHours === "number"
-          ? { crawlIntervalHours: Math.max(1, Math.min(168, cd.crawlIntervalHours)) }
+          ? {
+              crawlIntervalHours: Math.max(
+                1,
+                Math.min(168, cd.crawlIntervalHours)
+              ),
+            }
           : {}),
-        ...(cd.excludeKeywords
-          ? { excludeKeywords: cd.excludeKeywords }
-          : {}),
-        ...(cd.includeKeywords
-          ? { includeKeywords: cd.includeKeywords }
-          : {}),
-        ...(cd.targetRoles ? { targetRoles: cd.targetRoles } : {}),
         ...(typeof cd.alertsEnabled === "boolean"
           ? { alertsEnabled: cd.alertsEnabled }
           : {}),
         ...(typeof cd.alertMinScore === "number"
           ? {
-              alertMinScore: Math.max(28, Math.min(100, Math.round(cd.alertMinScore))),
+              alertMinScore: Math.max(
+                28,
+                Math.min(100, Math.round(cd.alertMinScore))
+              ),
             }
           : {}),
         ...(typeof cd.followUpRemindersEnabled === "boolean"
@@ -219,6 +265,15 @@ export async function PUT(request: Request) {
               ),
             }
           : {}),
+        ...(cd.slackWebhookUrl !== undefined
+          ? { slackWebhookUrl: cd.slackWebhookUrl?.trim() || null }
+          : {}),
+        ...(typeof cd.inAppAlertsEnabled === "boolean"
+          ? { inAppAlertsEnabled: cd.inAppAlertsEnabled }
+          : {}),
+        ...(typeof cd.interviewRemindersEnabled === "boolean"
+          ? { interviewRemindersEnabled: cd.interviewRemindersEnabled }
+          : {}),
       },
     })
   }
@@ -226,6 +281,7 @@ export async function PUT(request: Request) {
   const prefs = await prisma.jobPreferences.findUnique({
     where: { userId: user.id },
   })
+  const health = await getCrawlHealth(user.id)
 
   return NextResponse.json({
     emailAccount: serializeEmailAccount(emailAccount),
@@ -244,6 +300,10 @@ export async function PUT(request: Request) {
       autoApplyMinScore: prefs?.autoApplyMinScore ?? 70,
       autoApplyMarkApplied: prefs?.autoApplyMarkApplied ?? true,
       autoApplyFollowUpDays: prefs?.autoApplyFollowUpDays ?? 7,
+      slackWebhookUrl: prefs?.slackWebhookUrl ?? "",
+      inAppAlertsEnabled: prefs?.inAppAlertsEnabled ?? true,
+      interviewRemindersEnabled: prefs?.interviewRemindersEnabled ?? true,
     },
+    crawlHealth: health,
   })
 }

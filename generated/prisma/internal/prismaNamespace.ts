@@ -412,9 +412,11 @@ export const ModelName = {
   JobContact: 'JobContact',
   OutreachEmail: 'OutreachEmail',
   EmailAccount: 'EmailAccount',
+  AppNotification: 'AppNotification',
   JobDocument: 'JobDocument',
   AssistantThread: 'AssistantThread',
-  AssistantMessage: 'AssistantMessage'
+  AssistantMessage: 'AssistantMessage',
+  ExtensionToken: 'ExtensionToken'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -430,7 +432,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "aiPlatform" | "skill" | "userSkill" | "project" | "resume" | "jobPreferences" | "company" | "jobSource" | "crawlRun" | "job" | "jobApplication" | "jobContact" | "outreachEmail" | "emailAccount" | "jobDocument" | "assistantThread" | "assistantMessage"
+    modelProps: "user" | "aiPlatform" | "skill" | "userSkill" | "project" | "resume" | "jobPreferences" | "company" | "jobSource" | "crawlRun" | "job" | "jobApplication" | "jobContact" | "outreachEmail" | "emailAccount" | "appNotification" | "jobDocument" | "assistantThread" | "assistantMessage" | "extensionToken"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1544,6 +1546,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    AppNotification: {
+      payload: Prisma.$AppNotificationPayload<ExtArgs>
+      fields: Prisma.AppNotificationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AppNotificationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppNotificationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AppNotificationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppNotificationPayload>
+        }
+        findFirst: {
+          args: Prisma.AppNotificationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppNotificationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AppNotificationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppNotificationPayload>
+        }
+        findMany: {
+          args: Prisma.AppNotificationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppNotificationPayload>[]
+        }
+        create: {
+          args: Prisma.AppNotificationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppNotificationPayload>
+        }
+        createMany: {
+          args: Prisma.AppNotificationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AppNotificationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppNotificationPayload>[]
+        }
+        delete: {
+          args: Prisma.AppNotificationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppNotificationPayload>
+        }
+        update: {
+          args: Prisma.AppNotificationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppNotificationPayload>
+        }
+        deleteMany: {
+          args: Prisma.AppNotificationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AppNotificationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AppNotificationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppNotificationPayload>[]
+        }
+        upsert: {
+          args: Prisma.AppNotificationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AppNotificationPayload>
+        }
+        aggregate: {
+          args: Prisma.AppNotificationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAppNotification>
+        }
+        groupBy: {
+          args: Prisma.AppNotificationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AppNotificationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AppNotificationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AppNotificationCountAggregateOutputType> | number
+        }
+      }
+    }
     JobDocument: {
       payload: Prisma.$JobDocumentPayload<ExtArgs>
       fields: Prisma.JobDocumentFieldRefs
@@ -1766,6 +1842,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ExtensionToken: {
+      payload: Prisma.$ExtensionTokenPayload<ExtArgs>
+      fields: Prisma.ExtensionTokenFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ExtensionTokenFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExtensionTokenPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ExtensionTokenFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExtensionTokenPayload>
+        }
+        findFirst: {
+          args: Prisma.ExtensionTokenFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExtensionTokenPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ExtensionTokenFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExtensionTokenPayload>
+        }
+        findMany: {
+          args: Prisma.ExtensionTokenFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExtensionTokenPayload>[]
+        }
+        create: {
+          args: Prisma.ExtensionTokenCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExtensionTokenPayload>
+        }
+        createMany: {
+          args: Prisma.ExtensionTokenCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ExtensionTokenCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExtensionTokenPayload>[]
+        }
+        delete: {
+          args: Prisma.ExtensionTokenDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExtensionTokenPayload>
+        }
+        update: {
+          args: Prisma.ExtensionTokenUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExtensionTokenPayload>
+        }
+        deleteMany: {
+          args: Prisma.ExtensionTokenDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ExtensionTokenUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ExtensionTokenUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExtensionTokenPayload>[]
+        }
+        upsert: {
+          args: Prisma.ExtensionTokenUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExtensionTokenPayload>
+        }
+        aggregate: {
+          args: Prisma.ExtensionTokenAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateExtensionToken>
+        }
+        groupBy: {
+          args: Prisma.ExtensionTokenGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ExtensionTokenGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ExtensionTokenCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ExtensionTokenCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1931,6 +2081,11 @@ export const JobPreferencesScalarFieldEnum = {
   autoApplyMinScore: 'autoApplyMinScore',
   autoApplyMarkApplied: 'autoApplyMarkApplied',
   autoApplyFollowUpDays: 'autoApplyFollowUpDays',
+  slackWebhookUrl: 'slackWebhookUrl',
+  inAppAlertsEnabled: 'inAppAlertsEnabled',
+  interviewRemindersEnabled: 'interviewRemindersEnabled',
+  lastCrawlError: 'lastCrawlError',
+  lastCrawlFailedAt: 'lastCrawlFailedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2016,6 +2171,10 @@ export const JobScalarFieldEnum = {
   postedAt: 'postedAt',
   scrapedAt: 'scrapedAt',
   alertedAt: 'alertedAt',
+  gapAnalysisJson: 'gapAnalysisJson',
+  gapAnalyzedAt: 'gapAnalyzedAt',
+  interviewPrepJson: 'interviewPrepJson',
+  interviewPrepAt: 'interviewPrepAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2037,6 +2196,12 @@ export const JobApplicationScalarFieldEnum = {
   autoApplyError: 'autoApplyError',
   applyPackageJson: 'applyPackageJson',
   autoPreparedAt: 'autoPreparedAt',
+  replyStatus: 'replyStatus',
+  lastReplyAt: 'lastReplyAt',
+  outreachFollowUpCount: 'outreachFollowUpCount',
+  lastOutreachFollowUpAt: 'lastOutreachFollowUpAt',
+  interviewAt: 'interviewAt',
+  interviewRemindedAt: 'interviewRemindedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2091,11 +2256,32 @@ export const EmailAccountScalarFieldEnum = {
   smtpPass: 'smtpPass',
   smtpSecure: 'smtpSecure',
   isActive: 'isActive',
+  imapHost: 'imapHost',
+  imapPort: 'imapPort',
+  imapUser: 'imapUser',
+  imapPass: 'imapPass',
+  imapSecure: 'imapSecure',
+  replySyncEnabled: 'replySyncEnabled',
+  lastReplySyncAt: 'lastReplySyncAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type EmailAccountScalarFieldEnum = (typeof EmailAccountScalarFieldEnum)[keyof typeof EmailAccountScalarFieldEnum]
+
+
+export const AppNotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  title: 'title',
+  body: 'body',
+  href: 'href',
+  readAt: 'readAt',
+  createdAt: 'createdAt'
+} as const
+
+export type AppNotificationScalarFieldEnum = (typeof AppNotificationScalarFieldEnum)[keyof typeof AppNotificationScalarFieldEnum]
 
 
 export const JobDocumentScalarFieldEnum = {
@@ -2133,6 +2319,21 @@ export const AssistantMessageScalarFieldEnum = {
 } as const
 
 export type AssistantMessageScalarFieldEnum = (typeof AssistantMessageScalarFieldEnum)[keyof typeof AssistantMessageScalarFieldEnum]
+
+
+export const ExtensionTokenScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  tokenHash: 'tokenHash',
+  tokenPrefix: 'tokenPrefix',
+  label: 'label',
+  lastUsedAt: 'lastUsedAt',
+  revokedAt: 'revokedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ExtensionTokenScalarFieldEnum = (typeof ExtensionTokenScalarFieldEnum)[keyof typeof ExtensionTokenScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2424,9 +2625,11 @@ export type GlobalOmitConfig = {
   jobContact?: Prisma.JobContactOmit
   outreachEmail?: Prisma.OutreachEmailOmit
   emailAccount?: Prisma.EmailAccountOmit
+  appNotification?: Prisma.AppNotificationOmit
   jobDocument?: Prisma.JobDocumentOmit
   assistantThread?: Prisma.AssistantThreadOmit
   assistantMessage?: Prisma.AssistantMessageOmit
+  extensionToken?: Prisma.ExtensionTokenOmit
 }
 
 /* Types for Logging */

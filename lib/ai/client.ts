@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma"
+import { decryptSecret } from "@/lib/crypto/secrets"
 
 export type AiPlatformConfig = {
   provider: string
@@ -17,9 +18,12 @@ export async function getActiveAiPlatform(
 
   if (!platform) return null
 
+  const apiKey = decryptSecret(platform.apiKey)
+  if (!apiKey) return null
+
   return {
     provider: platform.provider,
-    apiKey: platform.apiKey,
+    apiKey,
     modelId: platform.modelId,
     baseUrl: platform.baseUrl,
   }

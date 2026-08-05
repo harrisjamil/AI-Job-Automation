@@ -54,6 +54,11 @@ export type JobPreferencesMinAggregateOutputType = {
   autoApplyMinScore: number | null
   autoApplyMarkApplied: boolean | null
   autoApplyFollowUpDays: number | null
+  slackWebhookUrl: string | null
+  inAppAlertsEnabled: boolean | null
+  interviewRemindersEnabled: boolean | null
+  lastCrawlError: string | null
+  lastCrawlFailedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -72,6 +77,11 @@ export type JobPreferencesMaxAggregateOutputType = {
   autoApplyMinScore: number | null
   autoApplyMarkApplied: boolean | null
   autoApplyFollowUpDays: number | null
+  slackWebhookUrl: string | null
+  inAppAlertsEnabled: boolean | null
+  interviewRemindersEnabled: boolean | null
+  lastCrawlError: string | null
+  lastCrawlFailedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -94,6 +104,11 @@ export type JobPreferencesCountAggregateOutputType = {
   autoApplyMinScore: number
   autoApplyMarkApplied: number
   autoApplyFollowUpDays: number
+  slackWebhookUrl: number
+  inAppAlertsEnabled: number
+  interviewRemindersEnabled: number
+  lastCrawlError: number
+  lastCrawlFailedAt: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -128,6 +143,11 @@ export type JobPreferencesMinAggregateInputType = {
   autoApplyMinScore?: true
   autoApplyMarkApplied?: true
   autoApplyFollowUpDays?: true
+  slackWebhookUrl?: true
+  inAppAlertsEnabled?: true
+  interviewRemindersEnabled?: true
+  lastCrawlError?: true
+  lastCrawlFailedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -146,6 +166,11 @@ export type JobPreferencesMaxAggregateInputType = {
   autoApplyMinScore?: true
   autoApplyMarkApplied?: true
   autoApplyFollowUpDays?: true
+  slackWebhookUrl?: true
+  inAppAlertsEnabled?: true
+  interviewRemindersEnabled?: true
+  lastCrawlError?: true
+  lastCrawlFailedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -168,6 +193,11 @@ export type JobPreferencesCountAggregateInputType = {
   autoApplyMinScore?: true
   autoApplyMarkApplied?: true
   autoApplyFollowUpDays?: true
+  slackWebhookUrl?: true
+  inAppAlertsEnabled?: true
+  interviewRemindersEnabled?: true
+  lastCrawlError?: true
+  lastCrawlFailedAt?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -277,6 +307,11 @@ export type JobPreferencesGroupByOutputType = {
   autoApplyMinScore: number
   autoApplyMarkApplied: boolean
   autoApplyFollowUpDays: number
+  slackWebhookUrl: string | null
+  inAppAlertsEnabled: boolean
+  interviewRemindersEnabled: boolean
+  lastCrawlError: string | null
+  lastCrawlFailedAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: JobPreferencesCountAggregateOutputType | null
@@ -322,6 +357,11 @@ export type JobPreferencesWhereInput = {
   autoApplyMinScore?: Prisma.IntFilter<"JobPreferences"> | number
   autoApplyMarkApplied?: Prisma.BoolFilter<"JobPreferences"> | boolean
   autoApplyFollowUpDays?: Prisma.IntFilter<"JobPreferences"> | number
+  slackWebhookUrl?: Prisma.StringNullableFilter<"JobPreferences"> | string | null
+  inAppAlertsEnabled?: Prisma.BoolFilter<"JobPreferences"> | boolean
+  interviewRemindersEnabled?: Prisma.BoolFilter<"JobPreferences"> | boolean
+  lastCrawlError?: Prisma.StringNullableFilter<"JobPreferences"> | string | null
+  lastCrawlFailedAt?: Prisma.DateTimeNullableFilter<"JobPreferences"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"JobPreferences"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"JobPreferences"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -345,6 +385,11 @@ export type JobPreferencesOrderByWithRelationInput = {
   autoApplyMinScore?: Prisma.SortOrder
   autoApplyMarkApplied?: Prisma.SortOrder
   autoApplyFollowUpDays?: Prisma.SortOrder
+  slackWebhookUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  inAppAlertsEnabled?: Prisma.SortOrder
+  interviewRemindersEnabled?: Prisma.SortOrder
+  lastCrawlError?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastCrawlFailedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -371,6 +416,11 @@ export type JobPreferencesWhereUniqueInput = Prisma.AtLeast<{
   autoApplyMinScore?: Prisma.IntFilter<"JobPreferences"> | number
   autoApplyMarkApplied?: Prisma.BoolFilter<"JobPreferences"> | boolean
   autoApplyFollowUpDays?: Prisma.IntFilter<"JobPreferences"> | number
+  slackWebhookUrl?: Prisma.StringNullableFilter<"JobPreferences"> | string | null
+  inAppAlertsEnabled?: Prisma.BoolFilter<"JobPreferences"> | boolean
+  interviewRemindersEnabled?: Prisma.BoolFilter<"JobPreferences"> | boolean
+  lastCrawlError?: Prisma.StringNullableFilter<"JobPreferences"> | string | null
+  lastCrawlFailedAt?: Prisma.DateTimeNullableFilter<"JobPreferences"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"JobPreferences"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"JobPreferences"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -394,6 +444,11 @@ export type JobPreferencesOrderByWithAggregationInput = {
   autoApplyMinScore?: Prisma.SortOrder
   autoApplyMarkApplied?: Prisma.SortOrder
   autoApplyFollowUpDays?: Prisma.SortOrder
+  slackWebhookUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  inAppAlertsEnabled?: Prisma.SortOrder
+  interviewRemindersEnabled?: Prisma.SortOrder
+  lastCrawlError?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastCrawlFailedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.JobPreferencesCountOrderByAggregateInput
@@ -424,6 +479,11 @@ export type JobPreferencesScalarWhereWithAggregatesInput = {
   autoApplyMinScore?: Prisma.IntWithAggregatesFilter<"JobPreferences"> | number
   autoApplyMarkApplied?: Prisma.BoolWithAggregatesFilter<"JobPreferences"> | boolean
   autoApplyFollowUpDays?: Prisma.IntWithAggregatesFilter<"JobPreferences"> | number
+  slackWebhookUrl?: Prisma.StringNullableWithAggregatesFilter<"JobPreferences"> | string | null
+  inAppAlertsEnabled?: Prisma.BoolWithAggregatesFilter<"JobPreferences"> | boolean
+  interviewRemindersEnabled?: Prisma.BoolWithAggregatesFilter<"JobPreferences"> | boolean
+  lastCrawlError?: Prisma.StringNullableWithAggregatesFilter<"JobPreferences"> | string | null
+  lastCrawlFailedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"JobPreferences"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"JobPreferences"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"JobPreferences"> | Date | string
 }
@@ -445,6 +505,11 @@ export type JobPreferencesCreateInput = {
   autoApplyMinScore?: number
   autoApplyMarkApplied?: boolean
   autoApplyFollowUpDays?: number
+  slackWebhookUrl?: string | null
+  inAppAlertsEnabled?: boolean
+  interviewRemindersEnabled?: boolean
+  lastCrawlError?: string | null
+  lastCrawlFailedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutJobPreferencesInput
@@ -468,6 +533,11 @@ export type JobPreferencesUncheckedCreateInput = {
   autoApplyMinScore?: number
   autoApplyMarkApplied?: boolean
   autoApplyFollowUpDays?: number
+  slackWebhookUrl?: string | null
+  inAppAlertsEnabled?: boolean
+  interviewRemindersEnabled?: boolean
+  lastCrawlError?: string | null
+  lastCrawlFailedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -489,6 +559,11 @@ export type JobPreferencesUpdateInput = {
   autoApplyMinScore?: Prisma.IntFieldUpdateOperationsInput | number
   autoApplyMarkApplied?: Prisma.BoolFieldUpdateOperationsInput | boolean
   autoApplyFollowUpDays?: Prisma.IntFieldUpdateOperationsInput | number
+  slackWebhookUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inAppAlertsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  interviewRemindersEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastCrawlError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastCrawlFailedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutJobPreferencesNestedInput
@@ -512,6 +587,11 @@ export type JobPreferencesUncheckedUpdateInput = {
   autoApplyMinScore?: Prisma.IntFieldUpdateOperationsInput | number
   autoApplyMarkApplied?: Prisma.BoolFieldUpdateOperationsInput | boolean
   autoApplyFollowUpDays?: Prisma.IntFieldUpdateOperationsInput | number
+  slackWebhookUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inAppAlertsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  interviewRemindersEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastCrawlError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastCrawlFailedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -534,6 +614,11 @@ export type JobPreferencesCreateManyInput = {
   autoApplyMinScore?: number
   autoApplyMarkApplied?: boolean
   autoApplyFollowUpDays?: number
+  slackWebhookUrl?: string | null
+  inAppAlertsEnabled?: boolean
+  interviewRemindersEnabled?: boolean
+  lastCrawlError?: string | null
+  lastCrawlFailedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -555,6 +640,11 @@ export type JobPreferencesUpdateManyMutationInput = {
   autoApplyMinScore?: Prisma.IntFieldUpdateOperationsInput | number
   autoApplyMarkApplied?: Prisma.BoolFieldUpdateOperationsInput | boolean
   autoApplyFollowUpDays?: Prisma.IntFieldUpdateOperationsInput | number
+  slackWebhookUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inAppAlertsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  interviewRemindersEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastCrawlError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastCrawlFailedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -577,6 +667,11 @@ export type JobPreferencesUncheckedUpdateManyInput = {
   autoApplyMinScore?: Prisma.IntFieldUpdateOperationsInput | number
   autoApplyMarkApplied?: Prisma.BoolFieldUpdateOperationsInput | boolean
   autoApplyFollowUpDays?: Prisma.IntFieldUpdateOperationsInput | number
+  slackWebhookUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inAppAlertsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  interviewRemindersEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastCrawlError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastCrawlFailedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -604,6 +699,11 @@ export type JobPreferencesCountOrderByAggregateInput = {
   autoApplyMinScore?: Prisma.SortOrder
   autoApplyMarkApplied?: Prisma.SortOrder
   autoApplyFollowUpDays?: Prisma.SortOrder
+  slackWebhookUrl?: Prisma.SortOrder
+  inAppAlertsEnabled?: Prisma.SortOrder
+  interviewRemindersEnabled?: Prisma.SortOrder
+  lastCrawlError?: Prisma.SortOrder
+  lastCrawlFailedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -629,6 +729,11 @@ export type JobPreferencesMaxOrderByAggregateInput = {
   autoApplyMinScore?: Prisma.SortOrder
   autoApplyMarkApplied?: Prisma.SortOrder
   autoApplyFollowUpDays?: Prisma.SortOrder
+  slackWebhookUrl?: Prisma.SortOrder
+  inAppAlertsEnabled?: Prisma.SortOrder
+  interviewRemindersEnabled?: Prisma.SortOrder
+  lastCrawlError?: Prisma.SortOrder
+  lastCrawlFailedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -647,6 +752,11 @@ export type JobPreferencesMinOrderByAggregateInput = {
   autoApplyMinScore?: Prisma.SortOrder
   autoApplyMarkApplied?: Prisma.SortOrder
   autoApplyFollowUpDays?: Prisma.SortOrder
+  slackWebhookUrl?: Prisma.SortOrder
+  inAppAlertsEnabled?: Prisma.SortOrder
+  interviewRemindersEnabled?: Prisma.SortOrder
+  lastCrawlError?: Prisma.SortOrder
+  lastCrawlFailedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -751,6 +861,11 @@ export type JobPreferencesCreateWithoutUserInput = {
   autoApplyMinScore?: number
   autoApplyMarkApplied?: boolean
   autoApplyFollowUpDays?: number
+  slackWebhookUrl?: string | null
+  inAppAlertsEnabled?: boolean
+  interviewRemindersEnabled?: boolean
+  lastCrawlError?: string | null
+  lastCrawlFailedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -772,6 +887,11 @@ export type JobPreferencesUncheckedCreateWithoutUserInput = {
   autoApplyMinScore?: number
   autoApplyMarkApplied?: boolean
   autoApplyFollowUpDays?: number
+  slackWebhookUrl?: string | null
+  inAppAlertsEnabled?: boolean
+  interviewRemindersEnabled?: boolean
+  lastCrawlError?: string | null
+  lastCrawlFailedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -809,6 +929,11 @@ export type JobPreferencesUpdateWithoutUserInput = {
   autoApplyMinScore?: Prisma.IntFieldUpdateOperationsInput | number
   autoApplyMarkApplied?: Prisma.BoolFieldUpdateOperationsInput | boolean
   autoApplyFollowUpDays?: Prisma.IntFieldUpdateOperationsInput | number
+  slackWebhookUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inAppAlertsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  interviewRemindersEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastCrawlError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastCrawlFailedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -830,6 +955,11 @@ export type JobPreferencesUncheckedUpdateWithoutUserInput = {
   autoApplyMinScore?: Prisma.IntFieldUpdateOperationsInput | number
   autoApplyMarkApplied?: Prisma.BoolFieldUpdateOperationsInput | boolean
   autoApplyFollowUpDays?: Prisma.IntFieldUpdateOperationsInput | number
+  slackWebhookUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inAppAlertsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  interviewRemindersEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastCrawlError?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastCrawlFailedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -854,6 +984,11 @@ export type JobPreferencesSelect<ExtArgs extends runtime.Types.Extensions.Intern
   autoApplyMinScore?: boolean
   autoApplyMarkApplied?: boolean
   autoApplyFollowUpDays?: boolean
+  slackWebhookUrl?: boolean
+  inAppAlertsEnabled?: boolean
+  interviewRemindersEnabled?: boolean
+  lastCrawlError?: boolean
+  lastCrawlFailedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -877,6 +1012,11 @@ export type JobPreferencesSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   autoApplyMinScore?: boolean
   autoApplyMarkApplied?: boolean
   autoApplyFollowUpDays?: boolean
+  slackWebhookUrl?: boolean
+  inAppAlertsEnabled?: boolean
+  interviewRemindersEnabled?: boolean
+  lastCrawlError?: boolean
+  lastCrawlFailedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -900,6 +1040,11 @@ export type JobPreferencesSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   autoApplyMinScore?: boolean
   autoApplyMarkApplied?: boolean
   autoApplyFollowUpDays?: boolean
+  slackWebhookUrl?: boolean
+  inAppAlertsEnabled?: boolean
+  interviewRemindersEnabled?: boolean
+  lastCrawlError?: boolean
+  lastCrawlFailedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -923,11 +1068,16 @@ export type JobPreferencesSelectScalar = {
   autoApplyMinScore?: boolean
   autoApplyMarkApplied?: boolean
   autoApplyFollowUpDays?: boolean
+  slackWebhookUrl?: boolean
+  inAppAlertsEnabled?: boolean
+  interviewRemindersEnabled?: boolean
+  lastCrawlError?: boolean
+  lastCrawlFailedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type JobPreferencesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"userId" | "targetRoles" | "targetCountries" | "includeKeywords" | "excludeKeywords" | "remoteOnly" | "scheduledCrawlEnabled" | "crawlIntervalHours" | "lastScheduledAt" | "alertsEnabled" | "alertMinScore" | "lastAlertedAt" | "followUpRemindersEnabled" | "autoApplyEnabled" | "autoApplyMinScore" | "autoApplyMarkApplied" | "autoApplyFollowUpDays" | "createdAt" | "updatedAt", ExtArgs["result"]["jobPreferences"]>
+export type JobPreferencesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"userId" | "targetRoles" | "targetCountries" | "includeKeywords" | "excludeKeywords" | "remoteOnly" | "scheduledCrawlEnabled" | "crawlIntervalHours" | "lastScheduledAt" | "alertsEnabled" | "alertMinScore" | "lastAlertedAt" | "followUpRemindersEnabled" | "autoApplyEnabled" | "autoApplyMinScore" | "autoApplyMarkApplied" | "autoApplyFollowUpDays" | "slackWebhookUrl" | "inAppAlertsEnabled" | "interviewRemindersEnabled" | "lastCrawlError" | "lastCrawlFailedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["jobPreferences"]>
 export type JobPreferencesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -976,6 +1126,23 @@ export type $JobPreferencesPayload<ExtArgs extends runtime.Types.Extensions.Inte
      * Days until follow-up after auto-apply (0 = skip)
      */
     autoApplyFollowUpDays: number
+    /**
+     * Slack incoming webhook for high-score / crawl / interview alerts
+     */
+    slackWebhookUrl: string | null
+    /**
+     * Store notifications in-app (header bell)
+     */
+    inAppAlertsEnabled: boolean
+    /**
+     * Email/Slack when an interview date is approaching
+     */
+    interviewRemindersEnabled: boolean
+    /**
+     * Last scheduled/manual crawl failure message (for Settings health)
+     */
+    lastCrawlError: string | null
+    lastCrawlFailedAt: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["jobPreferences"]>
@@ -1419,6 +1586,11 @@ export interface JobPreferencesFieldRefs {
   readonly autoApplyMinScore: Prisma.FieldRef<"JobPreferences", 'Int'>
   readonly autoApplyMarkApplied: Prisma.FieldRef<"JobPreferences", 'Boolean'>
   readonly autoApplyFollowUpDays: Prisma.FieldRef<"JobPreferences", 'Int'>
+  readonly slackWebhookUrl: Prisma.FieldRef<"JobPreferences", 'String'>
+  readonly inAppAlertsEnabled: Prisma.FieldRef<"JobPreferences", 'Boolean'>
+  readonly interviewRemindersEnabled: Prisma.FieldRef<"JobPreferences", 'Boolean'>
+  readonly lastCrawlError: Prisma.FieldRef<"JobPreferences", 'String'>
+  readonly lastCrawlFailedAt: Prisma.FieldRef<"JobPreferences", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"JobPreferences", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"JobPreferences", 'DateTime'>
 }

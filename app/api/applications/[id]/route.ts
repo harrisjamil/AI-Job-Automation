@@ -25,6 +25,8 @@ export async function PATCH(
     status?: string
     notes?: string
     followUpAt?: string | null
+    replyStatus?: string
+    interviewAt?: string | null
   }
 
   const data: {
@@ -34,6 +36,10 @@ export async function PATCH(
     followUpRemindedAt?: Date | null
     appliedAt?: Date | null
     statusChangedAt?: Date
+    replyStatus?: string
+    lastReplyAt?: Date | null
+    interviewAt?: Date | null
+    interviewRemindedAt?: Date | null
   } = {}
 
   if (body.status) {
@@ -44,6 +50,9 @@ export async function PATCH(
     data.statusChangedAt = new Date()
     if (body.status === "applied" && !existing.appliedAt) {
       data.appliedAt = new Date()
+    }
+    if (body.status === "interview" && !existing.interviewAt && !body.interviewAt) {
+      // keep existing interviewAt; UI can set it explicitly
     }
   }
 
@@ -57,6 +66,28 @@ export async function PATCH(
   } else if (typeof body.followUpAt === "string") {
     data.followUpAt = new Date(body.followUpAt)
     data.followUpRemindedAt = null
+  }
+
+  if (body.interviewAt === null) {
+    data.interviewAt = null
+    data.interviewRemindedAt = null
+  } else if (typeof body.interviewAt === "string") {
+    data.interviewAt = new Date(body.interviewAt)
+    data.interviewRemindedAt = null
+    if (!body.status && existing.status !== "interview") {
+      data.status = "interview"
+      data.statusChangedAt = new Date()
+    }
+  }
+
+  const replyStatuses = ["none", "awaiting", "replied", "bounced", "ghosted"]
+  if (typeof body.replyStatus === "string") {
+    if (!replyStatuses.includes(body.replyStatus)) {
+      return NextResponse.json({ error: "Invalid replyStatus" }, { status: 400 })
+    }
+    data.replyStatus = body.replyStatus
+    data.lastReplyAt =
+      body.replyStatus === "replied" ? new Date() : existing.lastReplyAt
   }
 
   const application = await prisma.jobApplication.update({

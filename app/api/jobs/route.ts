@@ -17,6 +17,7 @@ export async function GET(request: Request) {
   const hasContact = searchParams.get("hasContact") === "1"
   const category = searchParams.get("category")?.trim()
   const includeStale = searchParams.get("includeStale") === "1"
+  const includeApplied = searchParams.get("includeApplied") === "1"
   const limit = Math.min(
     Math.max(Number(searchParams.get("limit") ?? 80) || 80, 1),
     200
@@ -27,40 +28,51 @@ export async function GET(request: Request) {
   )
   const undatedCutoff = new Date(Date.now() - 3 * 24 * 60 * 60 * 1000)
 
+  const andFilters: Prisma.JobWhereInput[] = []
+
+  if (!includeApplied) {
+    andFilters.push({
+      OR: [
+        { application: null },
+        {
+          application: {
+            status: { in: ["saved", "outreach"] },
+          },
+        },
+      ],
+    })
+  }
+
+  if (!includeStale) {
+    andFilters.push({
+      OR: [
+        { postedAt: { gte: staleCutoff } },
+        {
+          AND: [{ postedAt: null }, { scrapedAt: { gte: undatedCutoff } }],
+        },
+      ],
+    })
+  }
+
+  if (q) {
+    andFilters.push({
+      OR: [
+        { title: { contains: q, mode: "insensitive" } },
+        { company: { contains: q, mode: "insensitive" } },
+        { location: { contains: q, mode: "insensitive" } },
+        { source: { contains: q, mode: "insensitive" } },
+        { tags: { has: q } },
+      ],
+    })
+  }
+
   const where: Prisma.JobWhereInput = {
     userId: user.id,
     matchScore: { gte: MIN_MATCH_SCORE },
     ...(remote ? { isRemote: true } : {}),
     ...(category ? { sourceCategory: category } : {}),
     ...(hasContact ? { contacts: { some: {} } } : {}),
-    ...(includeStale
-      ? {}
-      : {
-          AND: [
-            {
-              OR: [
-                { postedAt: { gte: staleCutoff } },
-                {
-                  AND: [
-                    { postedAt: null },
-                    { scrapedAt: { gte: undatedCutoff } },
-                  ],
-                },
-              ],
-            },
-          ],
-        }),
-    ...(q
-      ? {
-          OR: [
-            { title: { contains: q, mode: "insensitive" } },
-            { company: { contains: q, mode: "insensitive" } },
-            { location: { contains: q, mode: "insensitive" } },
-            { source: { contains: q, mode: "insensitive" } },
-            { tags: { has: q } },
-          ],
-        }
-      : {}),
+    ...(andFilters.length ? { AND: andFilters } : {}),
   }
 
   const jobs = await prisma.job.findMany({

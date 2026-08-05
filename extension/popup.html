@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>AI Job Automation</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        width: 320px;
+        margin: 0;
+        padding: 14px;
+        color: #111;
+      }
+      h1 {
+        font-size: 14px;
+        margin: 0 0 10px;
+      }
+      label {
+        display: block;
+        font-size: 11px;
+        color: #555;
+        margin-bottom: 4px;
+      }
+      input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 8px;
+        margin-bottom: 8px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+      }
+      button {
+        width: 100%;
+        padding: 9px 10px;
+        border: 0;
+        border-radius: 8px;
+        background: #111;
+        color: #fff;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 4px;
+      }
+      button.secondary {
+        background: #eee;
+        color: #111;
+      }
+      p {
+        font-size: 12px;
+        color: #444;
+        line-height: 1.4;
+      }
+      #status {
+        margin-top: 8px;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>AI Job Automation</h1>
+    <p>
+      Paste your extension token from Settings → Form-fill extension. Then open
+      an apply page and click Fill form.
+    </p>
+    <label for="apiBase">App URL</label>
+    <input id="apiBase" placeholder="http://localhost:3000" />
+    <label for="token">Extension token</label>
+    <input id="token" type="password" placeholder="aja_…" />
+    <button id="save">Save</button>
+    <button id="fill" class="secondary">Fill form + attach resume PDF</button>
+    <button id="submitted" class="secondary">Mark submitted</button>
+    <div id="status"></div>
+    <script src="popup.js"></script>
+  </body>
+</html>

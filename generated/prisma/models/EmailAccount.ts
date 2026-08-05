@@ -28,10 +28,12 @@ export type AggregateEmailAccount = {
 
 export type EmailAccountAvgAggregateOutputType = {
   smtpPort: number | null
+  imapPort: number | null
 }
 
 export type EmailAccountSumAggregateOutputType = {
   smtpPort: number | null
+  imapPort: number | null
 }
 
 export type EmailAccountMinAggregateOutputType = {
@@ -47,6 +49,13 @@ export type EmailAccountMinAggregateOutputType = {
   smtpPass: string | null
   smtpSecure: boolean | null
   isActive: boolean | null
+  imapHost: string | null
+  imapPort: number | null
+  imapUser: string | null
+  imapPass: string | null
+  imapSecure: boolean | null
+  replySyncEnabled: boolean | null
+  lastReplySyncAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -64,6 +73,13 @@ export type EmailAccountMaxAggregateOutputType = {
   smtpPass: string | null
   smtpSecure: boolean | null
   isActive: boolean | null
+  imapHost: string | null
+  imapPort: number | null
+  imapUser: string | null
+  imapPass: string | null
+  imapSecure: boolean | null
+  replySyncEnabled: boolean | null
+  lastReplySyncAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -81,6 +97,13 @@ export type EmailAccountCountAggregateOutputType = {
   smtpPass: number
   smtpSecure: number
   isActive: number
+  imapHost: number
+  imapPort: number
+  imapUser: number
+  imapPass: number
+  imapSecure: number
+  replySyncEnabled: number
+  lastReplySyncAt: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -89,10 +112,12 @@ export type EmailAccountCountAggregateOutputType = {
 
 export type EmailAccountAvgAggregateInputType = {
   smtpPort?: true
+  imapPort?: true
 }
 
 export type EmailAccountSumAggregateInputType = {
   smtpPort?: true
+  imapPort?: true
 }
 
 export type EmailAccountMinAggregateInputType = {
@@ -108,6 +133,13 @@ export type EmailAccountMinAggregateInputType = {
   smtpPass?: true
   smtpSecure?: true
   isActive?: true
+  imapHost?: true
+  imapPort?: true
+  imapUser?: true
+  imapPass?: true
+  imapSecure?: true
+  replySyncEnabled?: true
+  lastReplySyncAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -125,6 +157,13 @@ export type EmailAccountMaxAggregateInputType = {
   smtpPass?: true
   smtpSecure?: true
   isActive?: true
+  imapHost?: true
+  imapPort?: true
+  imapUser?: true
+  imapPass?: true
+  imapSecure?: true
+  replySyncEnabled?: true
+  lastReplySyncAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -142,6 +181,13 @@ export type EmailAccountCountAggregateInputType = {
   smtpPass?: true
   smtpSecure?: true
   isActive?: true
+  imapHost?: true
+  imapPort?: true
+  imapUser?: true
+  imapPass?: true
+  imapSecure?: true
+  replySyncEnabled?: true
+  lastReplySyncAt?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -246,6 +292,13 @@ export type EmailAccountGroupByOutputType = {
   smtpPass: string | null
   smtpSecure: boolean
   isActive: boolean
+  imapHost: string | null
+  imapPort: number | null
+  imapUser: string | null
+  imapPass: string | null
+  imapSecure: boolean
+  replySyncEnabled: boolean
+  lastReplySyncAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: EmailAccountCountAggregateOutputType | null
@@ -286,6 +339,13 @@ export type EmailAccountWhereInput = {
   smtpPass?: Prisma.StringNullableFilter<"EmailAccount"> | string | null
   smtpSecure?: Prisma.BoolFilter<"EmailAccount"> | boolean
   isActive?: Prisma.BoolFilter<"EmailAccount"> | boolean
+  imapHost?: Prisma.StringNullableFilter<"EmailAccount"> | string | null
+  imapPort?: Prisma.IntNullableFilter<"EmailAccount"> | number | null
+  imapUser?: Prisma.StringNullableFilter<"EmailAccount"> | string | null
+  imapPass?: Prisma.StringNullableFilter<"EmailAccount"> | string | null
+  imapSecure?: Prisma.BoolFilter<"EmailAccount"> | boolean
+  replySyncEnabled?: Prisma.BoolFilter<"EmailAccount"> | boolean
+  lastReplySyncAt?: Prisma.DateTimeNullableFilter<"EmailAccount"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"EmailAccount"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"EmailAccount"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -304,6 +364,13 @@ export type EmailAccountOrderByWithRelationInput = {
   smtpPass?: Prisma.SortOrderInput | Prisma.SortOrder
   smtpSecure?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  imapHost?: Prisma.SortOrderInput | Prisma.SortOrder
+  imapPort?: Prisma.SortOrderInput | Prisma.SortOrder
+  imapUser?: Prisma.SortOrderInput | Prisma.SortOrder
+  imapPass?: Prisma.SortOrderInput | Prisma.SortOrder
+  imapSecure?: Prisma.SortOrder
+  replySyncEnabled?: Prisma.SortOrder
+  lastReplySyncAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -325,6 +392,13 @@ export type EmailAccountWhereUniqueInput = Prisma.AtLeast<{
   smtpPass?: Prisma.StringNullableFilter<"EmailAccount"> | string | null
   smtpSecure?: Prisma.BoolFilter<"EmailAccount"> | boolean
   isActive?: Prisma.BoolFilter<"EmailAccount"> | boolean
+  imapHost?: Prisma.StringNullableFilter<"EmailAccount"> | string | null
+  imapPort?: Prisma.IntNullableFilter<"EmailAccount"> | number | null
+  imapUser?: Prisma.StringNullableFilter<"EmailAccount"> | string | null
+  imapPass?: Prisma.StringNullableFilter<"EmailAccount"> | string | null
+  imapSecure?: Prisma.BoolFilter<"EmailAccount"> | boolean
+  replySyncEnabled?: Prisma.BoolFilter<"EmailAccount"> | boolean
+  lastReplySyncAt?: Prisma.DateTimeNullableFilter<"EmailAccount"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"EmailAccount"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"EmailAccount"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -343,6 +417,13 @@ export type EmailAccountOrderByWithAggregationInput = {
   smtpPass?: Prisma.SortOrderInput | Prisma.SortOrder
   smtpSecure?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  imapHost?: Prisma.SortOrderInput | Prisma.SortOrder
+  imapPort?: Prisma.SortOrderInput | Prisma.SortOrder
+  imapUser?: Prisma.SortOrderInput | Prisma.SortOrder
+  imapPass?: Prisma.SortOrderInput | Prisma.SortOrder
+  imapSecure?: Prisma.SortOrder
+  replySyncEnabled?: Prisma.SortOrder
+  lastReplySyncAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.EmailAccountCountOrderByAggregateInput
@@ -368,6 +449,13 @@ export type EmailAccountScalarWhereWithAggregatesInput = {
   smtpPass?: Prisma.StringNullableWithAggregatesFilter<"EmailAccount"> | string | null
   smtpSecure?: Prisma.BoolWithAggregatesFilter<"EmailAccount"> | boolean
   isActive?: Prisma.BoolWithAggregatesFilter<"EmailAccount"> | boolean
+  imapHost?: Prisma.StringNullableWithAggregatesFilter<"EmailAccount"> | string | null
+  imapPort?: Prisma.IntNullableWithAggregatesFilter<"EmailAccount"> | number | null
+  imapUser?: Prisma.StringNullableWithAggregatesFilter<"EmailAccount"> | string | null
+  imapPass?: Prisma.StringNullableWithAggregatesFilter<"EmailAccount"> | string | null
+  imapSecure?: Prisma.BoolWithAggregatesFilter<"EmailAccount"> | boolean
+  replySyncEnabled?: Prisma.BoolWithAggregatesFilter<"EmailAccount"> | boolean
+  lastReplySyncAt?: Prisma.DateTimeNullableWithAggregatesFilter<"EmailAccount"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"EmailAccount"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"EmailAccount"> | Date | string
 }
@@ -384,6 +472,13 @@ export type EmailAccountCreateInput = {
   smtpPass?: string | null
   smtpSecure?: boolean
   isActive?: boolean
+  imapHost?: string | null
+  imapPort?: number | null
+  imapUser?: string | null
+  imapPass?: string | null
+  imapSecure?: boolean
+  replySyncEnabled?: boolean
+  lastReplySyncAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutEmailAccountInput
@@ -402,6 +497,13 @@ export type EmailAccountUncheckedCreateInput = {
   smtpPass?: string | null
   smtpSecure?: boolean
   isActive?: boolean
+  imapHost?: string | null
+  imapPort?: number | null
+  imapUser?: string | null
+  imapPass?: string | null
+  imapSecure?: boolean
+  replySyncEnabled?: boolean
+  lastReplySyncAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -418,6 +520,13 @@ export type EmailAccountUpdateInput = {
   smtpPass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smtpSecure?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  imapHost?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imapPort?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  imapUser?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imapPass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imapSecure?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  replySyncEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastReplySyncAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutEmailAccountNestedInput
@@ -436,6 +545,13 @@ export type EmailAccountUncheckedUpdateInput = {
   smtpPass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smtpSecure?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  imapHost?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imapPort?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  imapUser?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imapPass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imapSecure?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  replySyncEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastReplySyncAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -453,6 +569,13 @@ export type EmailAccountCreateManyInput = {
   smtpPass?: string | null
   smtpSecure?: boolean
   isActive?: boolean
+  imapHost?: string | null
+  imapPort?: number | null
+  imapUser?: string | null
+  imapPass?: string | null
+  imapSecure?: boolean
+  replySyncEnabled?: boolean
+  lastReplySyncAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -469,6 +592,13 @@ export type EmailAccountUpdateManyMutationInput = {
   smtpPass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smtpSecure?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  imapHost?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imapPort?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  imapUser?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imapPass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imapSecure?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  replySyncEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastReplySyncAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -486,6 +616,13 @@ export type EmailAccountUncheckedUpdateManyInput = {
   smtpPass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smtpSecure?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  imapHost?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imapPort?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  imapUser?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imapPass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imapSecure?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  replySyncEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastReplySyncAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -508,12 +645,20 @@ export type EmailAccountCountOrderByAggregateInput = {
   smtpPass?: Prisma.SortOrder
   smtpSecure?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  imapHost?: Prisma.SortOrder
+  imapPort?: Prisma.SortOrder
+  imapUser?: Prisma.SortOrder
+  imapPass?: Prisma.SortOrder
+  imapSecure?: Prisma.SortOrder
+  replySyncEnabled?: Prisma.SortOrder
+  lastReplySyncAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type EmailAccountAvgOrderByAggregateInput = {
   smtpPort?: Prisma.SortOrder
+  imapPort?: Prisma.SortOrder
 }
 
 export type EmailAccountMaxOrderByAggregateInput = {
@@ -529,6 +674,13 @@ export type EmailAccountMaxOrderByAggregateInput = {
   smtpPass?: Prisma.SortOrder
   smtpSecure?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  imapHost?: Prisma.SortOrder
+  imapPort?: Prisma.SortOrder
+  imapUser?: Prisma.SortOrder
+  imapPass?: Prisma.SortOrder
+  imapSecure?: Prisma.SortOrder
+  replySyncEnabled?: Prisma.SortOrder
+  lastReplySyncAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -546,12 +698,20 @@ export type EmailAccountMinOrderByAggregateInput = {
   smtpPass?: Prisma.SortOrder
   smtpSecure?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  imapHost?: Prisma.SortOrder
+  imapPort?: Prisma.SortOrder
+  imapUser?: Prisma.SortOrder
+  imapPass?: Prisma.SortOrder
+  imapSecure?: Prisma.SortOrder
+  replySyncEnabled?: Prisma.SortOrder
+  lastReplySyncAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type EmailAccountSumOrderByAggregateInput = {
   smtpPort?: Prisma.SortOrder
+  imapPort?: Prisma.SortOrder
 }
 
 export type EmailAccountCreateNestedOneWithoutUserInput = {
@@ -598,6 +758,13 @@ export type EmailAccountCreateWithoutUserInput = {
   smtpPass?: string | null
   smtpSecure?: boolean
   isActive?: boolean
+  imapHost?: string | null
+  imapPort?: number | null
+  imapUser?: string | null
+  imapPass?: string | null
+  imapSecure?: boolean
+  replySyncEnabled?: boolean
+  lastReplySyncAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -614,6 +781,13 @@ export type EmailAccountUncheckedCreateWithoutUserInput = {
   smtpPass?: string | null
   smtpSecure?: boolean
   isActive?: boolean
+  imapHost?: string | null
+  imapPort?: number | null
+  imapUser?: string | null
+  imapPass?: string | null
+  imapSecure?: boolean
+  replySyncEnabled?: boolean
+  lastReplySyncAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -646,6 +820,13 @@ export type EmailAccountUpdateWithoutUserInput = {
   smtpPass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smtpSecure?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  imapHost?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imapPort?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  imapUser?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imapPass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imapSecure?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  replySyncEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastReplySyncAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -662,6 +843,13 @@ export type EmailAccountUncheckedUpdateWithoutUserInput = {
   smtpPass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   smtpSecure?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  imapHost?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imapPort?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  imapUser?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imapPass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imapSecure?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  replySyncEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastReplySyncAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -681,6 +869,13 @@ export type EmailAccountSelect<ExtArgs extends runtime.Types.Extensions.Internal
   smtpPass?: boolean
   smtpSecure?: boolean
   isActive?: boolean
+  imapHost?: boolean
+  imapPort?: boolean
+  imapUser?: boolean
+  imapPass?: boolean
+  imapSecure?: boolean
+  replySyncEnabled?: boolean
+  lastReplySyncAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -699,6 +894,13 @@ export type EmailAccountSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   smtpPass?: boolean
   smtpSecure?: boolean
   isActive?: boolean
+  imapHost?: boolean
+  imapPort?: boolean
+  imapUser?: boolean
+  imapPass?: boolean
+  imapSecure?: boolean
+  replySyncEnabled?: boolean
+  lastReplySyncAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -717,6 +919,13 @@ export type EmailAccountSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   smtpPass?: boolean
   smtpSecure?: boolean
   isActive?: boolean
+  imapHost?: boolean
+  imapPort?: boolean
+  imapUser?: boolean
+  imapPass?: boolean
+  imapSecure?: boolean
+  replySyncEnabled?: boolean
+  lastReplySyncAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -735,11 +944,18 @@ export type EmailAccountSelectScalar = {
   smtpPass?: boolean
   smtpSecure?: boolean
   isActive?: boolean
+  imapHost?: boolean
+  imapPort?: boolean
+  imapUser?: boolean
+  imapPass?: boolean
+  imapSecure?: boolean
+  replySyncEnabled?: boolean
+  lastReplySyncAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type EmailAccountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "provider" | "fromEmail" | "fromName" | "apiKey" | "smtpHost" | "smtpPort" | "smtpUser" | "smtpPass" | "smtpSecure" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["emailAccount"]>
+export type EmailAccountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "provider" | "fromEmail" | "fromName" | "apiKey" | "smtpHost" | "smtpPort" | "smtpUser" | "smtpPass" | "smtpSecure" | "isActive" | "imapHost" | "imapPort" | "imapUser" | "imapPass" | "imapSecure" | "replySyncEnabled" | "lastReplySyncAt" | "createdAt" | "updatedAt", ExtArgs["result"]["emailAccount"]>
 export type EmailAccountInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -768,6 +984,16 @@ export type $EmailAccountPayload<ExtArgs extends runtime.Types.Extensions.Intern
     smtpPass: string | null
     smtpSecure: boolean
     isActive: boolean
+    /**
+     * IMAP inbox for automatic reply detection (optional)
+     */
+    imapHost: string | null
+    imapPort: number | null
+    imapUser: string | null
+    imapPass: string | null
+    imapSecure: boolean
+    replySyncEnabled: boolean
+    lastReplySyncAt: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["emailAccount"]>
@@ -1206,6 +1432,13 @@ export interface EmailAccountFieldRefs {
   readonly smtpPass: Prisma.FieldRef<"EmailAccount", 'String'>
   readonly smtpSecure: Prisma.FieldRef<"EmailAccount", 'Boolean'>
   readonly isActive: Prisma.FieldRef<"EmailAccount", 'Boolean'>
+  readonly imapHost: Prisma.FieldRef<"EmailAccount", 'String'>
+  readonly imapPort: Prisma.FieldRef<"EmailAccount", 'Int'>
+  readonly imapUser: Prisma.FieldRef<"EmailAccount", 'String'>
+  readonly imapPass: Prisma.FieldRef<"EmailAccount", 'String'>
+  readonly imapSecure: Prisma.FieldRef<"EmailAccount", 'Boolean'>
+  readonly replySyncEnabled: Prisma.FieldRef<"EmailAccount", 'Boolean'>
+  readonly lastReplySyncAt: Prisma.FieldRef<"EmailAccount", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"EmailAccount", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"EmailAccount", 'DateTime'>
 }

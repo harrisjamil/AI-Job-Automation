@@ -1125,7 +1125,7 @@ export function ProfileForm() {
 
       <SectionCard
         title="AI matching preferences"
-        description="Multi-role filters for worldwide search. Countries are soft preferences — search is not locked to one region."
+        description="Single source of truth for crawl keywords and roles (Settings shows a read-only preview). Countries are soft preferences — search is not locked to one region."
       >
         <FieldGroup className="gap-5">
           <Field>

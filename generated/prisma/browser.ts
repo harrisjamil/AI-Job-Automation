@@ -93,6 +93,11 @@ export type OutreachEmail = Prisma.OutreachEmailModel
  */
 export type EmailAccount = Prisma.EmailAccountModel
 /**
+ * Model AppNotification
+ * In-app notification feed (header bell).
+ */
+export type AppNotification = Prisma.AppNotificationModel
+/**
  * Model JobDocument
  * Per-job cover letter or tailored resume draft.
  */
@@ -107,3 +112,8 @@ export type AssistantThread = Prisma.AssistantThreadModel
  * 
  */
 export type AssistantMessage = Prisma.AssistantMessageModel
+/**
+ * Model ExtensionToken
+ * API tokens for the Chrome form-fill extension.
+ */
+export type ExtensionToken = Prisma.ExtensionTokenModel

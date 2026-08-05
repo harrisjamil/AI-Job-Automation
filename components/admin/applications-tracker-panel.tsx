@@ -32,8 +32,11 @@ type ApplicationRow = {
   notes: string | null
   followUpAt: string | null
   appliedAt: string | null
+  interviewAt: string | null
   statusChangedAt: string
   updatedAt: string
+  replyStatus: string
+  outreachFollowUpCount?: number
   job: {
     id: string
     title: string
@@ -99,6 +102,8 @@ export function ApplicationsTrackerPanel() {
       status?: string
       notes?: string
       followUpAt?: string | null
+      replyStatus?: string
+      interviewAt?: string | null
     }
   ) {
     setSavingId(id)
@@ -240,7 +245,7 @@ export function ApplicationsTrackerPanel() {
                 </div>
               </div>
 
-              <div className="mt-4 grid gap-3 md:grid-cols-3">
+              <div className="mt-4 grid gap-3 md:grid-cols-4">
                 <div className="space-y-2">
                   <Label>Status</Label>
                   <Select
@@ -263,6 +268,28 @@ export function ApplicationsTrackerPanel() {
                   </Select>
                 </div>
                 <div className="space-y-2">
+                  <Label>Reply</Label>
+                  <Select
+                    value={app.replyStatus || "none"}
+                    onValueChange={(value) => {
+                      if (value)
+                        void updateApplication(app.id, { replyStatus: value })
+                    }}
+                    disabled={savingId === app.id}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="none">None</SelectItem>
+                      <SelectItem value="awaiting">Awaiting</SelectItem>
+                      <SelectItem value="replied">Replied</SelectItem>
+                      <SelectItem value="bounced">Bounced</SelectItem>
+                      <SelectItem value="ghosted">Ghosted</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
                   <Label>Follow up</Label>
                   <Input
                     type="date"
@@ -280,12 +307,50 @@ export function ApplicationsTrackerPanel() {
                     disabled={savingId === app.id}
                   />
                 </div>
-                <div className="space-y-2 md:col-span-1">
-                  <Label>Applied</Label>
+                <div className="space-y-2">
+                  <Label>Interview</Label>
+                  <div className="flex gap-2">
+                    <Input
+                      type="datetime-local"
+                      defaultValue={
+                        app.interviewAt
+                          ? new Date(app.interviewAt).toISOString().slice(0, 16)
+                          : ""
+                      }
+                      onBlur={(event) => {
+                        const value = event.target.value
+                        void updateApplication(app.id, {
+                          interviewAt: value
+                            ? new Date(value).toISOString()
+                            : null,
+                        })
+                      }}
+                      disabled={savingId === app.id}
+                    />
+                    {app.interviewAt ? (
+                      <a
+                        href={`/api/applications/${app.id}/ics`}
+                        download
+                        className="inline-flex size-8 shrink-0 items-center justify-center rounded-lg border border-border text-muted-foreground hover:bg-muted"
+                        title="Download calendar .ics"
+                      >
+                        <ExternalLinkIcon className="size-3.5" />
+                      </a>
+                    ) : null}
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-3 grid gap-3 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label>Applied / follow-ups</Label>
                   <p className="text-sm text-muted-foreground">
                     {app.appliedAt
                       ? new Date(app.appliedAt).toLocaleDateString()
                       : "Not applied yet"}
+                    {typeof app.outreachFollowUpCount === "number"
+                      ? ` · ${app.outreachFollowUpCount} auto follow-up(s)`
+                      : ""}
                   </p>
                 </div>
               </div>
@@ -295,7 +360,7 @@ export function ApplicationsTrackerPanel() {
                 <Textarea
                   rows={2}
                   defaultValue={app.notes ?? ""}
-                  placeholder="Interview date, recruiter name, next step…"
+                  placeholder="Recruiter name, next step…"
                   onBlur={(event) => {
                     if (event.target.value !== (app.notes ?? "")) {
                       void updateApplication(app.id, {

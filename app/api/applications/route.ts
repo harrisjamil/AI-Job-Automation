@@ -53,7 +53,18 @@ export async function GET(request: Request) {
     statusCounts[row.status] = row._count._all
   }
 
-  return NextResponse.json({ applications, statusCounts })
+  return NextResponse.json({
+    applications: applications.map((app) => ({
+      ...app,
+      replyStatus: app.replyStatus,
+      interviewAt: app.interviewAt,
+      autoApplyStatus: app.autoApplyStatus,
+      applyPackageJson: app.applyPackageJson,
+      autoPreparedAt: app.autoPreparedAt,
+      outreachFollowUpCount: app.outreachFollowUpCount,
+    })),
+    statusCounts,
+  })
 }
 
 export async function POST(request: Request) {

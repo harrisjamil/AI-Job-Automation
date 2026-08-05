@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { testAiPlatform } from "@/lib/ai-platforms"
+import { decryptSecret } from "@/lib/crypto/secrets"
 import { prisma } from "@/lib/prisma"
 import { getCurrentUser } from "@/lib/session"
 
@@ -26,7 +27,7 @@ export async function POST(_request: Request, context: RouteContext) {
   try {
     const result = await testAiPlatform({
       provider: platform.provider,
-      apiKey: platform.apiKey,
+      apiKey: decryptSecret(platform.apiKey) || "",
       modelId: platform.modelId,
       baseUrl: platform.baseUrl,
     })
